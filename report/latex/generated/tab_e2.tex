@@ -1,0 +1,16 @@
+\fitbox{%
+\begin{tabular}{@{}llrrrrrrrr@{}}
+\toprule
+\headrow \hd{Модел} & \hd{Атака} & \hd{Дял атаки} & \hd{Записи} & \hd{TP} & \hd{FP} & \hd{FN} & \hd{Precision} & \hd{Sensitivity} & \hd{Specificity}\\
+\midrule
+Random Forest & DDoS & 27,7\% & 200\,000 & 55\,495 & 2 & 0 & 100,0\% & 100,0\% & 100,0\%\\
+\rowcolor{rowalt}SVM (RBF) & DDoS & 27,7\% & 200\,000 & 55\,478 & 116 & 17 & 99,8\% & 100,0\% & 99,9\%\\
+XGBoost & DDoS & 27,7\% & 200\,000 & 55\,495 & 0 & 0 & 100,0\% & 100,0\% & 100,0\%\\
+\rowcolor{rowalt}Random Forest & BruteForce & 17,5\% & 160\,925 & 28\,227 & 4 & 1 & 100,0\% & 100,0\% & 100,0\%\\
+SVM (RBF) & BruteForce & 17,5\% & 160\,925 & 28\,221 & 12 & 7 & 100,0\% & 100,0\% & 100,0\%\\
+\rowcolor{rowalt}XGBoost & BruteForce & 17,5\% & 160\,925 & 28\,227 & 5 & 1 & 100,0\% & 100,0\% & 100,0\%\\
+Random Forest & Bot & 13,8\% & 200\,000 & 27\,544 & 73 & 14 & 99,7\% & 99,9\% & 100,0\%\\
+\rowcolor{rowalt}SVM (RBF) & Bot & 13,8\% & 200\,000 & 27\,357 & 156 & 201 & 99,4\% & 99,3\% & 99,9\%\\
+XGBoost & Bot & 13,8\% & 200\,000 & 27\,551 & 36 & 7 & 99,9\% & 100,0\% & 100,0\%\\
+\bottomrule
+\end{tabular}}%

@@ -1,0 +1,16 @@
+\fitbox{%
+\begin{tabular}{@{}llrrrrrrr@{}}
+\toprule
+\headrow \hd{Модел} & \hd{Атака} & \hd{Specificity} & \hd{F1} & \hd{FPR} & \hd{ROC-AUC} & \hd{Обуч., s} & \hd{µs/запис} & \hd{записа/s}\\
+\midrule
+Random Forest & DDoS & 100,00\% & 100,00\% & 0,000\% & 1,0000 & 9,8 & 5,2 & 190\,821\\
+\rowcolor{rowalt}SVM (RBF) & DDoS & 99,94\% & 99,95\% & 0,060\% & 1,0000 & 1,8 & 10,9 & 92\,118\\
+XGBoost & DDoS & 100,00\% & 100,00\% & 0,000\% & 1,0000 & 4,2 & 0,9 & 1\,058\,630\\
+\rowcolor{rowalt}Random Forest & BruteForce & 100,00\% & 100,00\% & 0,000\% & 1,0000 & 5,1 & 6,0 & 166\,228\\
+SVM (RBF) & BruteForce & 100,00\% & 99,99\% & 0,004\% & 1,0000 & 1,2 & 2,4 & 419\,217\\
+\rowcolor{rowalt}XGBoost & BruteForce & 100,00\% & 100,00\% & 0,000\% & 1,0000 & 3,8 & 0,9 & 1\,098\,465\\
+Random Forest & Bot & 99,97\% & 99,97\% & 0,027\% & 1,0000 & 6,3 & 6,6 & 151\,108\\
+\rowcolor{rowalt}SVM (RBF) & Bot & 99,91\% & 99,60\% & 0,090\% & 0,9998 & 2,2 & 24,1 & 41\,468\\
+XGBoost & Bot & 99,98\% & 99,98\% & 0,017\% & 1,0000 & 5,1 & 1,4 & 704\,173\\
+\bottomrule
+\end{tabular}}%

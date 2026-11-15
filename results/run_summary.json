@@ -1,0 +1,14 @@
+{
+  "total_minutes": 25.015208210866664,
+  "attacks": [
+    "DDoS",
+    "BruteForce",
+    "Bot"
+  ],
+  "algorithms": [
+    "RF",
+    "SVM",
+    "XGB"
+  ],
+  "extended": true
+}

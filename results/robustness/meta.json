@@ -1,0 +1,95 @@
+{
+  "fingerprint_features": [
+    "Init Fwd Win Byts",
+    "Init Bwd Win Byts",
+    "Fwd Seg Size Min"
+  ],
+  "init_win_top_values": {
+    "Benign": {
+      "8192": 0.3965,
+      "65535": 0.2445,
+      "-1": 0.2088
+    },
+    "Bot": {
+      "8192": 0.9895,
+      "2052": 0.0044,
+      "256": 0.0037
+    },
+    "DDOS attack-HOIC": {
+      "65535": 0.8234,
+      "32738": 0.1766
+    },
+    "DDOS attack-LOIC-UDP": {
+      "-1": 1.0
+    },
+    "FTP-BruteForce": {
+      "26883": 1.0
+    },
+    "SSH-Bruteforce": {
+      "26883": 0.9976,
+      "241": 0.0024
+    }
+  },
+  "DDoS_chronological": {
+    "train_until": "14:28",
+    "test_from": "14:15",
+    "attack_test_from": "14:15",
+    "attack_train_until": "14:15",
+    "train_rows": 140000,
+    "test_rows": 60000,
+    "test_attack_labels": {
+      "DDOS attack-HOIC": 30000
+    },
+    "train_attack_labels": {
+      "DDOS attack-HOIC": 69137,
+      "DDOS attack-LOIC-UDP": 863
+    }
+  },
+  "BruteForce_chronological": {
+    "train_until": "15:05",
+    "test_from": "15:05",
+    "attack_test_from": "15:05",
+    "attack_train_until": "15:05",
+    "train_rows": 131730,
+    "test_rows": 56458,
+    "test_attack_labels": {
+      "SSH-Bruteforce": 28229
+    },
+    "train_attack_labels": {
+      "SSH-Bruteforce": 65812,
+      "FTP-BruteForce": 53
+    }
+  },
+  "Bot_chronological": {
+    "train_until": "14:40",
+    "test_from": "14:28",
+    "attack_test_from": "14:28",
+    "attack_train_until": "14:28",
+    "train_rows": 140000,
+    "test_rows": 60000,
+    "test_attack_labels": {
+      "Bot": 30000
+    },
+    "train_attack_labels": {
+      "Bot": 70000
+    }
+  },
+  "benign_profile_by_day": {
+    "Friday-02-03-2018": {
+      "rows": 626486,
+      "init_win_65535_share": 0.0004213980839156821,
+      "tcp_share": 0.7379079500579422
+    },
+    "Wednesday-14-02-2018": {
+      "rows": 485069,
+      "init_win_65535_share": 0.0025357217220642837,
+      "tcp_share": 0.7087754525644805
+    },
+    "Wednesday-21-02-2018": {
+      "rows": 360774,
+      "init_win_65535_share": 0.9937689523080931,
+      "tcp_share": 0.99453397417774
+    }
+  },
+  "runtime_min": 7.626799691216669
+}

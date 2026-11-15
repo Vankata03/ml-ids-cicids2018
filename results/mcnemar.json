@@ -1,0 +1,362 @@
+{
+  "DDoS:RF-SVM": {
+    "attack": "DDoS",
+    "A": "RF",
+    "B": "SVM",
+    "both_correct": 59970,
+    "only_A_correct": 30,
+    "only_B_correct": 0,
+    "both_wrong": 0,
+    "statistic": 28.033333333333335,
+    "p_value": 1.1924366854416797e-07,
+    "method": "хи-квадрат с корекция на Edwards",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.0004999999999999449,
+      "ci_low": 0.0003333333333332966,
+      "ci_high": 0.0006833333333333691,
+      "share_A_better": 1.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0004999500049994721,
+      "ci_low": 0.0003322397189891968,
+      "ci_high": 0.0006794002841976897,
+      "share_A_better": 1.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0005998800239952473,
+      "ci_low": 0.0003632109730954736,
+      "ci_high": 0.0008973267292750303,
+      "share_A_better": 1.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.00039999999999995595,
+      "ci_low": 0.000199196077877406,
+      "ci_high": 0.000632814429886952,
+      "share_A_better": 1.0
+    }
+  },
+  "DDoS:RF-XGB": {
+    "attack": "DDoS",
+    "A": "RF",
+    "B": "XGB",
+    "both_correct": 60000,
+    "only_A_correct": 0,
+    "only_B_correct": 0,
+    "both_wrong": 0,
+    "statistic": 0.0,
+    "p_value": 1.0,
+    "method": "няма несъгласия",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    }
+  },
+  "DDoS:SVM-XGB": {
+    "attack": "DDoS",
+    "A": "SVM",
+    "B": "XGB",
+    "both_correct": 59970,
+    "only_A_correct": 0,
+    "only_B_correct": 30,
+    "both_wrong": 0,
+    "statistic": 28.033333333333335,
+    "p_value": 1.1924366854416797e-07,
+    "method": "хи-квадрат с корекция на Edwards",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": -0.0004999999999999449,
+      "ci_low": -0.0006833333333333691,
+      "ci_high": -0.0003333333333332966,
+      "share_A_better": 0.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": -0.0004999500049994721,
+      "ci_low": -0.0006794002841976898,
+      "ci_high": -0.0003322397189891968,
+      "share_A_better": 0.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": -0.0005998800239952473,
+      "ci_low": -0.0008973267292750303,
+      "ci_high": -0.0003632109730954742,
+      "share_A_better": 0.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": -0.00039999999999995595,
+      "ci_low": -0.000632814429886952,
+      "ci_high": -0.000199196077877406,
+      "share_A_better": 0.0
+    }
+  },
+  "BruteForce:RF-SVM": {
+    "attack": "BruteForce",
+    "A": "RF",
+    "B": "SVM",
+    "both_correct": 56449,
+    "only_A_correct": 7,
+    "only_B_correct": 0,
+    "both_wrong": 1,
+    "statistic": 0.0,
+    "p_value": 0.015625,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.00012398816798631085,
+      "ci_low": 5.269497139413495e-05,
+      "ci_high": 0.0002302637405459107,
+      "share_A_better": 0.999
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0001240051118885921,
+      "ci_low": 5.225959936045745e-05,
+      "ci_high": 0.00023024620356480453,
+      "share_A_better": 0.999
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 3.5433349868885244e-05,
+      "ci_low": 0.0,
+      "ci_high": 0.00010681601975646715,
+      "share_A_better": 0.646
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.00021255491001848092,
+      "ci_low": 7.087366874736767e-05,
+      "ci_high": 0.00039113580772209833,
+      "share_A_better": 0.998
+    }
+  },
+  "BruteForce:RF-XGB": {
+    "attack": "BruteForce",
+    "A": "RF",
+    "B": "XGB",
+    "both_correct": 56456,
+    "only_A_correct": 0,
+    "only_B_correct": 0,
+    "both_wrong": 1,
+    "statistic": 0.0,
+    "p_value": 1.0,
+    "method": "няма несъгласия",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    }
+  },
+  "BruteForce:SVM-XGB": {
+    "attack": "BruteForce",
+    "A": "SVM",
+    "B": "XGB",
+    "both_correct": 56449,
+    "only_A_correct": 0,
+    "only_B_correct": 7,
+    "both_wrong": 1,
+    "statistic": 0.0,
+    "p_value": 0.015625,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": -0.00012398816798631085,
+      "ci_low": -0.0002302637405459107,
+      "ci_high": -5.269497139413533e-05,
+      "share_A_better": 0.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": -0.0001240051118885921,
+      "ci_low": -0.00023024620356480453,
+      "ci_high": -5.225959936045782e-05,
+      "share_A_better": 0.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": -3.5433349868885244e-05,
+      "ci_low": -0.00010681601975646715,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": -0.00021255491001848092,
+      "ci_low": -0.00039113580772209833,
+      "ci_high": -7.087366874736767e-05,
+      "share_A_better": 0.0
+    }
+  },
+  "Bot:RF-SVM": {
+    "attack": "Bot",
+    "A": "RF",
+    "B": "SVM",
+    "both_correct": 59752,
+    "only_A_correct": 228,
+    "only_B_correct": 7,
+    "both_wrong": 13,
+    "statistic": 205.95744680851064,
+    "p_value": 1.0468303993048255e-46,
+    "method": "хи-квадрат с корекция на Edwards",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.0036833333333333718,
+      "ci_low": 0.0032166666666667565,
+      "ci_high": 0.004167083333333426,
+      "share_A_better": 1.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0036958688590598143,
+      "ci_low": 0.003226578491202689,
+      "ci_high": 0.004193888908742926,
+      "share_A_better": 1.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0006389429613771203,
+      "ci_low": 0.00030303155113653446,
+      "ci_high": 0.00104062894104667,
+      "share_A_better": 1.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.006733333333333369,
+      "ci_low": 0.005832247083334119,
+      "ci_high": 0.007621241017036645,
+      "share_A_better": 1.0
+    }
+  },
+  "Bot:RF-XGB": {
+    "attack": "Bot",
+    "A": "RF",
+    "B": "XGB",
+    "both_correct": 59978,
+    "only_A_correct": 2,
+    "only_B_correct": 11,
+    "both_wrong": 9,
+    "statistic": 2.0,
+    "p_value": 0.0224609375,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": -0.00014999999999998348,
+      "ci_low": -0.00026708333333341213,
+      "ci_high": -3.333333333332966e-05,
+      "share_A_better": 0.004
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": -0.00015001916809720406,
+      "ci_low": -0.0002690610959417,
+      "ci_high": -3.3460149486697063e-05,
+      "share_A_better": 0.004
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": -0.00010003000455616196,
+      "ci_low": -0.00026782753172726047,
+      "ci_high": 6.703553146500396e-05,
+      "share_A_better": 0.087
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": -0.00019999999999997797,
+      "ci_low": -0.0003672377280733885,
+      "ci_high": -6.618396675617255e-05,
+      "share_A_better": 0.0
+    }
+  },
+  "Bot:SVM-XGB": {
+    "attack": "Bot",
+    "A": "SVM",
+    "B": "XGB",
+    "both_correct": 59755,
+    "only_A_correct": 4,
+    "only_B_correct": 234,
+    "both_wrong": 7,
+    "statistic": 220.3403361344538,
+    "p_value": 7.623385069673603e-50,
+    "method": "хи-квадрат с корекция на Edwards",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": -0.0038333333333333552,
+      "ci_low": -0.004316666666666635,
+      "ci_high": -0.003316666666666743,
+      "share_A_better": 0.0
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": -0.0038458880271570184,
+      "ci_low": -0.004331775075824757,
+      "ci_high": -0.0033327865437415395,
+      "share_A_better": 0.0
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": -0.0007389729659332822,
+      "ci_low": -0.0011076812806832287,
+      "ci_high": -0.00040405713348979635,
+      "share_A_better": 0.0
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": -0.006933333333333347,
+      "ci_low": -0.00783684384529986,
+      "ci_high": -0.0059807363959348825,
+      "share_A_better": 0.0
+    }
+  }
+}

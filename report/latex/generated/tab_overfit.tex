@@ -1,0 +1,16 @@
+\fitbox{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+\headrow \hd{Модел} & \hd{Атака} & \hd{Accuracy\\обучение} & \hd{F1\\5-CV} & \hd{Accuracy\\тест} & \hd{F1\\тест} & \hd{Разлика обуч.$-$тест,\\пр. п.}\\
+\midrule
+Random Forest & DDoS & 100,000\% & 99,994\% & 100,000\% & 100,000\% & $+$0,000\\
+\rowcolor{rowalt}SVM (RBF) & DDoS & 99,954\% & 99,955\% & 99,950\% & 99,950\% & $+$0,004\\
+XGBoost & DDoS & 100,000\% & 100,000\% & 100,000\% & 100,000\% & $+$0,000\\
+\rowcolor{rowalt}Random Forest & BruteForce & 99,998\% & 99,992\% & 99,998\% & 99,998\% & $+$0,000\\
+SVM (RBF) & BruteForce & 99,972\% & 99,965\% & 99,986\% & 99,986\% & $-$0,014\\
+\rowcolor{rowalt}XGBoost & BruteForce & 99,997\% & 99,990\% & 99,998\% & 99,998\% & $-$0,001\\
+Random Forest & Bot & 99,983\% & 99,932\% & 99,967\% & 99,967\% & $+$0,016\\
+\rowcolor{rowalt}SVM (RBF) & Bot & 99,586\% & 99,473\% & 99,598\% & 99,597\% & $-$0,012\\
+XGBoost & Bot & 99,991\% & 99,960\% & 99,982\% & 99,982\% & $+$0,010\\
+\bottomrule
+\end{tabular}}%

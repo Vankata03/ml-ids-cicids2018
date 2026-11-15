@@ -1,0 +1,25 @@
+\fitbox{%
+\begin{tabular}{@{}llrrrrr@{}}
+\toprule
+\headrow \hd{Атака} & \hd{Модел} & \hd{Цел Recall} & \hd{Постигнат Recall} & \hd{Precision} & \hd{Specificity} & \hd{Аларми / 10\,000}\\
+\midrule
+DDoS & Random Forest & 90\% & 99,5\% & 100,0\% & 100,0\% & 2760\\
+\rowcolor{rowalt}DDoS & Random Forest & 95\% & 99,5\% & 100,0\% & 100,0\% & 2760\\
+DDoS & SVM (RBF) & 90\% & 90,0\% & 100,0\% & 100,0\% & 2498\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & 95\% & 95,0\% & 100,0\% & 100,0\% & 2636\\
+DDoS & XGBoost & 90\% & 90,9\% & 100,0\% & 100,0\% & 2521\\
+\rowcolor{rowalt}DDoS & XGBoost & 95\% & 95,2\% & 100,0\% & 100,0\% & 2641\\
+BruteForce & Random Forest & 90\% & 99,5\% & 100,0\% & 100,0\% & 1745\\
+\rowcolor{rowalt}BruteForce & Random Forest & 95\% & 99,5\% & 100,0\% & 100,0\% & 1745\\
+BruteForce & SVM (RBF) & 90\% & 90,0\% & 100,0\% & 100,0\% & 1579\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & 95\% & 95,0\% & 100,0\% & 100,0\% & 1667\\
+BruteForce & XGBoost & 90\% & 90,4\% & 100,0\% & 100,0\% & 1587\\
+\rowcolor{rowalt}BruteForce & XGBoost & 95\% & 95,0\% & 100,0\% & 100,0\% & 1667\\
+Bot & Random Forest & 90\% & 97,1\% & 100,0\% & 100,0\% & 1338\\
+\rowcolor{rowalt}Bot & Random Forest & 95\% & 97,1\% & 100,0\% & 100,0\% & 1338\\
+Bot & SVM (RBF) & 90\% & 90,0\% & 100,0\% & 100,0\% & 1241\\
+\rowcolor{rowalt}Bot & SVM (RBF) & 95\% & 95,0\% & 100,0\% & 100,0\% & 1310\\
+Bot & XGBoost & 90\% & 90,0\% & 100,0\% & 100,0\% & 1240\\
+\rowcolor{rowalt}Bot & XGBoost & 95\% & 95,0\% & 100,0\% & 100,0\% & 1309\\
+\bottomrule
+\end{tabular}}%

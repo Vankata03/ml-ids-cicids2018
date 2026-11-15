@@ -1,0 +1,31 @@
+% ============================== ПРИЛОЖЕНИЕ ==============================
+\chapter{Възпроизвеждане на изследването}\label{app:repro}
+\begin{enumerate}
+  \item Изтегляне на трите дневни CSV файла на CSE-CIC-IDS2018 от публичното хранилище в AWS (без регистрация)~\cite{aws2018}. Файловете се поставят в \texttt{data/raw/} (вж. \texttt{data/README.md}).
+  \item Инсталиране на зависимостите: \texttt{pip install -r requirements.txt}.
+  \item Изпълнение на тестовете: \texttt{python -m pytest tests}.
+  \item Пълен експеримент: \texttt{python run\_all.py} (около 25 минути на 4 ядра и 16~GB RAM).
+  \item Доклад (изисква XeLaTeX): \texttt{python report/build\_report.py}.
+  \item Презентация: първо \path{python presentation/render_formulas.py},\\ след това \path{node presentation/build_presentation.js}.
+\end{enumerate}
+
+\begin{table}[H]
+\centering\small
+\caption{Структура на хранилището}\label{tab:repo}
+\begin{tabularx}{\textwidth}{@{}lL@{}}
+\toprule
+\textsf{\textbf{Път}} & \textsf{\textbf{Съдържание}}\\
+\midrule
+\texttt{src/config.py}, \texttt{src/registry.py} & параметри на експеримента; регистри на атаки и алгоритми\\
+\texttt{src/preprocess.py} & зареждане, почистване, бинарни задачи, \texttt{FeatureFilter}, \texttt{ImportanceSelector}\\
+\texttt{src/train.py}, \texttt{src/evaluate.py} & конвейер, GridSearchCV с правилото 1-SE, оперативна фаза, метрики\\
+\texttt{src/analysis.py}, \texttt{src/stats.py} & разширени анализи A1--A9, bootstrap, McNemar\\
+\texttt{src/robustness.py} & проверки за приложимост A10--A14\\
+\texttt{src/experiment.py}, \texttt{run\_all.py} & оркестрация и команден ред\\
+\texttt{src/plots.py}, \texttt{src/plots\_ext.py}, \texttt{src/diagram.py} & всички фигури\\
+\texttt{tests/} & автоматични тестове върху реални записи\\
+\texttt{results/} & метрики (CSV/JSON), журнал \texttt{run\_log.txt}, фигури\\
+\texttt{report/}, \texttt{presentation/} & генератори на доклада (LaTeX) и презентацията\\
+\bottomrule
+\end{tabularx}
+\end{table}

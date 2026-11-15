@@ -1,0 +1,76 @@
+{
+ "ks": {
+  "DDoS": {
+   "mean_top10": 0.6491139888763428,
+   "top": [
+    "Bwd Pkt Len Std",
+    "Bwd Pkt Len Mean",
+    "Bwd Seg Size Avg",
+    "Fwd IAT Min",
+    "Init Fwd Win Byts"
+   ]
+  },
+  "BruteForce": {
+   "mean_top10": 0.9772439897060394,
+   "top": [
+    "Fwd Seg Size Min",
+    "Fwd Act Data Pkts",
+    "Fwd Header Len",
+    "TotLen Fwd Pkts",
+    "Subflow Fwd Byts"
+   ]
+  },
+  "Bot": {
+   "mean_top10": 0.7123539865016937,
+   "top": [
+    "Bwd Pkt Len Mean",
+    "Bwd Seg Size Avg",
+    "Pkt Size Avg",
+    "Fwd IAT Tot",
+    "Fwd IAT Max"
+   ]
+  }
+ },
+ "median": {
+  "Flow Duration": {
+   "Нормален": 53348.0,
+   "DDoS": 11797.5,
+   "BruteForce": 374850.5,
+   "Bot": 10901.0
+  },
+  "Tot Fwd Pkts": {
+   "Нормален": 5.0,
+   "DDoS": 3.0,
+   "BruteForce": 22.0,
+   "Bot": 3.0
+  },
+  "Flow Pkts/s": {
+   "Нормален": 78.99830627441406,
+   "DDoS": 561.2122192382812,
+   "BruteForce": 117.69032287597656,
+   "Bot": 642.5555419921875
+  },
+  "Init Fwd Win Byts": {
+   "Нормален": 8192.0,
+   "DDoS": 65535.0,
+   "BruteForce": 26883.0,
+   "Bot": 8192.0
+  }
+ },
+ "pre": {
+  "DDoS_RF": 0.9999833333333332,
+  "DDoS_SVM": 0.9996666666666668,
+  "DDoS_XGB": 0.9999833333333332,
+  "PortScan_RF": 0.8382612670642259,
+  "PortScan_SVM": 0.8176491366592558,
+  "PortScan_XGB": 0.8426247220894716
+ },
+ "dup_share": {
+  "Benign": 0.17785422842761756,
+  "DDOS attack-HOIC": 0.7101202311329831,
+  "Bot": 0.4949701423175432,
+  "FTP-BruteForce": 0.9997258998758792,
+  "SSH-Bruteforce": 0.4986486414448609,
+  "DDOS attack-LOIC-UDP": 0.0
+ }
+}

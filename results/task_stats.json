@@ -1,0 +1,66 @@
+{
+  "DDoS": {
+    "attack": "DDoS",
+    "attack_labels_included": [
+      "DDOS attack-HOIC",
+      "DDOS attack-LOIC-UDP"
+    ],
+    "attack_rows_original": 687742,
+    "benign_rows_original": 1790843,
+    "attack_rows_available": 200590,
+    "benign_rows_available": 1472333,
+    "natural_attack_share": 0.27747363919333007,
+    "per_class_sample": 100000,
+    "task_duplicates_removed": 0,
+    "task_conflicting_rows_removed": 2,
+    "task_conflicting_vectors": 1,
+    "train_rows": 140000,
+    "test_rows": 60000,
+    "attack_subtype_counts_in_sample": {
+      "DDOS attack-HOIC": 99152,
+      "DDOS attack-LOIC-UDP": 848
+    }
+  },
+  "BruteForce": {
+    "attack": "BruteForce",
+    "attack_labels_included": [
+      "FTP-BruteForce",
+      "SSH-Bruteforce"
+    ],
+    "attack_rows_original": 380949,
+    "benign_rows_original": 1790843,
+    "attack_rows_available": 94094,
+    "benign_rows_available": 1472334,
+    "natural_attack_share": 0.17540768176694638,
+    "per_class_sample": 94094,
+    "task_duplicates_removed": 7,
+    "task_conflicting_rows_removed": 0,
+    "task_conflicting_vectors": 0,
+    "train_rows": 131731,
+    "test_rows": 56457,
+    "attack_subtype_counts_in_sample": {
+      "SSH-Bruteforce": 94041,
+      "FTP-BruteForce": 53
+    }
+  },
+  "Bot": {
+    "attack": "Bot",
+    "attack_labels_included": [
+      "Bot"
+    ],
+    "attack_rows_original": 286191,
+    "benign_rows_original": 1790843,
+    "attack_rows_available": 144287,
+    "benign_rows_available": 1472086,
+    "natural_attack_share": 0.13778830775037867,
+    "per_class_sample": 100000,
+    "task_duplicates_removed": 0,
+    "task_conflicting_rows_removed": 496,
+    "task_conflicting_vectors": 248,
+    "train_rows": 140000,
+    "test_rows": 60000,
+    "attack_subtype_counts_in_sample": {
+      "Bot": 100000
+    }
+  }
+}

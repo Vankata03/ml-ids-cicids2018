@@ -1,0 +1,16 @@
+\fitbox{%
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+\headrow \hd{Модел} & \hd{Атака} & \hd{PCA компоненти} & \hd{F1 с PCA} & \hd{F1 с подбор} & \hd{Подбор $-$ PCA, пр. п.}\\
+\midrule
+Random Forest & DDoS & 22 & 100,000\% & 100,000\% & $+$0,00\\
+\rowcolor{rowalt}SVM (RBF) & DDoS & 21 & 99,955\% & 99,950\% & $-$0,01\\
+XGBoost & DDoS & 22 & 99,998\% & 100,000\% & $+$0,00\\
+\rowcolor{rowalt}Random Forest & BruteForce & 22 & 99,993\% & 99,998\% & $+$0,01\\
+SVM (RBF) & BruteForce & 20 & 99,972\% & 99,986\% & $+$0,01\\
+\rowcolor{rowalt}XGBoost & BruteForce & 22 & 99,991\% & 99,998\% & $+$0,01\\
+Random Forest & Bot & 23 & 99,948\% & 99,967\% & $+$0,02\\
+\rowcolor{rowalt}SVM (RBF) & Bot & 22 & 99,600\% & 99,597\% & $-$0,00\\
+XGBoost & Bot & 23 & 99,942\% & 99,982\% & $+$0,04\\
+\bottomrule
+\end{tabular}}%

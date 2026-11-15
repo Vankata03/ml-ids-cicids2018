@@ -1,0 +1,18 @@
+# Raw CSE-CIC-IDS2018 files (about 1 GB); download steps are in data/README.md
+data/raw/
+data/processed/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Intermediate build output of the report
+report/_docx_build/
+report/latex/*.aux
+report/latex/*.log
+report/latex/*.out
+report/latex/*.toc
+report/latex/*.fls
+report/latex/*.fdb_latexmk
+report/latex/*.xdv

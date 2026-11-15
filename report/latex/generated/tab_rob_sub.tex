@@ -1,0 +1,11 @@
+\fitbox{%
+\begin{tabular}{@{}lrrrrrrrr@{}}
+\toprule
+\headrow \hd{Обучен $\to$ тест} & \hd{Обуч. атаки} & \hd{Тест. атаки} & \hd{RF} & \hd{SVM} & \hd{XGB} & \hd{RF\\без отп.} & \hd{SVM\\без отп.} & \hd{XGB\\без отп.}\\
+\midrule
+HOIC $\to$ LOIC-UDP & 70\,000 & 1\,730 & 0,0\% & 0,0\% & 0,0\% & 0,0\% & 0,0\% & 0,0\%\\
+\rowcolor{rowalt}LOIC-UDP $\to$ HOIC & 1\,211 & 198\,861 & 0,0\% & 17,6\% & 0,0\% & 0,0\% & 17,6\% & 0,0\%\\
+SSH $\to$ FTP & 65\,834 & 53 & 100,0\% & 1,9\% & 32,1\% & 11,3\% & 1,9\% & 0,0\%\\
+\rowcolor{rowalt}FTP $\to$ SSH & 37 & 94\,048 & 0,2\% & 0,2\% & 0,2\% & 0,2\% & 0,2\% & 0,2\%\\
+\bottomrule
+\end{tabular}}%
