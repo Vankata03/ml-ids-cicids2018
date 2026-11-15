@@ -68,27 +68,27 @@ def class_distribution(task_stats: dict):
         ben = [st["benign_rows_original"], st["per_class_sample"]]
         x = np.arange(2)
         w = 0.36
-        b1 = ax.bar(x - w / 2 - 0.01, ben, w, color=BENIGN_COLOR, label=f"Нормален трафик ({C.BENIGN_LABEL})")
+        b1 = ax.bar(x - w / 2 - 0.01, ben, w, color=BENIGN_COLOR, label="Нормален трафик (Benign)")
         b2 = ax.bar(x + w / 2 + 0.01, att, w, color=ATTACK_COLOR, label="Атака")
         ax.set_yscale("log")
         ax.set_xticks(x, cats)
-        ax.set_title(f"{attack} срещу нормален трафик")
+        ax.set_title(f"{attack} срещу нормален трафик\n({st.get('dataset', C.DATASET_2018)})")
         ax.set_ylabel("Брой записи (лог. скала)")
         for bars in (b1, b2):
             for b in bars:
                 ax.annotate(_fmt_int(b.get_height()), (b.get_x() + b.get_width() / 2, b.get_height()),
                             ha="center", va="bottom", fontsize=8, color=INK2, xytext=(0, 2), textcoords="offset points")
         ax.grid(axis="x", visible=False)
-    axes[0].legend(handles=[b1, b2], labels=[f"Нормален трафик ({C.BENIGN_LABEL})", "Атака"],
+    axes[0].legend(handles=[b1, b2], labels=["Нормален трафик (Benign)", "Атака"],
                    loc="upper center", bbox_to_anchor=(n / 2 + 0.05 * (n - 1), -0.12), ncol=2)
-    fig.suptitle(f"Разпределение на класовете в {C.DATASET_NAME} и след балансиране", fontweight="bold", y=1.02)
+    fig.suptitle("Разпределение на класовете в оригиналните файлове и след балансиране", fontweight="bold", y=1.04)
     return _save(fig, "01_class_distribution.png")
 
 
 # 2. PCA: кумулативна обяснена дисперсия ----------------------------------------
 def pca_variance(curves: dict):
     fig, ax = plt.subplots(figsize=(7.5, 4))
-    styles = {"DDoS": "-", "BruteForce": ":", "Bot": "--"}
+    styles = {"DDoS": "-", "BruteForce": ":", "PortScan": "--"}
     for attack, evr in curves.items():
         cum = np.cumsum(evr)
         k = int(np.searchsorted(cum, C.PCA_VARIANCE) + 1)

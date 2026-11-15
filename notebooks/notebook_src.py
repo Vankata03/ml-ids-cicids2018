@@ -1,9 +1,9 @@
 # %% [markdown]
-# # Откриване на DDoS, BruteForce и Bot с машинно обучение (CSE-CIC-IDS2018)
+# # Откриване на PortScan, DDoS и BruteForce с машинно обучение (CSE-CIC-IDS2018 и CIC-IDS2017)
 #
 # **Курсов проект:** Експериментално изследване на откриване на проникване в мрежов трафик на център за данни, базирано на машинно обучение.
 #
-# Ноутбукът минава през цялото изследване и генерира всички диаграми в презентацията. Използват се само реалните записи от публичния набор CSE-CIC-IDS2018 (Communications Security Establishment и Canadian Institute for Cybersecurity), уловени в инфраструктура на Amazon Web Services. Синтетични данни няма.
+# Ноутбукът минава през цялото изследване и генерира всички диаграми в презентацията. Използват се само реални записи от два публични набора на Canadian Institute for Cybersecurity: CSE-CIC-IDS2018 (DDoS и BruteForce, уловени в инфраструктура на Amazon Web Services) и коригираната версия на CIC-IDS2017 (PortScan). Синтетични данни няма.
 #
 # | Част | Съдържание |
 # |---|---|
@@ -22,11 +22,11 @@
 # %% [markdown]
 # ## 0. Настройка на средата
 #
-# **В Google Colab:** качете папката на хранилището `ml-ids-cicids2018` (с изтеглените CSV файлове в `data/raw/`) в Google Drive и изпълнете клетката.
+# **В Google Colab:** качете папката на хранилището `ml-ids-cicids2018` (с изтеглените CSV файлове в `data/raw/` и `data/raw_cicids2017/`) в Google Drive и изпълнете клетката.
 #
 # **Локално:** ноутбукът се стартира от папката `notebooks/` на хранилището.
 #
-# Суровите данни се изтеглят от публичното хранилище на набора в AWS S3 (вж. `data/README.md`).
+# Суровите данни се изтеглят от публичното хранилище на CSE-CIC-IDS2018 в AWS S3 и от страницата на коригирания CIC-IDS2017 (вж. `data/README.md`).
 
 # %%
 import sys, os, json, time, warnings
@@ -65,7 +65,8 @@ FIG = REPO / "presentation" / "figures"
 FIG.mkdir(parents=True, exist_ok=True)
 for old in FIG.glob("p*.png"):
     old.unlink()
-ATT = list(ATTACKS)              # DDoS, BruteForce, Bot
+ATT = list(ATTACKS)              # DDoS, BruteForce, PortScan
+HARD = "PortScan"                 # атаката, показана подробно в диаграмите за един модел
 ALG = list(ALGORITHMS)           # RF, SVM, XGB
 print("Хранилище:", REPO)
 print("Атаки:", ATT, "| Алгоритми:", ALG)
@@ -73,18 +74,19 @@ print("Атаки:", ATT, "| Алгоритми:", ALG)
 # %% [markdown]
 # ### Стил на диаграмите
 #
-# Едни и същи цветове навсякъде: **сиво** е нормалният трафик, **червено** е DDoS, **виолетово** е BruteForce, **кехлибарено** е Bot. При сравнение на алгоритмите **синьо** е Random Forest, **тюркоазено** е SVM, а **оранжево** е XGBoost.
+# Едни и същи цветове навсякъде: **сиво** е нормалният трафик (по-светло за CIC-IDS2017), **червено** е DDoS, **виолетово** е BruteForce, **кехлибарено** е PortScan. При сравнение на алгоритмите **синьо** е Random Forest, **тюркоазено** е SVM, а **оранжево** е XGBoost.
 
 # %%
 INK, MUTED, GRID = "#14213D", "#3F4858", "#E3E7EE"
-BENIGN, DDOS, BRUTE, BOT = "#8D99AE", "#D64545", "#7A4FB5", "#E69B23"
+BENIGN, BENIGN17, DDOS, BRUTE, SCAN = "#8D99AE", "#B9C2D0", "#D64545", "#7A4FB5", "#E69B23"
 ALGO_C = {"RF": "#1D5FA8", "SVM": "#14A38B", "XGB": "#D9731A"}
 ALGO_N = {"RF": "Random Forest", "SVM": "SVM (RBF)", "XGB": "XGBoost"}
-ATT_C = {"DDoS": DDOS, "BruteForce": BRUTE, "Bot": BOT}
-ATT_N = {"DDoS": "DDoS", "BruteForce": "BruteForce", "Bot": "Bot"}
-GRP_C = {"Нормален": BENIGN, **ATT_C}
-GROUPS0 = ["Нормален", "DDoS", "BruteForce", "Bot"]
-GRP_N = {"Нормален": "Нормален трафик", **ATT_N}
+ATT_C = {"DDoS": DDOS, "BruteForce": BRUTE, "PortScan": SCAN}
+ATT_N = {"DDoS": "DDoS", "BruteForce": "BruteForce", "PortScan": "PortScan"}
+ATT_DS = {a: ATTACKS[a].dataset for a in ATT}      # набор на всяка атака
+GRP_C = {"Нормален": BENIGN, "Нормален 2017": BENIGN17, **ATT_C}
+GROUPS0 = ["Нормален", "DDoS", "BruteForce", "Нормален 2017", "PortScan"]
+GRP_N = {"Нормален": "Нормален трафик (2018)", "Нормален 2017": "Нормален трафик (2017)", **ATT_N}
 
 fams = {f.name for f in font_manager.fontManager.ttflist}
 FONT = next((f for f in ["Times New Roman", "Liberation Serif", "DejaVu Serif"] if f in fams), "DejaVu Serif")
@@ -130,13 +132,15 @@ def legend_below(fig, handles, labels, ncol=4, y=-0.01, fontsize=16):
 def group_of(label):
     if label == C.BENIGN_LABEL:
         return "Нормален"
+    if label == C.BENIGN_LABEL_2017:
+        return "Нормален 2017"
     return next(a for a, spec in ATTACKS.items() if spec(label))
 
 
 # %% [markdown]
 # ## 1. Зареждане и почистване на реалните данни
 #
-# Четат се три официални CSV файла на CICFlowMeter-V3: сряда 14.02.2018 (FTP и SSH BruteForce), сряда 21.02.2018 (DDoS с HOIC и LOIC-UDP) и петък 02.03.2018 (Bot). Колоните `Timestamp` и `Dst Port` се премахват, защото описват момента и мястото на експеримента, а не поведението на потока. След това се махат записите с NaN/Inf и пълните дубликати.
+# Четат се шест дневни CSV файла. От CSE-CIC-IDS2018: сряда 14.02.2018 (FTP и SSH BruteForce), сряда 21.02.2018 (DDoS с HOIC и LOIC-UDP) и петък 02.03.2018 (само нормален трафик). От коригирания CIC-IDS2017: петък 07.07.2017 (PortScan) и понеделник 03.07 и сряда 05.07.2017 (само нормален трафик). Колоните на CIC-IDS2017 се преименуват към имената от CSE-CIC-IDS2018. Колоните `Timestamp` и `Dst Port` се премахват, защото описват момента и мястото на експеримента, а не поведението на потока. След това се махат записите с NaN/Inf и пълните дубликати.
 
 # %%
 t0 = time.time()
@@ -155,12 +159,14 @@ print(pd.Series(grp).value_counts())
 # %% [markdown]
 # ### Диаграма 1. Записи по клас и ефект на почистването
 #
-# Вляво е броят записи по етикет преди и след почистването (логаритмична скала). Вдясно е делът на премахнатите записи (NaN/Inf и дубликати). При FTP BruteForce от около 193 хиляди записа остават 53 уникални: всеки опит за вход генерира идентичен поток.
+# Вляво е броят записи по етикет преди и след почистването (логаритмична скала). Вдясно е делът на премахнатите записи (NaN/Inf и дубликати). При FTP BruteForce от около 193 хиляди записа остават 53 уникални, а при PortScan от около 159 хиляди остават под 2 хиляди: всеки опит за вход и всяка проба на скенера генерират почти идентичен поток. Показани са само използваните етикети.
 
 # %%
-LBL_N = {"Benign": "Нормален (Benign)", "DDOS attack-HOIC": "DDoS HOIC", "DDOS attack-LOIC-UDP": "DDoS LOIC-UDP",
-         "Bot": "Bot", "FTP-BruteForce": "FTP BruteForce", "SSH-Bruteforce": "SSH BruteForce"}
+LBL_N = {"Benign": "Нормален 2018 (Benign)", C.BENIGN_LABEL_2017: "Нормален 2017 (BENIGN)", "DDOS attack-HOIC": "DDoS HOIC",
+         "DDOS attack-LOIC-UDP": "DDoS LOIC-UDP", "PortScan": "PortScan (Nmap)", "FTP-BruteForce": "FTP BruteForce",
+         "SSH-Bruteforce": "SSH BruteForce"}
 orig = pd.Series(load_stats["original_class_counts"])
+orig = orig[[k for k in orig.index if k in LBL_N]]          # само използваните етикети
 after = pd.Series(clean_stats["class_counts_after_cleaning"]).reindex(orig.index).fillna(0)
 order = orig.sort_values().index
 fig, axes = plt.subplots(1, 2, figsize=(15, 5.4), gridspec_kw={"width_ratios": [1.5, 1]})
@@ -191,7 +197,7 @@ save(fig, "p01_class_counts")
 #
 # ### Формиране на задачите
 #
-# За всяка атака се строи балансирана бинарна задача: всички уникални записи на атаката (до 100 000) срещу същия брой случайни нормални записи от същите файлове. Записите с противоречив етикет се премахват. Данните се делят стратифицирано 70/30.
+# За всяка атака се строи балансирана бинарна задача: всички уникални записи на атаката (до 100 000) срещу същия брой случайни нормални записи от същия набор. Записите с противоречив етикет се премахват. Данните се делят стратифицирано 70/30.
 
 # %%
 tasks = {a: build_task(df, a, load_stats["original_class_counts"]) for a in ATT}
@@ -203,7 +209,7 @@ for a, t in tasks.items():
 # %% [markdown]
 # ### Диаграма 2. Профил на атаките
 #
-# Медиана (точка) и интерквартилен размах (лента) на четири признака за по 20 000 реални записа от всеки вид трафик. DDoS (HOIC) праща много пакети в кратки потоци; BruteForce има по-дълги потоци с почти постоянен брой пакети; Bot поддържа кратки периодични връзки с командния сървър.
+# Медиана (точка) и интерквартилен размах (лента) на четири признака за по 20 000 реални записа от всеки вид трафик. DDoS (HOIC) праща много пакети в кратки потоци; BruteForce има по-дълги потоци с почти постоянен брой пакети; пробата на PortScan е най-краткият поток: един пакет от скенера и един отговор.
 
 # %%
 rng = np.random.default_rng(7)
@@ -252,7 +258,7 @@ save(fig, "p04_ks_separability")
 # %% [markdown]
 # ### Диаграма 4. Двумерни проекции (t-SNE)
 #
-# Проекциите са изчислени в `run_all.py` върху по 1500 реални записа от всеки клас. Отделни, добре оформени групи показват, че класовете са геометрично разделими.
+# Проекциите са изчислени в `run_all.py` върху до 1500 реални записа от всеки клас. Отделни, добре оформени групи показват, че класовете са геометрично разделими.
 
 # %%
 P = pd.read_csv(RES / "projections_2d.csv")
@@ -265,7 +271,8 @@ for ax, a in zip(axes, ATT):
     ax.set_title(ATT_N[a]); ax.set_xticks([]); ax.set_yticks([]); ax.grid(False)
     for sp in ax.spines.values(): sp.set_visible(True); sp.set_color(GRID)
 fig.tight_layout(w_pad=1.0)
-legend_below(fig, [Line2D([], [], color=GRP_C[g], marker="o", ls="", ms=10) for g in GROUPS], [GRP_N[g] for g in GROUPS], ncol=4)
+legend_below(fig, [Line2D([], [], color=GRP_C[g], marker="o", ls="", ms=10) for g in ["Нормален"] + ATT],
+             ["Нормален трафик (от набора на атаката)"] + [ATT_N[a] for a in ATT], ncol=4)
 save(fig, "p06_projection")
 
 # %% [markdown]
@@ -277,7 +284,7 @@ save(fig, "p06_projection")
 
 # %%
 RED = json.load(open(RES / "reduction.json"))
-r0 = RED["XGB_Bot"]
+r0 = RED[f"XGB_{HARD}"]
 print("Входни признаци:", r0["n_features_in"], "| след филтъра:", r0["n_features_after_filter"], "| избрани:", r0["n_reduced"])
 fig, ax = plt.subplots(figsize=(6.5, 5.2))
 steps = [("Изтеглени", 79), ("Без Timestamp\nи Dst Port", r0["n_features_in"]), ("Филтър по\nдисперсия", r0["n_features_after_filter"]), ("Подбор по\nважност", r0["n_reduced"])]
@@ -290,11 +297,11 @@ ax.grid(axis="x", visible=False)
 fig.tight_layout()
 save(fig, "p07_dimensions")
 
-imp_all = pd.read_csv(RES / "feature_importance_Bot.csv", index_col=0).iloc[:, 0].sort_values(ascending=False)
+imp_all = pd.read_csv(RES / f"feature_importance_{HARD}.csv", index_col=0).iloc[:, 0].sort_values(ascending=False)
 imp = imp_all.head(12)
 fig, (ax, ax2) = plt.subplots(1, 2, figsize=(9.5, 6.6), sharey=True, gridspec_kw={"width_ratios": [1.6, 1]})
 yy = np.arange(len(imp))[::-1]
-ax.barh(yy, imp.values, color=BOT, height=0.7)
+ax.barh(yy, imp.values, color=SCAN, height=0.7)
 for y_, v in zip(yy, imp.values):
     ax.text(v + 0.002, y_, fmt_pct(v, 1), va="center", fontsize=14.5, color=INK)
 ax.set_yticks(yy, imp.index, fontsize=15.5); ax.xaxis.set_major_formatter(PCT()); ax.set_xlim(0, imp.max() * 1.3)
@@ -306,20 +313,20 @@ for y_, v in zip(yy, cum):
     ax2.text(v + 0.05, y_, fmt_pct(v, 0), va="center", fontsize=14.5, color=INK)
 ax2.set_xlim(0, 1.0); ax2.xaxis.set_major_formatter(PCT()); ax2.set_xlabel("кумулативен дял"); ax2.set_title("Натрупана важност"); ax2.grid(axis="y", visible=False)
 fig.tight_layout(w_pad=1.0)
-legend_below(fig, [Patch(color=BOT), Line2D([], [], color=INK, marker="o", lw=1.8, ms=5)],
-             ["важност на признака (Bot, 12 от 20 избрани)", "натрупан дял на важността"], ncol=1)
+legend_below(fig, [Patch(color=SCAN), Line2D([], [], color=INK, marker="o", lw=1.8, ms=5)],
+             [f"важност на признака ({HARD}, 12-те най-важни)", "натрупан дял на важността"], ncol=1)
 save(fig, "p08_selection")
 
 # %% [markdown]
 # ## 4. Избор на хиперпараметри: правило „една стандартна грешка“
 #
-# За всяка конфигурация се изчисляват среден F1 и стандартна грешка по петте фолда. Избира се най-простата конфигурация в рамките на една стандартна грешка от най-добрата. Диаграмата показва това за Bot, където разликите между конфигурациите са най-големи.
+# За всяка конфигурация се изчисляват среден F1 и стандартна грешка по петте фолда. Избира се най-простата конфигурация в рамките на една стандартна грешка от най-добрата. Диаграмата показва това за PortScan, където разликите между конфигурациите са най-големи.
 
 # %%
 CV = json.load(open(RES / "cv_summary.json"))
 fig, axes = plt.subplots(1, 3, figsize=(15.5, 5.0))
 for ax, g in zip(axes, ALG):
-    cv = pd.read_csv(RES / f"cv_{g}_Bot.csv").sort_values("mean_test_score").reset_index(drop=True)
+    cv = pd.read_csv(RES / f"cv_{g}_{HARD}.csv").sort_values("mean_test_score").reset_index(drop=True)
     se = cv.std_test_score / np.sqrt(C.CV_FOLDS)
     x = np.arange(len(cv))
     thr = cv.one_se_threshold.iloc[0]
@@ -342,16 +349,16 @@ legend_below(fig, [Line2D([], [], color="#6B7688", marker="o", ls="-", ms=5), Li
              ["конфигурация: среден F1 ± SE", "праг: най-добра оценка − SE", "зона на статистически равните", "най-висока оценка", "избрана: най-проста в зоната"], ncol=3)
 save(fig, "p09_one_se")
 for g in ALG:
-    print(g, CV[f"{g}_Bot"]["best_params"])
+    print(g, CV[f"{g}_{HARD}"]["best_params"])
 
 # %% [markdown]
-# ### Диаграма 6б. Чувствителност към хиперпараметрите (Bot)
+# ### Диаграма 6б. Чувствителност към хиперпараметрите (PortScan)
 #
 # Среден F1 от кръстосаната валидация за всяка комбинация от хиперпараметри (при RF и XGBoost е осреднен по броя дървета). Рамката е конфигурацията, избрана с правилото 1-SE.
 
 # %%
 def hp_heat(g, rows, cols, rname, cname, fmt_r, fmt_c, avg=None):
-    cv = pd.read_csv(RES / f"cv_{g}_Bot.csv")
+    cv = pd.read_csv(RES / f"cv_{g}_{HARD}.csv")
     for c in cv.columns:
         if c.startswith("param_"):
             cv[c] = cv[c].fillna("∞").astype(str)
@@ -412,7 +419,7 @@ RLAB = [f"{ALGO_N[g]} · {ATT_N[a]}" for a, g in ROWS]
 H = np.array([[getattr(MET[k], m) for m, _ in mets] for k in ROWS])
 fig, axes = plt.subplots(1, 2, figsize=(16, 6.4), gridspec_kw={"width_ratios": [1.35, 1]})
 ax = axes[0]
-im = ax.imshow(H, cmap="Blues", vmin=0.990, vmax=1.0, aspect="auto")
+im = ax.imshow(H, cmap="Blues", vmin=min(0.990, H.min() - 0.001), vmax=1.0, aspect="auto")
 for (i, j), v in np.ndenumerate(H):
     ax.text(j, i, f"{v * 100:.3f}".replace(".", ","), ha="center", va="center", fontsize=15, color="white" if v > 0.997 else INK)
 ax.set_xticks(range(5), [n for _, n in mets], fontsize=15.5); ax.xaxis.tick_top()
@@ -424,14 +431,14 @@ fp = np.array([MET[k].FP for k in ROWS]); fn = np.array([MET[k].FN for k in ROWS
 ax.barh(yy - 0.2, fp, height=0.38, color=[ALGO_C[g] for _, g in ROWS])
 ax.barh(yy + 0.2, fn, height=0.38, color=[ALGO_C[g] for _, g in ROWS], alpha=0.4, hatch="///", edgecolor="white")
 for y_, a_, b_ in zip(yy, fp, fn):
-    ax.text(a_ + 3, y_ - 0.2, str(a_), va="center", fontsize=14, color=INK)
-    ax.text(b_ + 3, y_ + 0.2, str(b_), va="center", fontsize=14, color=INK)
-ax.set_yticks(yy, [""] * 9); ax.set_ylim(8.6, -0.6); ax.set_xlim(0, 250); ax.grid(axis="y", visible=False)
+    ax.text(a_ + 0.4, y_ - 0.2, str(a_), va="center", fontsize=14, color=INK)
+    ax.text(b_ + 0.4, y_ + 0.2, str(b_), va="center", fontsize=14, color=INK)
+ax.set_yticks(yy, [""] * 9); ax.set_ylim(8.6, -0.6); ax.set_xlim(0, max(fp.max(), fn.max()) * 1.3 + 3); ax.grid(axis="y", visible=False)
 for k in (2.5, 5.5): ax.axhline(k, color=GRID, lw=1.5)
-ax.set_xlabel("брой грешки от ≈ 60 000 тестови записа"); ax.set_title("Грешки по вид")
+ax.set_xlabel("брой грешки (тестови записи: " + ", ".join(fmt_int(MET[(a, "RF")].n_test) for a in ATT) + ")", fontsize=15); ax.set_title("Грешки по вид")
 fig.tight_layout(w_pad=0.8)
 cax = fig.add_axes([0.08, -0.05, 0.42, 0.03])
-cb = fig.colorbar(im, cax=cax, orientation="horizontal"); cb.ax.xaxis.set_major_formatter(PCT(1)); cb.set_label("стойност на метриката (скала 99–100%)", fontsize=15)
+cb = fig.colorbar(im, cax=cax, orientation="horizontal"); cb.ax.xaxis.set_major_formatter(PCT(1)); cb.set_label("стойност на метриката", fontsize=15)
 fig.legend(handles=[Patch(color=MUTED), Patch(facecolor=MUTED, alpha=0.4, hatch="///", edgecolor="white")] + [Patch(color=ALGO_C[g]) for g in ALG],
            labels=["FP (фалшиви аларми)", "FN (пропуснати атаки)"] + [ALGO_N[g] for g in ALG],
            loc="upper center", bbox_to_anchor=(0.78, 0.0), ncol=2, frameon=False, fontsize=15)
@@ -465,27 +472,27 @@ legend_below(fig, [Patch(color="#E4EEF8"), Patch(color="#F8DEDE"), Patch(color="
 save(fig, "p12_confusion")
 
 # %% [markdown]
-# ### Диаграма 8. ROC криви за Bot
+# ### Диаграма 8. ROC криви за PortScan
 #
-# Bot е единствената задача, при която алгоритмите се различават. Увеличението вдясно показва областта с много малък дял фалшиви аларми.
+# PortScan е задачата с най-малко записи и с най-много грешки. Увеличението вдясно показва областта с малък дял фалшиви аларми.
 
 # %%
-t = tasks["Bot"]; yt = t["y_test"].to_numpy()
+t = tasks[HARD]; yt = t["y_test"].to_numpy()
 fig, axes = plt.subplots(1, 2, figsize=(14, 5.4))
 for g in ALG:
-    sc_ = scores_of(models[("Bot", g)], t["X_test"])
+    sc_ = scores_of(models[(HARD, g)], t["X_test"])
     fpr, tpr, _ = roc_curve(yt, sc_)
     for ax in axes:
         ax.plot(fpr, tpr, color=ALGO_C[g], lw=2.6)
-    r = MET[("Bot", g)]
+    r = MET[(HARD, g)]
     axes[1].plot(r.FPR, r.Sensitivity, "o", color=ALGO_C[g], ms=10, mec="white", mew=1.5)
 axes[0].plot([0, 1], [0, 1], ":", color=MUTED); axes[0].set_xlabel("FPR (дял фалшиви аларми)"); axes[0].set_ylabel("TPR (Recall)")
 axes[0].set_title("Цяла крива")
-axes[1].set_xlim(0, 0.01); axes[1].set_ylim(0.98, 1.0008); axes[1].xaxis.set_major_formatter(PCT(1)); axes[1].yaxis.set_major_formatter(PCT(1))
-axes[1].set_xlabel("FPR"); axes[1].set_title("Увеличение: FPR до 1%")
+axes[1].set_xlim(0, 0.03); axes[1].set_ylim(0.96, 1.002); axes[1].xaxis.set_major_formatter(PCT(1)); axes[1].yaxis.set_major_formatter(PCT(1))
+axes[1].set_xlabel("FPR"); axes[1].set_title("Увеличение: FPR до 3%")
 fig.tight_layout(w_pad=2)
 legend_below(fig, [Line2D([], [], color=ALGO_C[g], lw=2.6) for g in ALG] + [Line2D([], [], color=MUTED, ls=":"), Line2D([], [], color=MUTED, marker="o", ls="", ms=9)],
-             [f"{ALGO_N[g]}, AUC = {MET[('Bot', g)].ROC_AUC:.4f}".replace(".", ",") for g in ALG] + ["случаен класификатор", "работна точка при праг 0,5"], ncol=3)
+             [f"{ALGO_N[g]}, AUC = {MET[(HARD, g)].ROC_AUC:.4f}".replace(".", ",") for g in ALG] + ["случаен класификатор", "работна точка при праг 0,5"], ncol=3)
 save(fig, "p14_roc")
 
 # %% [markdown]
@@ -506,7 +513,7 @@ for k, r in enumerate(OF.itertuples()):
     ax.plot(k + 0.22, r.test_accuracy, "o", color=ALGO_C[r.algo], ms=12, mec="white", mew=1.5)
     labels.append(f"{r.algo}\n{ATT_N[r.attack]}\nΔ {r.gap_accuracy * 100:.3f} пп".replace(".", ","))
 for k in (2.5, 5.5): ax.axvline(k, color=GRID, lw=1.5)
-ax.set_xticks(range(len(OF)), labels, fontsize=14.5); ax.set_ylim(0.9935, 1.0006); ax.yaxis.set_major_formatter(PCT(1))
+ax.set_xticks(range(len(OF)), labels, fontsize=14.5); ax.set_ylim(min(OF.train_accuracy.min(), OF.test_accuracy.min(), OF.cv_f1.min()) - 0.001, 1.0008); ax.yaxis.set_major_formatter(PCT(1))
 ax.set_ylabel("Accuracy / F1"); ax.grid(axis="x", visible=False)
 fig.tight_layout()
 legend_below(fig, [Line2D([], [], color=INK, marker="s", ls="", ms=10), Line2D([], [], color="#9AA6B8", marker="D", ls="", ms=9)] +
@@ -518,7 +525,7 @@ print("Максимална разлика обучение–тест:", fmt_pc
 # %% [markdown]
 # ### Диаграма 10. Bootstrap интервали и тест на McNemar
 #
-# Вляво: 95% доверителни интервали на F1 при Bot (1000 bootstrap извадки от тестовите записи). Вдясно: броят записи, на които само единият модел от двойката е прав, и p-стойността на теста на McNemar.
+# Вляво: 95% доверителни интервали на F1 при PortScan (1000 bootstrap извадки от тестовите записи). Вдясно: броят записи, на които само единият модел от двойката е прав, и p-стойността на теста на McNemar.
 
 # %%
 CI = pd.read_csv(RES / "bootstrap_ci.csv")
@@ -526,24 +533,25 @@ MC = json.load(open(RES / "mcnemar.json"))
 fig, axes = plt.subplots(1, 2, figsize=(16, 5.6), gridspec_kw={"width_ratios": [0.75, 1.5]})
 ax = axes[0]
 for k, g in enumerate(ALG):
-    r = CI[(CI.attack == "Bot") & (CI.algo == g) & (CI.metric == "F1")].iloc[0]
+    r = CI[(CI.attack == HARD) & (CI.algo == g) & (CI.metric == "F1")].iloc[0]
     ax.plot([r.ci_low, r.ci_high], [k, k], color=ALGO_C[g], lw=10, alpha=0.35, solid_capstyle="round")
     ax.plot(r.value, k, "o", color=ALGO_C[g], ms=13, mec="white", mew=1.5)
     ax.text(r.value, k - 0.28, fmt_pct(r.value, 2), ha="center", fontsize=15.5, color=INK)
 ax.set_yticks(range(3), [ALGO_N[g] for g in ALG]); ax.set_ylim(2.6, -0.6); ax.xaxis.set_major_formatter(PCT(1))
-ax.set_xlim(0.9945, 1.0008); ax.set_title("F1 и 95% интервал, Bot"); ax.grid(axis="y", visible=False)
+ax.set_xlim(CI[(CI.attack == HARD) & (CI.metric == "F1")].ci_low.min() - 0.002, 1.001); ax.set_title(f"F1 и 95% интервал, {HARD}"); ax.grid(axis="y", visible=False)
 ax = axes[1]
 rows = list(MC.values())
+MX = max(max(m["only_A_correct"], m["only_B_correct"]) for m in rows)
 for k, m in enumerate(rows):
     ax.barh(k - 0.2, m["only_A_correct"], height=0.38, color=ALGO_C[m["A"]])
     ax.barh(k + 0.2, m["only_B_correct"], height=0.38, color=ALGO_C[m["B"]])
-    ax.text(m["only_A_correct"] + 3, k - 0.2, str(m["only_A_correct"]), va="center", fontsize=14, color=INK)
-    ax.text(m["only_B_correct"] + 3, k + 0.2, str(m["only_B_correct"]), va="center", fontsize=14, color=INK)
+    ax.text(m["only_A_correct"] + MX * 0.01, k - 0.2, str(m["only_A_correct"]), va="center", fontsize=14, color=INK)
+    ax.text(m["only_B_correct"] + MX * 0.01, k + 0.2, str(m["only_B_correct"]), va="center", fontsize=14, color=INK)
     p = m["p_value"]; sig = p < 0.05
     ptxt = "p < 10⁻¹⁰" if p < 1e-10 else (f"p = {p:.1e}" if p < 0.001 else f"p = {p:.2f}").replace(".", ",")
-    ax.text(355, k, ptxt + (" *" if sig else ""), va="center", ha="right", fontsize=15, color=INK if sig else MUTED, weight="bold" if sig else "normal")
+    ax.text(MX * 1.48, k, ptxt + (" *" if sig else ""), va="center", ha="right", fontsize=15, color=INK if sig else MUTED, weight="bold" if sig else "normal")
 ax.set_yticks(range(len(rows)), [f"{ATT_N[m['attack']]}: {m['A']} – {m['B']}" for m in rows], fontsize=15)
-ax.set_ylim(len(rows) - 0.4, -0.6); ax.set_xlim(0, 360); ax.set_xticks([0, 50, 100, 150, 200, 250])
+ax.set_ylim(len(rows) - 0.4, -0.6); ax.set_xlim(0, MX * 1.5)
 ax.set_title("Записи, на които е прав само единият модел"); ax.grid(axis="y", visible=False)
 for k in (2.5, 5.5): ax.axhline(k, color=GRID, lw=1.5)
 fig.tight_layout(w_pad=2)
@@ -583,7 +591,7 @@ save(fig, "p10_controls")
 # %% [markdown]
 # ### Диаграма 12. Криви на обучение (A3)
 #
-# F1 при обучение върху 1 000 до 100 000 записа. Ансамблите от дървета достигат таван още при няколко хиляди записа; SVM се нуждае от повече данни при Bot.
+# F1 при обучение върху 1 000 до 100 000 записа (при PortScan: 1/8, 1/4, 1/2 и всички 2 354 обучаващи записа). Ансамблите от дървета достигат таван още при няколко хиляди записа; при PortScan и трите алгоритъма още печелят от повече данни.
 
 # %%
 LC = pd.read_csv(RES / "learning_curves.csv")
@@ -592,7 +600,7 @@ for ax, a in zip(axes, ATT):
     for g in ALG:
         d = LC[(LC.attack == a) & (LC.algo == g)].sort_values("n_train")
         ax.plot(d.n_train, d.F1, "-o", color=ALGO_C[g], lw=2.4, ms=6)
-    ax.set_xscale("log"); ax.set_ylim(0.985, 1.001); ax.yaxis.set_major_formatter(PCT(1)); ax.set_title(ATT_N[a])
+    ax.set_xscale("log"); ax.xaxis.set_minor_formatter(NullFormatter()); ax.set_ylim(0.965, 1.002); ax.yaxis.set_major_formatter(PCT(1)); ax.set_title(ATT_N[a])
     ax.set_xlabel("обучаващи записи (лог. скала)")
 axes[0].set_ylabel("F1 върху тестовите записи")
 fig.tight_layout(w_pad=1.0)
@@ -602,30 +610,30 @@ save(fig, "p17_learning_curves")
 # %% [markdown]
 # ### Диаграма 13. Брой запазени измерения: подбор срещу PCA (A4)
 #
-# F1 при Bot спрямо броя запазени признаци (подбор) или компоненти (PCA). Хоризонталната линия е резултатът без редукция.
+# F1 при PortScan спрямо броя запазени признаци (подбор) или компоненти (PCA). Хоризонталната линия е резултатът без редукция.
 
 # %%
 PS = pd.read_csv(RES / "pca_sweep.csv")
 fig, axes = plt.subplots(1, 3, figsize=(15.5, 5.0), sharey=True)
 for ax, g in zip(axes, ALG):
     for meth, ls, mk, al in [("select", "-", "o", 1), ("pca", "--", "s", 0.6)]:
-        d = PS[(PS.attack == "Bot") & (PS.algo == g) & (PS.method == meth) & (PS.reduced)].sort_values("n_components")
+        d = PS[(PS.attack == HARD) & (PS.algo == g) & (PS.method == meth) & (PS.reduced)].sort_values("n_components")
         ax.plot(d.n_components, d.F1, ls=ls, marker=mk, color=ALGO_C[g], lw=2.4, ms=6, alpha=al)
-    full = PS[(PS.attack == "Bot") & (PS.algo == g) & (~PS.reduced)].F1.iloc[0]
+    full = PS[(PS.attack == HARD) & (PS.algo == g) & (~PS.reduced)].F1.iloc[0]
     ax.axhline(full, color=MUTED, ls=":", lw=1.8)
     ax.axvline(20, color=GRID, lw=6, zorder=0)
     ax.set_ylim(0.95, 1.002); ax.yaxis.set_major_formatter(PCT(0)); ax.set_title(ALGO_N[g]); ax.set_xlabel("запазени измерения k")
-axes[0].set_ylabel("F1, Bot")
+axes[0].set_ylabel(f"F1, {HARD}")
 fig.tight_layout(w_pad=1.0)
 legend_below(fig, [Line2D([], [], color=INK, ls="-", marker="o", lw=2.4), Line2D([], [], color=INK, ls="--", marker="s", lw=2.4, alpha=0.6),
                    Line2D([], [], color=MUTED, ls=":", lw=1.8), Line2D([], [], color=GRID, lw=6)],
-             ["подбор на признаци (по важност)", "PCA (главни компоненти)", "без редукция (67 признака)", "избраното k = 20"], ncol=4)
+             ["подбор на признаци (по важност)", "PCA (главни компоненти)", "без редукция (77 признака)", "избраното k = 20"], ncol=4)
 save(fig, "p18_pca_sweep")
 
 # %% [markdown]
 # ### Диаграма 14. Естествено съотношение на класовете (E2)
 #
-# Тестът се повтаря върху 200 000 неизползвани записа в реалния дял на атаката. Вляво: криви Precision–Recall за Bot. Вдясно: брой грешки на 10 000 записа, отделно фалшиви аларми (FP) и пропуснати атаки (FN).
+# Тестът се повтаря върху неизползвани записи в реалния дял на атаката (до 200 000; при PortScan са 3 613, защото уникалните записи на атаката са малко). Вляво: криви Precision–Recall за PortScan. Вдясно: брой грешки на 10 000 записа, отделно фалшиви аларми (FP) и пропуснати атаки (FN).
 
 # %%
 MN = pd.read_csv(RES / "metrics_natural_ratio.csv")
@@ -633,11 +641,11 @@ PR = json.load(open(RES / "pr_curves.json"))
 fig, axes = plt.subplots(1, 2, figsize=(16, 5.6), gridspec_kw={"width_ratios": [1, 1.3]})
 ax = axes[0]
 for g in ALG:
-    d = PR[f"Bot_{g}"]
+    d = PR[f"{HARD}_{g}"]
     ax.plot(d["recall"], d["precision"], color=ALGO_C[g], lw=2.6)
-ax.set_xlim(0.95, 1.002); ax.set_ylim(0.95, 1.002); ax.xaxis.set_major_formatter(PCT(0)); ax.yaxis.set_major_formatter(PCT(0))
+ax.set_xlim(0.85, 1.004); ax.set_ylim(0.85, 1.004); ax.xaxis.set_major_formatter(PCT(0)); ax.yaxis.set_major_formatter(PCT(0))
 ax.set_xlabel("Recall"); ax.set_ylabel("Precision")
-ax.set_title(f"Bot при дял на атаките {fmt_pct(PR['Bot_RF']['base_rate'], 1)}")
+ax.set_title(f"{HARD} при дял на атаките {fmt_pct(PR[f'{HARD}_RF']['base_rate'], 1)}")
 ax = axes[1]
 x = np.arange(3); w = 0.13
 for j, g in enumerate(ALG):
@@ -649,7 +657,7 @@ ax.set_xticks(x, [f"{ATT_N[a]}\n(атаки {fmt_pct(MN[MN.attack == a].attack_s
 ax.set_ylabel("грешки на 10 000 записа"); ax.set_title("Грешки при естественото съотношение"); ax.grid(axis="x", visible=False)
 fig.tight_layout(w_pad=2)
 legend_below(fig, [Line2D([], [], color=ALGO_C[g], lw=2.6) for g in ALG] + [Patch(color=MUTED), Patch(facecolor=MUTED, alpha=0.4, hatch="///", edgecolor="white")],
-             [f"{ALGO_N[g]} (AP {PR[f'Bot_{g}']['average_precision']:.4f})".replace(".", ",") for g in ALG] + ["FP: фалшиви аларми", "FN: пропуснати атаки"], ncol=5)
+             [f"{ALGO_N[g]} (AP {PR[f'{HARD}_{g}']['average_precision']:.4f})".replace(".", ",") for g in ALG] + ["FP: фалшиви аларми", "FN: пропуснати атаки"], ncol=5)
 save(fig, "p19_natural")
 
 # %% [markdown]
@@ -720,7 +728,7 @@ axes[1].set_ylim(0, 14)
 for ax, t_ in zip(axes, ["Записи в секунда (лог. скала)", "Време за обучение на финалния модел, s"]):
     ax.set_xticks(x, [ATT_N[a] for a in ATT]); ax.set_title(t_); ax.grid(axis="x", visible=False)
 fig.tight_layout(w_pad=2)
-legend_below(fig, [Patch(color=ALGO_C[g]) for g in ALG], [f"{ALGO_N[g]}" + (" (50 000 записа)" if g == "SVM" else "") for g in ALG], ncol=3)
+legend_below(fig, [Patch(color=ALGO_C[g]) for g in ALG], [f"{ALGO_N[g]}" + (" (до 50 000 записа)" if g == "SVM" else "") for g in ALG], ncol=3)
 save(fig, "p24_speed")
 
 # %% [markdown]
@@ -730,8 +738,8 @@ save(fig, "p24_speed")
 #
 # * **A10** – без признаците на TCP стека на изпращача (`Init Fwd Win Byts`, `Init Bwd Win Byts`, `Fwd Seg Size Min`);
 # * **A11** – хронологично разделяне: обучение върху по-ранните 70% от потоците в деня на атаката, тест върху по-късните 30%;
-# * **A12** – пренос между подвидове (HOIC ↔ LOIC-UDP, SSH ↔ FTP);
-# * **A13** – фалшиви аларми върху нормалния трафик от други дни;
+# * **A12** – пренос между подвидове (HOIC ↔ LOIC-UDP, SSH ↔ FTP; PortScan няма подвидове);
+# * **A13** – фалшиви аларми върху нормалния трафик от други дни на същия набор;
 # * **A14** – комбиниран детектор: атака, ако XGBoost **или** SVM я открие.
 #
 # В тези проверки нормалният трафик е от деня на атаката (освен в A13 б), затова числата за случайното разделяне леко се различават от основните.
@@ -842,16 +850,16 @@ cb.set_label("дял открити атаки от непознатия под�
 save_both(fig, "p27_subtypes", "26_subtype_transfer")
 
 # %% [markdown]
-# ## 8. Предварително изследване върху CICIoT2023
+# ## 8. Предварително изследване върху CICIoT2023 и сравнение с избраните набори
 #
-# Първоначално изследването беше проведено върху IoT набора CICIoT2023 с атаките DDoS и Port Scan. Port Scan остана около 84% с всички алгоритми и подобрения, защото признаците на един прозорец от пакети не носят отпечатъка на Port Scan. Числата са от записаните резултати в `results/preliminary_ciciot2023/`.
+# Първоначално изследването беше проведено върху IoT набора CICIoT2023 с атаките DDoS и Port Scan. Port Scan остана около 84% с всички алгоритми и подобрения, защото признаците на един прозорец от пакети не носят отпечатъка на Port Scan. Същата атака в CIC-IDS2017, описана с признаците на целия двупосочен поток, се открива с над 99%. Числата са от записаните резултати в `results/preliminary_ciciot2023/`.
 
 # %%
 PRE = pd.read_csv(RES / "preliminary_ciciot2023" / "metrics.csv").set_index(["attack", "algo"])
 fig, ax = plt.subplots(figsize=(15, 5.4))
 rows = [("CICIoT2023\nPort Scan", [PRE.loc[("PortScan", g), "Accuracy"] for g in ALG]),
         ("CICIoT2023\nDDoS", [PRE.loc[("DDoS", g), "Accuracy"] for g in ALG])] + \
-       [(f"CSE-CIC-IDS2018\n{ATT_N[a]}", [MET[(a, g)].Accuracy for g in ALG]) for a in ATT]
+       [(f"{ATT_DS[a]}\n{ATT_N[a]}", [MET[(a, g)].Accuracy for g in ALG]) for a in ["PortScan", "DDoS", "BruteForce"]]
 ax.axvspan(-0.5, 1.5, color="#F4F5F7", zorder=0)
 for k, (nm, vals) in enumerate(rows):
     for j, g in enumerate(ALG):
@@ -870,7 +878,7 @@ save(fig, "p02_datasets")
 # %% [markdown]
 # ### Изображение за титулната страница
 #
-# Изображението е направено от реални записи: по 20 000 записа нормален трафик, DDoS, BruteForce и Bot, проектирани върху две главни компоненти.
+# Изображението е направено от реални записи: до 20 000 записа нормален трафик от двата набора, DDoS, BruteForce и PortScan, проектирани върху две главни компоненти.
 
 # %%
 from sklearn.decomposition import PCA
@@ -880,7 +888,7 @@ Xs = (Xs - Xs.mean(0)) / (Xs.std(0) + 1e-9)
 Z = PCA(2, random_state=0).fit_transform(Xs)
 gz = grp[samp_idx]
 fig = plt.figure(figsize=(13.333, 7.5)); ax = fig.add_axes([0, 0, 1, 1]); fig.patch.set_facecolor("#0A1424"); ax.set_facecolor("#0A1424")
-for g, c in [("Нормален", "#5FA8FF"), ("DDoS", "#FF6B5B"), ("BruteForce", "#C39BFF"), ("Bot", "#FFC145")]:
+for g, c in [("Нормален", "#5FA8FF"), ("Нормален 2017", "#8FD3FF"), ("DDoS", "#FF6B5B"), ("BruteForce", "#C39BFF"), ("PortScan", "#FFC145")]:
     zz = Z[gz == g] + rng.normal(0, 0.06, (int((gz == g).sum()), 2))
     for s_, al in [(60, 0.012), (18, 0.03), (3, 0.5)]:
         ax.scatter(zz[:, 0], zz[:, 1], s=s_, color=c, alpha=al, linewidths=0)

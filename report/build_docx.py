@@ -9,7 +9,10 @@
   4. python-docx: стилове, номера на формулите, таблици, заглавна страница,
      съдържание, горен и долен колонтитул.
 
-Изисква pandoc, python-docx и LibreOffice (за номерата на страниците в съдържанието).
+Изисква pandoc (или пакета pypandoc-binary), python-docx и LibreOffice или Microsoft Word
+(за номерата на страниците в съдържанието и за PDF версията). Без XeLaTeX номерата на
+препратките се изчисляват с report/make_aux.py, а архитектурната схема се взема от
+report/assets/architecture.png.
 Изпълнение (след python report/build_report.py): python report/build_docx.py
 """
 from __future__ import annotations
@@ -32,6 +35,7 @@ from docx.oxml.ns import qn
 from docx.shared import Cm, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "report"))
 LT = ROOT / "report" / "latex"
 FIG = ROOT / "results" / "figures"
 BUILD = ROOT / "report" / "_docx_build"
@@ -42,7 +46,7 @@ NAVY, ACCENT, MUTED, ORANGE = "000000", "000000", "404040", "000000"
 BODY_FONT, HEAD_FONT = "Times New Roman", "Times New Roman"
 LOGO = ROOT / "report" / "assets" / "tu_sofia_logo.png"
 THIRD_MEMBER = "Тихомир Божков, Fak No. 961326014"  # попълва се с име и факултетен номер
-RUNNING_TITLE = "ML откриване на прониквания в трафика на център за данни (CSE-CIC-IDS2018)"
+RUNNING_TITLE = "ML откриване на прониквания в трафика на център за данни (CSE-CIC-IDS2018, CIC-IDS2017)"
 
 CHAPTERS = ["00_abstract", "01_intro", "02_methodology", "03_framework", "04_plan", "05_results",
             "06_analysis", "07_conclusion", "09_appendix"]
@@ -63,7 +67,9 @@ MACROS = r"""
 # Източници: ключови думи -> източник (за цитирането след всеки абзац)
 # ---------------------------------------------------------------------------
 KEYWORDS = [
-    (r"ciciot2023|105 (реални )?iot|набора? от данни|canadian institute", "neto2023"),
+    (r"ciciot2023|105 (реални )?iot", "neto2023"),
+    (r"коригиран(ата|ия|а) (версия|cic)|грешки в етикетите", "liu2022"),
+    (r"cse-cic-ids2018|набора? от данни|canadian institute", "sharafaldin2018"),
     (r"изтегл|официалн(ия|ата) (сървър|дистрибуция|сайт)|регистрация", "cic2023web"),
     (r"mirai|ботнет", "antonakakis2017"),
     (r"откриване на прониквания|\bids\b|intrusion detection", "sommer2010"),
@@ -96,9 +102,9 @@ KEYWORDS = [
 ]
 # Източник по подразбиране за абзац без съвпадение, по глава
 CHAPTER_DEFAULT = {
-    "00_abstract": ["neto2023"], "01_intro": ["sommer2010"], "02_methodology": ["hastie2009"],
-    "03_framework": ["pedregosa2011", "repo"], "04_plan": ["repo"], "05_results": ["neto2023", "repo"],
-    "06_analysis": ["neto2023"], "07_conclusion": ["neto2023"], "09_appendix": ["repo"],
+    "00_abstract": ["sharafaldin2018"], "01_intro": ["sommer2010"], "02_methodology": ["hastie2009"],
+    "03_framework": ["pedregosa2011", "repo"], "04_plan": ["repo"], "05_results": ["sharafaldin2018", "repo"],
+    "06_analysis": ["sharafaldin2018"], "07_conclusion": ["sharafaldin2018"], "09_appendix": ["repo"],
 }
 MAX_REFS = 3
 
@@ -275,7 +281,7 @@ class Converter:
         return self.to_md(s).replace("\n", " ").replace("|", "\\|").strip()
 
     def to_md(self, latex: str) -> str:
-        r = subprocess.run(["pandoc", "-f", "latex+raw_tex", "-t", "markdown-raw_tex-simple_tables-multiline_tables-grid_tables",
+        r = subprocess.run([pandoc_exe(), "-f", "latex+raw_tex", "-t", "markdown-raw_tex-simple_tables-multiline_tables-grid_tables",
                             "--wrap=none"], input=MACROS + latex, capture_output=True, text=True)
         if r.returncode:
             raise SystemExit("pandoc: " + r.stderr[:2000] + "\n" + latex[:500])
@@ -388,7 +394,7 @@ class Converter:
         self.fig_count += 1
         imgs = []
         if "tikzpicture" in inner:
-            imgs.append((str(BUILD / "architecture.png"), 1.0))
+            imgs.append(((BUILD / "architecture.png").as_posix(), 1.0))
         for m in re.finditer(r"\\includegraphics(\[[^\]]*\])?\{([^}]+)\}", inner):
             opt = m.group(1) or ""
             w = re.search(r"width=([\d.]+)\\textwidth", opt)
@@ -595,9 +601,58 @@ def cite_block(b: str, chapter: str, num) -> str:
 
 
 # ---------------------------------------------------------------------------
+# Външни инструменти
+# ---------------------------------------------------------------------------
+def pandoc_exe() -> str:
+    """pandoc от PATH или от пакета pypandoc-binary."""
+    exe = shutil.which("pandoc")
+    if exe:
+        return exe
+    import pypandoc
+    return pypandoc.get_pandoc_path()
+
+
+def docx_to_pdf(docx: Path, out_dir: Path) -> Path:
+    """Превръща Word документа в PDF с LibreOffice, а ако го няма - с Microsoft Word."""
+    out_dir.mkdir(parents=True, exist_ok=True)
+    pdf = out_dir / (docx.stem + ".pdf")
+    if shutil.which("soffice"):
+        subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(out_dir), str(docx)],
+                       capture_output=True, check=True, timeout=600)
+        return pdf
+    import win32com.client
+    word = win32com.client.DispatchEx("Word.Application")
+    word.Visible = False
+    word.DisplayAlerts = 0
+    try:
+        d = word.Documents.Open(str(docx.resolve()), ReadOnly=True, AddToRecentFiles=False)
+        d.ExportAsFixedFormat(str(pdf.resolve()), 17)          # 17 = wdExportFormatPDF
+        d.Close(False)
+    finally:
+        word.Quit()
+    return pdf
+
+
+def pdf_page_texts(pdf: Path) -> list[str]:
+    """Текстът на всяка страница от PDF файла."""
+    if shutil.which("pdftotext") and shutil.which("pdfinfo"):
+        n = int(re.search(r"Pages:\s+(\d+)", subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True).stdout).group(1))
+        return [subprocess.run(["pdftotext", "-f", str(k), "-l", str(k), "-layout", str(pdf), "-"],
+                               capture_output=True, text=True).stdout for k in range(1, n + 1)]
+    import pymupdf
+    with pymupdf.open(str(pdf)) as doc:
+        return [page.get_text() for page in doc]
+
+
+# ---------------------------------------------------------------------------
 # Сглобяване и pandoc
 # ---------------------------------------------------------------------------
 def render_architecture():
+    if not shutil.which("xelatex"):
+        # без XeLaTeX: готовото изображение на схемата (тя не зависи от резултатите)
+        BUILD.mkdir(parents=True, exist_ok=True)
+        shutil.copy(ROOT / "report" / "assets" / "architecture.png", BUILD / "architecture.png")
+        return
     tex = strip_comments((LT / "chapters" / "03_framework.tex").read_text(encoding="utf-8"))
     m = re.search(r"\\begin\{tikzpicture\}.*?\\end\{tikzpicture\}", tex, re.S)
     pre = (ROOT / "presentation" / "render_formulas.py").read_text(encoding="utf-8")
@@ -612,7 +667,8 @@ def render_architecture():
 
 
 def latex_to_md_text(s: str) -> str:
-    r = subprocess.run(["pandoc", "-f", "latex", "-t", "markdown", "--wrap=none"], input=s, capture_output=True, text=True)
+    r = subprocess.run([pandoc_exe(), "-f", "latex", "-t", "markdown", "--wrap=none"], input=s, capture_output=True,
+                       text=True, encoding="utf-8")
     return r.stdout.strip()
 
 
@@ -641,7 +697,7 @@ def build_markdown() -> tuple[str, list[str]]:
 
 def make_reference_doc() -> Path:
     ref = BUILD / "reference.docx"
-    subprocess.run(["pandoc", "-o", str(ref), "--print-default-data-file", "reference.docx"], check=True)
+    subprocess.run([pandoc_exe(), "-o", str(ref), "--print-default-data-file", "reference.docx"], check=True)
     return ref
 
 
@@ -649,7 +705,7 @@ def run_pandoc(md: str, ref: Path) -> Path:
     src = BUILD / "report.md"
     src.write_text(MACROS.strip() + "\n\n" + md, encoding="utf-8")
     out = BUILD / "body.docx"
-    subprocess.run(["pandoc", str(src), "-f", "markdown+tex_math_dollars", "-o", str(out),
+    subprocess.run([pandoc_exe(), str(src), "-f", "markdown+tex_math_dollars", "-o", str(out),
                     f"--reference-doc={ref}", "--resource-path", str(ROOT)], check=True)
     return out
 
@@ -982,7 +1038,7 @@ def title_page(doc: Document, first):
     r = p.add_run("Тема: "); r.font.size, r.font.name = Pt(16), BODY_FONT
     r = p.add_run("„Експериментално изследване на откриване на проникване в мрежов трафик на център за данни, базирано на машинно обучение“")
     r.font.size, r.font.bold, r.font.name = Pt(16), True, BODY_FONT
-    P("Атаки Distributed Denial of Service (DDoS), Brute Force (BruteForce) и Botnet (Bot) · Random Forest, SVM и XGBoost · реален набор от данни CSE-CIC-IDS2018", 12, space_after=60)
+    P("Атаки Port Scan (PortScan), Distributed Denial of Service (DDoS) и Brute Force (BruteForce) · Random Forest, SVM и XGBoost · реални набори от данни CSE-CIC-IDS2018 и CIC-IDS2017", 12, space_after=60)
     rows = [("Дисциплина:", "Интелигентни системи за сигурност на екосистемите на големите данни и Интернет на нещата"),
             ("Изготвили:", "Иван Терзиев, Fak No. 961326004"),
             ("", "Кристиян Януцев, Fak No. 961326003"),
@@ -1184,17 +1240,10 @@ def postprocess(body: Path, pages: dict | None) -> Path:
 
 
 def page_numbers(docx: Path, hs: list[tuple[int, str]]) -> dict:
-    """Рендира документа с LibreOffice и намира страницата на всяко заглавие."""
-    pdf_dir = BUILD / "pdf"
-    pdf_dir.mkdir(exist_ok=True)
-    subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(pdf_dir), str(docx)],
-                   capture_output=True, check=True, timeout=600)
-    pdf = pdf_dir / (docx.stem + ".pdf")
-    n = int(re.search(r"Pages:\s+(\d+)", subprocess.run(["pdfinfo", str(pdf)], capture_output=True, text=True).stdout).group(1))
-    texts = []
-    for k in range(1, n + 1):
-        t = subprocess.run(["pdftotext", "-f", str(k), "-l", str(k), "-layout", str(pdf), "-"], capture_output=True, text=True).stdout
-        texts.append(re.sub(r"\s+", " ", t).lower())
+    """Рендира документа в PDF и намира страницата на всяко заглавие."""
+    pdf = docx_to_pdf(docx, BUILD / "pdf")
+    texts = [re.sub(r"\s+", " ", t).lower() for t in pdf_page_texts(pdf)]
+    n = len(texts)
     pages, start = {}, 2
     for _, h in hs:
         key = re.sub(r"\s+", " ", h)[:40].lower()
@@ -1234,6 +1283,9 @@ def main():
     if BUILD.exists():
         shutil.rmtree(BUILD)
     BUILD.mkdir(parents=True)
+    if not shutil.which("xelatex"):
+        import make_aux
+        make_aux.main()          # номерата на препратките без XeLaTeX
     render_architecture()
     md, order = build_markdown()
     ref = make_reference_doc()
@@ -1244,13 +1296,8 @@ def main():
     final = postprocess(body, pages)
     shutil.copy(final, OUT)
     force_times(OUT)
-    subprocess.run(["zip", "-d", str(OUT), "*/"], capture_output=True)
-    # PDF версията на доклада е същият Word документ, превърнат с LibreOffice
-    pdf_dir = BUILD / "pdf_out"
-    pdf_dir.mkdir(exist_ok=True)
-    subprocess.run(["soffice", "--headless", "--convert-to", "pdf", "--outdir", str(pdf_dir), str(OUT)],
-                   capture_output=True, check=True, timeout=600)
-    shutil.copy(pdf_dir / (OUT.stem + ".pdf"), OUT.with_suffix(".pdf"))
+    # PDF версията на доклада е същият Word документ, превърнат в PDF
+    shutil.copy(docx_to_pdf(OUT, BUILD / "pdf_out"), OUT.with_suffix(".pdf"))
     print("written", OUT, "източници:", len(order))
 
 

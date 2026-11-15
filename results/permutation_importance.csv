@@ -153,15 +153,15 @@ DDoS,SVM,Idle Mean,0.0,0.0
 DDoS,SVM,Idle Std,0.0,0.0
 DDoS,SVM,Idle Max,0.0,0.0
 DDoS,SVM,Idle Min,0.0,0.0
-DDoS,XGB,Init Fwd Win Byts,0.297234045510875,0.005548832180096685
+DDoS,XGB,Init Fwd Win Byts,0.3043532898845625,0.005466206999770668
+DDoS,XGB,Init Bwd Win Byts,0.012671928753011041,0.0037286276391099247
 DDoS,XGB,Fwd Act Data Pkts,0.004016064257028162,0.0
 DDoS,XGB,Bwd Pkt Len Std,0.00033316674995835055,0.00023558446816143255
 DDoS,XGB,Flow IAT Min,0.00033316674995835055,0.00023558446816143255
-DDoS,XGB,Protocol,0.0,0.0
 DDoS,XGB,TotLen Bwd Pkts,0.0,0.0
 DDoS,XGB,Fwd Pkt Len Max,0.0,0.0
 DDoS,XGB,Fwd Pkt Len Min,0.0,0.0
-DDoS,XGB,Fwd Pkt Len Mean,0.0,0.0
+DDoS,XGB,Protocol,0.0,0.0
 DDoS,XGB,Flow Duration,0.0,0.0
 DDoS,XGB,Tot Fwd Pkts,0.0,0.0
 DDoS,XGB,Tot Bwd Pkts,0.0,0.0
@@ -170,8 +170,8 @@ DDoS,XGB,Bwd Pkt Len Mean,0.0,0.0
 DDoS,XGB,Bwd Pkt Len Min,0.0,0.0
 DDoS,XGB,Bwd Pkt Len Max,0.0,0.0
 DDoS,XGB,Fwd Pkt Len Std,0.0,0.0
+DDoS,XGB,Fwd Pkt Len Mean,0.0,0.0
 DDoS,XGB,Flow IAT Mean,0.0,0.0
-DDoS,XGB,Flow IAT Std,0.0,0.0
 DDoS,XGB,Flow Pkts/s,0.0,0.0
 DDoS,XGB,Flow Byts/s,0.0,0.0
 DDoS,XGB,Fwd IAT Mean,0.0,0.0
@@ -179,7 +179,7 @@ DDoS,XGB,Fwd IAT Std,0.0,0.0
 DDoS,XGB,Fwd IAT Max,0.0,0.0
 DDoS,XGB,Fwd IAT Min,0.0,0.0
 DDoS,XGB,Bwd IAT Tot,0.0,0.0
-DDoS,XGB,Bwd IAT Mean,0.0,0.0
+DDoS,XGB,Flow IAT Std,0.0,0.0
 DDoS,XGB,Flow IAT Max,0.0,0.0
 DDoS,XGB,Fwd IAT Tot,0.0,0.0
 DDoS,XGB,Bwd IAT Min,0.0,0.0
@@ -195,15 +195,15 @@ DDoS,XGB,Pkt Len Min,0.0,0.0
 DDoS,XGB,Pkt Len Max,0.0,0.0
 DDoS,XGB,Pkt Len Mean,0.0,0.0
 DDoS,XGB,Pkt Len Std,0.0,0.0
-DDoS,XGB,Pkt Len Var,0.0,0.0
+DDoS,XGB,Bwd IAT Mean,0.0,0.0
 DDoS,XGB,Bwd IAT Std,0.0,0.0
 DDoS,XGB,Bwd IAT Max,0.0,0.0
 DDoS,XGB,SYN Flag Cnt,0.0,0.0
 DDoS,XGB,FIN Flag Cnt,0.0,0.0
+DDoS,XGB,Pkt Len Var,0.0,0.0
 DDoS,XGB,RST Flag Cnt,0.0,0.0
-DDoS,XGB,PSH Flag Cnt,0.0,0.0
 DDoS,XGB,CWE Flag Count,0.0,0.0
-DDoS,XGB,ECE Flag Cnt,0.0,0.0
+DDoS,XGB,PSH Flag Cnt,0.0,0.0
 DDoS,XGB,ACK Flag Cnt,0.0,0.0
 DDoS,XGB,URG Flag Cnt,0.0,0.0
 DDoS,XGB,Fwd Seg Size Avg,0.0,0.0
@@ -211,16 +211,16 @@ DDoS,XGB,Bwd Seg Size Avg,0.0,0.0
 DDoS,XGB,Fwd Byts/b Avg,0.0,0.0
 DDoS,XGB,Fwd Pkts/b Avg,0.0,0.0
 DDoS,XGB,Fwd Blk Rate Avg,0.0,0.0
-DDoS,XGB,Bwd Byts/b Avg,0.0,0.0
+DDoS,XGB,ECE Flag Cnt,0.0,0.0
 DDoS,XGB,Down/Up Ratio,0.0,0.0
 DDoS,XGB,Pkt Size Avg,0.0,0.0
 DDoS,XGB,Bwd Blk Rate Avg,0.0,0.0
 DDoS,XGB,Bwd Pkts/b Avg,0.0,0.0
+DDoS,XGB,Bwd Byts/b Avg,0.0,0.0
 DDoS,XGB,Subflow Fwd Pkts,0.0,0.0
-DDoS,XGB,Subflow Fwd Byts,0.0,0.0
 DDoS,XGB,Subflow Bwd Byts,0.0,0.0
 DDoS,XGB,Subflow Bwd Pkts,0.0,0.0
-DDoS,XGB,Init Bwd Win Byts,0.0,0.0
+DDoS,XGB,Subflow Fwd Byts,0.0,0.0
 DDoS,XGB,Fwd Seg Size Min,0.0,0.0
 DDoS,XGB,Active Mean,0.0,0.0
 DDoS,XGB,Active Std,0.0,0.0
@@ -384,7 +384,7 @@ BruteForce,SVM,Idle Mean,0.0,0.0
 BruteForce,SVM,Idle Std,0.0,0.0
 BruteForce,SVM,Idle Max,0.0,0.0
 BruteForce,SVM,Idle Min,0.0,0.0
-BruteForce,XGB,Fwd Seg Size Min,0.3489729903202028,0.006372045027907108
+BruteForce,XGB,Fwd Seg Size Min,0.34827503649896013,0.005953966588062188
 BruteForce,XGB,Flow Duration,0.0,0.0
 BruteForce,XGB,Tot Fwd Pkts,0.0,0.0
 BruteForce,XGB,Tot Bwd Pkts,0.0,0.0
@@ -461,234 +461,234 @@ BruteForce,XGB,Idle Mean,0.0,0.0
 BruteForce,XGB,Idle Std,0.0,0.0
 BruteForce,XGB,Idle Max,0.0,0.0
 BruteForce,XGB,Idle Min,0.0,0.0
-Bot,RF,RST Flag Cnt,0.1844060286929625,0.008207939592097674
-Bot,RF,Fwd IAT Min,0.0013370063457739019,0.00023652940372030518
-Bot,RF,Init Fwd Win Byts,0.0006683350024198435,0.00023629263755046783
-Bot,RF,Tot Fwd Pkts,0.0006671666667916742,0.00023605599065123868
-Bot,RF,Fwd Pkts/s,0.0003340002504169659,0.0002358206425928668
-Bot,RF,Pkt Size Avg,3.3325008330642447e-07,0.0004082483074912316
-Bot,RF,TotLen Bwd Pkts,0.0,0.0
-Bot,RF,Fwd Pkt Len Mean,0.0,0.0
-Bot,RF,Fwd Pkt Len Min,0.0,0.0
-Bot,RF,Protocol,0.0,0.0
-Bot,RF,Flow Duration,0.0,0.0
-Bot,RF,Tot Bwd Pkts,0.0,0.0
-Bot,RF,TotLen Fwd Pkts,0.0,0.0
-Bot,RF,Bwd Blk Rate Avg,0.0,0.0
-Bot,RF,Subflow Fwd Pkts,0.0,0.0
-Bot,RF,Bwd Pkt Len Max,0.0,0.0
-Bot,RF,Bwd Pkt Len Min,0.0,0.0
-Bot,RF,Fwd Pkt Len Std,0.0,0.0
-Bot,RF,Flow IAT Std,0.0,0.0
-Bot,RF,Flow Pkts/s,0.0,0.0
-Bot,RF,Bwd Pkt Len Std,0.0,0.0
-Bot,RF,Bwd IAT Tot,0.0,0.0
-Bot,RF,Bwd IAT Mean,0.0,0.0
-Bot,RF,Fwd IAT Std,0.0,0.0
-Bot,RF,Fwd IAT Max,0.0,0.0
-Bot,RF,Bwd IAT Std,0.0,0.0
-Bot,RF,Fwd IAT Tot,0.0,0.0
-Bot,RF,Fwd IAT Mean,0.0,0.0
-Bot,RF,Flow Byts/s,0.0,0.0
-Bot,RF,Bwd Pkts/s,0.0,0.0
-Bot,RF,Pkt Len Min,0.0,0.0
-Bot,RF,Bwd PSH Flags,0.0,0.0
-Bot,RF,Fwd PSH Flags,0.0,0.0
-Bot,RF,Fwd URG Flags,0.0,0.0
-Bot,RF,Bwd URG Flags,0.0,0.0
-Bot,RF,Fwd Header Len,0.0,0.0
-Bot,RF,Bwd Header Len,0.0,0.0
-Bot,RF,FIN Flag Cnt,0.0,0.0
-Bot,RF,Pkt Len Var,0.0,0.0
-Bot,RF,Pkt Len Max,0.0,0.0
-Bot,RF,Pkt Len Std,0.0,0.0
-Bot,RF,SYN Flag Cnt,0.0,0.0
-Bot,RF,Bwd IAT Max,0.0,0.0
-Bot,RF,Bwd IAT Min,0.0,0.0
-Bot,RF,Flow IAT Mean,0.0,0.0
-Bot,RF,Active Mean,0.0,0.0
-Bot,RF,Active Std,0.0,0.0
-Bot,RF,Subflow Bwd Pkts,0.0,0.0
-Bot,RF,ACK Flag Cnt,0.0,0.0
-Bot,RF,URG Flag Cnt,0.0,0.0
-Bot,RF,CWE Flag Count,0.0,0.0
-Bot,RF,ECE Flag Cnt,0.0,0.0
-Bot,RF,PSH Flag Cnt,0.0,0.0
-Bot,RF,Fwd Seg Size Avg,0.0,0.0
-Bot,RF,Bwd Seg Size Avg,0.0,0.0
-Bot,RF,Fwd Byts/b Avg,0.0,0.0
-Bot,RF,Fwd Pkts/b Avg,0.0,0.0
-Bot,RF,Fwd Blk Rate Avg,0.0,0.0
-Bot,RF,Bwd Byts/b Avg,0.0,0.0
-Bot,RF,Bwd Pkts/b Avg,0.0,0.0
-Bot,RF,Down/Up Ratio,0.0,0.0
-Bot,RF,Idle Mean,0.0,0.0
-Bot,RF,Idle Std,0.0,0.0
-Bot,RF,Active Max,0.0,0.0
-Bot,RF,Subflow Fwd Byts,0.0,0.0
-Bot,RF,Subflow Bwd Byts,0.0,0.0
-Bot,RF,Init Bwd Win Byts,0.0,0.0
-Bot,RF,Fwd Act Data Pkts,0.0,0.0
-Bot,RF,Fwd Seg Size Min,0.0,0.0
-Bot,RF,Idle Min,0.0,0.0
-Bot,RF,Active Min,0.0,0.0
-Bot,RF,Idle Max,0.0,0.0
-Bot,RF,Fwd Pkt Len Max,-0.00016658337497917527,0.00023558446816143253
-Bot,RF,Bwd Pkt Len Mean,-0.00033316674995835055,0.00023558446816143255
-Bot,RF,Flow IAT Max,-0.00033316674995835055,0.00023558446816143255
-Bot,RF,Pkt Len Mean,-0.00033316674995835055,0.00023558446816143258
-Bot,RF,Flow IAT Min,-0.0004997501249375258,0.0
-Bot,SVM,RST Flag Cnt,0.28711550630834853,0.006084558369240997
-Bot,SVM,Pkt Len Max,0.07836568705058371,0.002767301900766898
-Bot,SVM,Flow IAT Max,0.023336897564620207,0.0017920588273596966
-Bot,SVM,Flow IAT Std,0.020537970725149512,0.0023831018503271155
-Bot,SVM,Fwd IAT Min,0.015669568679726614,0.0017100904868187963
-Bot,SVM,Flow IAT Min,0.015151154856208882,0.0017603544483066427
-Bot,SVM,Idle Max,0.01394298705668462,0.0017054833314783231
-Bot,SVM,Pkt Len Mean,0.009138797775137967,0.0014502463840307235
-Bot,SVM,Pkt Size Avg,0.008115388298490752,0.001447313624976304
-Bot,SVM,Bwd Pkt Len Std,0.005226990469350823,0.0014577976716275
-Bot,SVM,Bwd Pkt Len Mean,0.005226649779392208,0.0013351521549794213
-Bot,SVM,Active Mean,0.002853032514580356,0.0006301610719541746
-Bot,SVM,Protocol,0.002016098546896994,0.0
-Bot,SVM,Fwd Pkt Len Mean,0.00016775531478193292,0.00023724184132477728
-Bot,SVM,Bwd Pkt Len Max,0.0,0.0
-Bot,SVM,Bwd Pkt Len Min,0.0,0.0
-Bot,SVM,Fwd Pkt Len Min,0.0,0.0
-Bot,SVM,TotLen Bwd Pkts,0.0,0.0
-Bot,SVM,Fwd Pkt Len Max,0.0,0.0
-Bot,SVM,Tot Bwd Pkts,0.0,0.0
-Bot,SVM,TotLen Fwd Pkts,0.0,0.0
-Bot,SVM,Tot Fwd Pkts,0.0,0.0
-Bot,SVM,Flow Duration,0.0,0.0
-Bot,SVM,Fwd Pkt Len Std,0.0,0.0
-Bot,SVM,Fwd IAT Max,0.0,0.0
-Bot,SVM,Fwd IAT Tot,0.0,0.0
-Bot,SVM,Fwd IAT Mean,0.0,0.0
-Bot,SVM,Fwd IAT Std,0.0,0.0
-Bot,SVM,Flow IAT Mean,0.0,0.0
-Bot,SVM,Bwd IAT Max,0.0,0.0
-Bot,SVM,Bwd IAT Std,0.0,0.0
-Bot,SVM,Bwd IAT Min,0.0,0.0
-Bot,SVM,Fwd PSH Flags,0.0,0.0
-Bot,SVM,Bwd URG Flags,0.0,0.0
-Bot,SVM,Fwd Header Len,0.0,0.0
-Bot,SVM,Bwd PSH Flags,0.0,0.0
-Bot,SVM,Fwd URG Flags,0.0,0.0
-Bot,SVM,Fwd Pkts/s,0.0,0.0
-Bot,SVM,Bwd Header Len,0.0,0.0
-Bot,SVM,Pkt Len Min,0.0,0.0
-Bot,SVM,Bwd Pkts/s,0.0,0.0
-Bot,SVM,Bwd IAT Tot,0.0,0.0
-Bot,SVM,Bwd IAT Mean,0.0,0.0
-Bot,SVM,Flow Byts/s,0.0,0.0
-Bot,SVM,Flow Pkts/s,0.0,0.0
-Bot,SVM,SYN Flag Cnt,0.0,0.0
-Bot,SVM,FIN Flag Cnt,0.0,0.0
-Bot,SVM,Pkt Len Var,0.0,0.0
-Bot,SVM,Pkt Len Std,0.0,0.0
-Bot,SVM,URG Flag Cnt,0.0,0.0
-Bot,SVM,CWE Flag Count,0.0,0.0
-Bot,SVM,ACK Flag Cnt,0.0,0.0
-Bot,SVM,PSH Flag Cnt,0.0,0.0
-Bot,SVM,Fwd Seg Size Avg,0.0,0.0
-Bot,SVM,Bwd Seg Size Avg,0.0,0.0
-Bot,SVM,Fwd Byts/b Avg,0.0,0.0
-Bot,SVM,Fwd Pkts/b Avg,0.0,0.0
-Bot,SVM,Fwd Blk Rate Avg,0.0,0.0
-Bot,SVM,Bwd Byts/b Avg,0.0,0.0
-Bot,SVM,ECE Flag Cnt,0.0,0.0
-Bot,SVM,Down/Up Ratio,0.0,0.0
-Bot,SVM,Bwd Blk Rate Avg,0.0,0.0
-Bot,SVM,Bwd Pkts/b Avg,0.0,0.0
-Bot,SVM,Subflow Fwd Pkts,0.0,0.0
-Bot,SVM,Subflow Fwd Byts,0.0,0.0
-Bot,SVM,Init Fwd Win Byts,0.0,0.0
-Bot,SVM,Init Bwd Win Byts,0.0,0.0
-Bot,SVM,Subflow Bwd Pkts,0.0,0.0
-Bot,SVM,Subflow Bwd Byts,0.0,0.0
-Bot,SVM,Fwd Seg Size Min,0.0,0.0
-Bot,SVM,Fwd Act Data Pkts,0.0,0.0
-Bot,SVM,Active Max,0.0,0.0
-Bot,SVM,Active Std,0.0,0.0
-Bot,SVM,Active Min,0.0,0.0
-Bot,SVM,Idle Mean,0.0,0.0
-Bot,SVM,Idle Std,0.0,0.0
-Bot,SVM,Idle Min,0.0,0.0
-Bot,XGB,Bwd Pkt Len Mean,0.03162756632221416,0.003590058920194469
-Bot,XGB,RST Flag Cnt,0.009562155700600742,0.0007117462656072793
-Bot,XGB,Fwd Pkt Len Mean,0.005025125628140725,0.0
-Bot,XGB,Init Fwd Win Byts,0.0025062656641604564,0.0
-Bot,XGB,Tot Fwd Pkts,0.00250542898725703,1.1832398241497395e-06
-Bot,XGB,Flow IAT Min,0.0018367564707114277,0.00023652940372030518
-Bot,XGB,Fwd Pkts/s,0.0008330835416041996,0.00047105112939056494
-Bot,XGB,Protocol,0.0005002501250624958,0.0
-Bot,XGB,Bwd Pkt Len Max,0.0005002501250624958,0.0
-Bot,XGB,Pkt Size Avg,0.0003335000833749972,0.0002358201704807395
-Bot,XGB,Flow IAT Std,0.0003335000833749972,0.0002358201704807395
-Bot,XGB,Pkt Len Max,0.0003335000833749972,0.0002358201704807395
-Bot,XGB,Flow IAT Max,0.00033316674995835055,0.00023558446816143255
-Bot,XGB,Fwd IAT Min,0.0001667500416874986,0.00023582017048073947
-Bot,XGB,Fwd Pkt Len Std,0.0,0.0
-Bot,XGB,Fwd Pkt Len Max,0.0,0.0
-Bot,XGB,Fwd Pkt Len Min,0.0,0.0
-Bot,XGB,TotLen Bwd Pkts,0.0,0.0
-Bot,XGB,Flow Duration,0.0,0.0
-Bot,XGB,Tot Bwd Pkts,0.0,0.0
-Bot,XGB,TotLen Fwd Pkts,0.0,0.0
-Bot,XGB,Bwd Pkt Len Min,0.0,0.0
-Bot,XGB,Fwd IAT Tot,0.0,0.0
-Bot,XGB,Fwd IAT Std,0.0,0.0
-Bot,XGB,Fwd IAT Max,0.0,0.0
-Bot,XGB,Bwd IAT Tot,0.0,0.0
-Bot,XGB,Fwd IAT Mean,0.0,0.0
-Bot,XGB,Flow IAT Mean,0.0,0.0
-Bot,XGB,Flow Pkts/s,0.0,0.0
-Bot,XGB,Bwd IAT Max,0.0,0.0
-Bot,XGB,Bwd IAT Std,0.0,0.0
-Bot,XGB,Bwd PSH Flags,0.0,0.0
-Bot,XGB,Bwd IAT Min,0.0,0.0
-Bot,XGB,Fwd URG Flags,0.0,0.0
-Bot,XGB,Bwd URG Flags,0.0,0.0
-Bot,XGB,Fwd Header Len,0.0,0.0
-Bot,XGB,Fwd PSH Flags,0.0,0.0
-Bot,XGB,Bwd Header Len,0.0,0.0
-Bot,XGB,Bwd Pkts/s,0.0,0.0
-Bot,XGB,Pkt Len Min,0.0,0.0
-Bot,XGB,Pkt Len Mean,0.0,0.0
-Bot,XGB,Pkt Len Std,0.0,0.0
-Bot,XGB,Bwd IAT Mean,0.0,0.0
-Bot,XGB,Flow Byts/s,0.0,0.0
-Bot,XGB,Bwd Pkt Len Std,0.0,0.0
-Bot,XGB,SYN Flag Cnt,0.0,0.0
-Bot,XGB,FIN Flag Cnt,0.0,0.0
-Bot,XGB,Pkt Len Var,0.0,0.0
-Bot,XGB,ACK Flag Cnt,0.0,0.0
-Bot,XGB,URG Flag Cnt,0.0,0.0
-Bot,XGB,CWE Flag Count,0.0,0.0
-Bot,XGB,ECE Flag Cnt,0.0,0.0
-Bot,XGB,PSH Flag Cnt,0.0,0.0
-Bot,XGB,Fwd Seg Size Avg,0.0,0.0
-Bot,XGB,Bwd Seg Size Avg,0.0,0.0
-Bot,XGB,Fwd Byts/b Avg,0.0,0.0
-Bot,XGB,Fwd Pkts/b Avg,0.0,0.0
-Bot,XGB,Fwd Blk Rate Avg,0.0,0.0
-Bot,XGB,Bwd Byts/b Avg,0.0,0.0
-Bot,XGB,Bwd Pkts/b Avg,0.0,0.0
-Bot,XGB,Down/Up Ratio,0.0,0.0
-Bot,XGB,Bwd Blk Rate Avg,0.0,0.0
-Bot,XGB,Subflow Fwd Pkts,0.0,0.0
-Bot,XGB,Subflow Bwd Pkts,0.0,0.0
-Bot,XGB,Subflow Fwd Byts,0.0,0.0
-Bot,XGB,Subflow Bwd Byts,0.0,0.0
-Bot,XGB,Init Bwd Win Byts,0.0,0.0
-Bot,XGB,Fwd Act Data Pkts,0.0,0.0
-Bot,XGB,Fwd Seg Size Min,0.0,0.0
-Bot,XGB,Active Mean,0.0,0.0
-Bot,XGB,Active Std,0.0,0.0
-Bot,XGB,Active Max,0.0,0.0
-Bot,XGB,Active Min,0.0,0.0
-Bot,XGB,Idle Mean,0.0,0.0
-Bot,XGB,Idle Std,0.0,0.0
-Bot,XGB,Idle Max,0.0,0.0
-Bot,XGB,Idle Min,0.0,0.0
+PortScan,RF,Idle Mean,0.0019723711501584695,0.0
+PortScan,RF,Flow Pkts/s,0.001643967776986684,0.00046443250426861154
+PortScan,RF,Protocol,0.0009930428127054025,0.0
+PortScan,RF,Flow Duration,0.0009871610306431133,0.0
+PortScan,RF,Active Mean,0.0009871610306431133,0.0
+PortScan,RF,Flow IAT Mean,0.0009871610306431133,0.0
+PortScan,RF,Subflow Fwd Byts,0.0006600679477828386,0.00046674469867208503
+PortScan,RF,Fwd Pkt Len Min,0.0,0.0
+PortScan,RF,Fwd Pkt Len Max,0.0,0.0
+PortScan,RF,Fwd Pkt Len Std,0.0,0.0
+PortScan,RF,Tot Fwd Pkts,0.0,0.0
+PortScan,RF,Tot Bwd Pkts,0.0,0.0
+PortScan,RF,TotLen Bwd Pkts,0.0,0.0
+PortScan,RF,SYN Flag Cnt,0.0,0.0
+PortScan,RF,Bwd Pkt Len Mean,0.0,0.0
+PortScan,RF,Bwd Pkt Len Max,0.0,0.0
+PortScan,RF,Bwd Pkt Len Min,0.0,0.0
+PortScan,RF,Fwd Pkt Len Mean,0.0,0.0
+PortScan,RF,Flow IAT Std,0.0,0.0
+PortScan,RF,Flow Byts/s,0.0,0.0
+PortScan,RF,Bwd Pkt Len Std,0.0,0.0
+PortScan,RF,Fwd IAT Mean,0.0,0.0
+PortScan,RF,Fwd IAT Std,0.0,0.0
+PortScan,RF,Fwd IAT Max,0.0,0.0
+PortScan,RF,Fwd IAT Min,0.0,0.0
+PortScan,RF,Bwd IAT Tot,0.0,0.0
+PortScan,RF,Flow IAT Max,0.0,0.0
+PortScan,RF,Flow IAT Min,0.0,0.0
+PortScan,RF,Fwd IAT Tot,0.0,0.0
+PortScan,RF,Bwd IAT Min,0.0,0.0
+PortScan,RF,Fwd PSH Flags,0.0,0.0
+PortScan,RF,Bwd PSH Flags,0.0,0.0
+PortScan,RF,Fwd URG Flags,0.0,0.0
+PortScan,RF,Bwd URG Flags,0.0,0.0
+PortScan,RF,Fwd Header Len,0.0,0.0
+PortScan,RF,Bwd Header Len,0.0,0.0
+PortScan,RF,Fwd Pkts/s,0.0,0.0
+PortScan,RF,Bwd Pkts/s,0.0,0.0
+PortScan,RF,Pkt Len Min,0.0,0.0
+PortScan,RF,Pkt Len Max,0.0,0.0
+PortScan,RF,Pkt Len Mean,0.0,0.0
+PortScan,RF,Pkt Len Std,0.0,0.0
+PortScan,RF,Bwd IAT Mean,0.0,0.0
+PortScan,RF,Bwd IAT Std,0.0,0.0
+PortScan,RF,Bwd IAT Max,0.0,0.0
+PortScan,RF,Bwd Blk Rate Avg,0.0,0.0
+PortScan,RF,FIN Flag Cnt,0.0,0.0
+PortScan,RF,Pkt Len Var,0.0,0.0
+PortScan,RF,RST Flag Cnt,0.0,0.0
+PortScan,RF,CWE Flag Count,0.0,0.0
+PortScan,RF,PSH Flag Cnt,0.0,0.0
+PortScan,RF,ACK Flag Cnt,0.0,0.0
+PortScan,RF,URG Flag Cnt,0.0,0.0
+PortScan,RF,Fwd Seg Size Avg,0.0,0.0
+PortScan,RF,Bwd Seg Size Avg,0.0,0.0
+PortScan,RF,Fwd Byts/b Avg,0.0,0.0
+PortScan,RF,Fwd Pkts/b Avg,0.0,0.0
+PortScan,RF,Fwd Blk Rate Avg,0.0,0.0
+PortScan,RF,ECE Flag Cnt,0.0,0.0
+PortScan,RF,Down/Up Ratio,0.0,0.0
+PortScan,RF,Pkt Size Avg,0.0,0.0
+PortScan,RF,Fwd Seg Size Min,0.0,0.0
+PortScan,RF,Bwd Pkts/b Avg,0.0,0.0
+PortScan,RF,Bwd Byts/b Avg,0.0,0.0
+PortScan,RF,Subflow Fwd Pkts,0.0,0.0
+PortScan,RF,Init Fwd Win Byts,0.0,0.0
+PortScan,RF,Init Bwd Win Byts,0.0,0.0
+PortScan,RF,Subflow Bwd Pkts,0.0,0.0
+PortScan,RF,Subflow Bwd Byts,0.0,0.0
+PortScan,RF,Active Min,0.0,0.0
+PortScan,RF,Fwd Act Data Pkts,0.0,0.0
+PortScan,RF,Active Max,0.0,0.0
+PortScan,RF,Active Std,0.0,0.0
+PortScan,RF,Idle Max,0.0,0.0
+PortScan,RF,Idle Std,0.0,0.0
+PortScan,RF,Idle Min,0.0,0.0
+PortScan,RF,TotLen Fwd Pkts,-0.0003297059140998278,0.0004662745753145952
+PortScan,SVM,SYN Flag Cnt,0.2585770767692589,0.0045951897467543384
+PortScan,SVM,Protocol,0.16339554507482876,0.0023042878769944266
+PortScan,SVM,Fwd Pkt Len Max,0.058392908020541534,0.002517940048970415
+PortScan,SVM,Flow IAT Mean,0.05802698827043399,0.0014496783550390622
+PortScan,SVM,Active Mean,0.033859922773759855,0.002256789000492089
+PortScan,SVM,Pkt Len Mean,0.03233003505474034,0.002194638169245429
+PortScan,SVM,Bwd Pkt Len Std,0.031090517894720577,0.0020330860296654736
+PortScan,SVM,Bwd Pkt Len Mean,0.02949482971077566,0.0012940825712124005
+PortScan,SVM,Bwd Pkt Len Min,0.026991463775690356,0.0026221998202147117
+PortScan,SVM,Idle Mean,0.023886647003153794,0.002207886363832001
+PortScan,SVM,Flow Duration,0.01995564079149681,0.002296734902851746
+PortScan,SVM,ACK Flag Cnt,0.014527707662737699,0.002400388151944945
+PortScan,SVM,Idle Std,0.011590832364304767,0.001229980360941987
+PortScan,SVM,Down/Up Ratio,0.006948755913668762,2.417351802050564e-05
+PortScan,SVM,Subflow Fwd Byts,0.005345101041420275,0.0012605551062019218
+PortScan,SVM,Fwd IAT Min,0.005024681841367211,0.0021672996018236874
+PortScan,SVM,Fwd Pkt Len Mean,0.002652738290905362,0.001248204738602246
+PortScan,SVM,TotLen Fwd Pkts,0.001666920751611493,0.0009446396302145855
+PortScan,SVM,Flow Pkts/s,0.0013122947905556497,0.0009280209142352809
+PortScan,SVM,Flow IAT Min,0.0003329865544364023,0.00047091410137184696
+PortScan,SVM,Tot Bwd Pkts,0.0,0.0
+PortScan,SVM,Fwd Pkt Len Std,0.0,0.0
+PortScan,SVM,Bwd Pkt Len Max,0.0,0.0
+PortScan,SVM,TotLen Bwd Pkts,0.0,0.0
+PortScan,SVM,Fwd Pkt Len Min,0.0,0.0
+PortScan,SVM,Tot Fwd Pkts,0.0,0.0
+PortScan,SVM,Fwd IAT Mean,0.0,0.0
+PortScan,SVM,Fwd IAT Tot,0.0,0.0
+PortScan,SVM,Flow Byts/s,0.0,0.0
+PortScan,SVM,Bwd IAT Max,0.0,0.0
+PortScan,SVM,Bwd IAT Std,0.0,0.0
+PortScan,SVM,Bwd IAT Min,0.0,0.0
+PortScan,SVM,Fwd PSH Flags,0.0,0.0
+PortScan,SVM,Bwd URG Flags,0.0,0.0
+PortScan,SVM,Fwd Header Len,0.0,0.0
+PortScan,SVM,Bwd PSH Flags,0.0,0.0
+PortScan,SVM,Fwd URG Flags,0.0,0.0
+PortScan,SVM,Fwd Pkts/s,0.0,0.0
+PortScan,SVM,Bwd Header Len,0.0,0.0
+PortScan,SVM,Fwd IAT Std,0.0,0.0
+PortScan,SVM,Fwd IAT Max,0.0,0.0
+PortScan,SVM,Bwd IAT Tot,0.0,0.0
+PortScan,SVM,Bwd IAT Mean,0.0,0.0
+PortScan,SVM,Flow IAT Max,0.0,0.0
+PortScan,SVM,Flow IAT Std,0.0,0.0
+PortScan,SVM,FIN Flag Cnt,0.0,0.0
+PortScan,SVM,Pkt Len Var,0.0,0.0
+PortScan,SVM,Pkt Len Std,0.0,0.0
+PortScan,SVM,Pkt Len Max,0.0,0.0
+PortScan,SVM,Bwd Pkts/s,0.0,0.0
+PortScan,SVM,Pkt Len Min,0.0,0.0
+PortScan,SVM,PSH Flag Cnt,0.0,0.0
+PortScan,SVM,RST Flag Cnt,0.0,0.0
+PortScan,SVM,Fwd Seg Size Avg,0.0,0.0
+PortScan,SVM,Bwd Seg Size Avg,0.0,0.0
+PortScan,SVM,Fwd Byts/b Avg,0.0,0.0
+PortScan,SVM,Fwd Pkts/b Avg,0.0,0.0
+PortScan,SVM,URG Flag Cnt,0.0,0.0
+PortScan,SVM,CWE Flag Count,0.0,0.0
+PortScan,SVM,ECE Flag Cnt,0.0,0.0
+PortScan,SVM,Pkt Size Avg,0.0,0.0
+PortScan,SVM,Bwd Blk Rate Avg,0.0,0.0
+PortScan,SVM,Bwd Pkts/b Avg,0.0,0.0
+PortScan,SVM,Bwd Byts/b Avg,0.0,0.0
+PortScan,SVM,Fwd Blk Rate Avg,0.0,0.0
+PortScan,SVM,Init Fwd Win Byts,0.0,0.0
+PortScan,SVM,Subflow Fwd Pkts,0.0,0.0
+PortScan,SVM,Subflow Bwd Pkts,0.0,0.0
+PortScan,SVM,Subflow Bwd Byts,0.0,0.0
+PortScan,SVM,Fwd Seg Size Min,0.0,0.0
+PortScan,SVM,Fwd Act Data Pkts,0.0,0.0
+PortScan,SVM,Init Bwd Win Byts,0.0,0.0
+PortScan,SVM,Active Std,0.0,0.0
+PortScan,SVM,Active Min,0.0,0.0
+PortScan,SVM,Active Max,0.0,0.0
+PortScan,SVM,Idle Max,0.0,0.0
+PortScan,SVM,Idle Min,0.0,0.0
+PortScan,XGB,Pkt Len Mean,0.00565488223583388,0.001250707964568493
+PortScan,XGB,TotLen Fwd Pkts,0.0026292145876014583,0.0004533772462613531
+PortScan,XGB,Flow Duration,0.002284573215418121,0.0009243010568554694
+PortScan,XGB,Subflow Fwd Byts,0.0016531062310631839,0.0004667565944092756
+PortScan,XGB,Idle Mean,0.0009852101195153562,0.0
+PortScan,XGB,Flow IAT Mean,0.0009852101195153562,0.0
+PortScan,XGB,Fwd IAT Min,0.0006568067463435708,0.0004644325042686115
+PortScan,XGB,ACK Flag Cnt,0.00033297292374038595,0.0004667419534622518
+PortScan,XGB,SYN Flag Cnt,0.0003284033731717854,0.0004644325042686115
+PortScan,XGB,Fwd Pkt Len Max,0.0003284033731717854,0.0004644325042686115
+PortScan,XGB,Fwd Pkt Len Std,0.0,0.0
+PortScan,XGB,Tot Bwd Pkts,0.0,0.0
+PortScan,XGB,Tot Fwd Pkts,0.0,0.0
+PortScan,XGB,Fwd Seg Size Min,0.0,0.0
+PortScan,XGB,Bwd Pkt Len Mean,0.0,0.0
+PortScan,XGB,Bwd Pkt Len Max,0.0,0.0
+PortScan,XGB,Bwd Pkt Len Min,0.0,0.0
+PortScan,XGB,Fwd Pkt Len Mean,0.0,0.0
+PortScan,XGB,Fwd Pkt Len Min,0.0,0.0
+PortScan,XGB,TotLen Bwd Pkts,0.0,0.0
+PortScan,XGB,Flow IAT Min,0.0,0.0
+PortScan,XGB,Bwd IAT Tot,0.0,0.0
+PortScan,XGB,Fwd IAT Mean,0.0,0.0
+PortScan,XGB,Fwd IAT Std,0.0,0.0
+PortScan,XGB,Fwd IAT Max,0.0,0.0
+PortScan,XGB,Bwd IAT Std,0.0,0.0
+PortScan,XGB,Flow IAT Max,0.0,0.0
+PortScan,XGB,Flow Byts/s,0.0,0.0
+PortScan,XGB,Bwd Pkt Len Std,0.0,0.0
+PortScan,XGB,Fwd Pkts/s,0.0,0.0
+PortScan,XGB,Bwd IAT Max,0.0,0.0
+PortScan,XGB,Bwd IAT Min,0.0,0.0
+PortScan,XGB,Fwd PSH Flags,0.0,0.0
+PortScan,XGB,Bwd URG Flags,0.0,0.0
+PortScan,XGB,Fwd Header Len,0.0,0.0
+PortScan,XGB,Bwd PSH Flags,0.0,0.0
+PortScan,XGB,Fwd URG Flags,0.0,0.0
+PortScan,XGB,Pkt Len Max,0.0,0.0
+PortScan,XGB,Bwd Header Len,0.0,0.0
+PortScan,XGB,Pkt Len Min,0.0,0.0
+PortScan,XGB,Bwd Pkts/s,0.0,0.0
+PortScan,XGB,Pkt Len Var,0.0,0.0
+PortScan,XGB,Bwd IAT Mean,0.0,0.0
+PortScan,XGB,Fwd IAT Tot,0.0,0.0
+PortScan,XGB,Flow IAT Std,0.0,0.0
+PortScan,XGB,Active Min,0.0,0.0
+PortScan,XGB,FIN Flag Cnt,0.0,0.0
+PortScan,XGB,Pkt Len Std,0.0,0.0
+PortScan,XGB,RST Flag Cnt,0.0,0.0
+PortScan,XGB,CWE Flag Count,0.0,0.0
+PortScan,XGB,ECE Flag Cnt,0.0,0.0
+PortScan,XGB,PSH Flag Cnt,0.0,0.0
+PortScan,XGB,URG Flag Cnt,0.0,0.0
+PortScan,XGB,Fwd Blk Rate Avg,0.0,0.0
+PortScan,XGB,Bwd Seg Size Avg,0.0,0.0
+PortScan,XGB,Fwd Byts/b Avg,0.0,0.0
+PortScan,XGB,Fwd Pkts/b Avg,0.0,0.0
+PortScan,XGB,Bwd Pkts/b Avg,0.0,0.0
+PortScan,XGB,Bwd Byts/b Avg,0.0,0.0
+PortScan,XGB,Pkt Size Avg,0.0,0.0
+PortScan,XGB,Fwd Seg Size Avg,0.0,0.0
+PortScan,XGB,Idle Max,0.0,0.0
+PortScan,XGB,Bwd Blk Rate Avg,0.0,0.0
+PortScan,XGB,Subflow Bwd Pkts,0.0,0.0
+PortScan,XGB,Subflow Fwd Pkts,0.0,0.0
+PortScan,XGB,Init Fwd Win Byts,0.0,0.0
+PortScan,XGB,Init Bwd Win Byts,0.0,0.0
+PortScan,XGB,Fwd Act Data Pkts,0.0,0.0
+PortScan,XGB,Subflow Bwd Byts,0.0,0.0
+PortScan,XGB,Idle Min,0.0,0.0
+PortScan,XGB,Active Mean,0.0,0.0
+PortScan,XGB,Active Max,0.0,0.0
+PortScan,XGB,Active Std,0.0,0.0
+PortScan,XGB,Idle Std,0.0,0.0
+PortScan,XGB,Down/Up Ratio,-0.00032905367688103776,0.0004653521725938978
+PortScan,XGB,Flow Pkts/s,-0.0003342638597293816,0.0004644352332708074
+PortScan,XGB,Protocol,-0.0009871610306431133,0.0

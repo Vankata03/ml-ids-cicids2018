@@ -1,21 +1,38 @@
 {
   "load": {
-    "files": 3,
+    "files": 6,
     "file_names": [
       "raw/Friday-02-03-2018_TrafficForML_CICFlowMeter.csv",
       "raw/Wednesday-14-02-2018_TrafficForML_CICFlowMeter.csv",
-      "raw/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv"
+      "raw/Wednesday-21-02-2018_TrafficForML_CICFlowMeter.csv",
+      "raw_cicids2017/friday.csv",
+      "raw_cicids2017/monday.csv",
+      "raw_cicids2017/wednesday.csv"
     ],
-    "rows_read_total": 3145725,
+    "rows_read_total": 4561547,
     "original_class_counts": {
       "Benign": 1790843,
+      "Benign (CIC-IDS2017)": 979288,
       "DDOS attack-HOIC": 686012,
       "Bot": 286191,
       "FTP-BruteForce": 193360,
       "SSH-Bruteforce": 187589,
-      "DDOS attack-LOIC-UDP": 1730
+      "PortScan": 159066,
+      "DoS Hulk (CIC-IDS2017)": 158468,
+      "DDoS (CIC-IDS2017)": 95144,
+      "DoS GoldenEye (CIC-IDS2017)": 7567,
+      "Botnet - Attempted (CIC-IDS2017)": 4067,
+      "DoS Slowloris (CIC-IDS2017)": 3859,
+      "DoS Slowhttptest - Attempted (CIC-IDS2017)": 3368,
+      "DoS Slowloris - Attempted (CIC-IDS2017)": 1847,
+      "DoS Slowhttptest (CIC-IDS2017)": 1740,
+      "DDOS attack-LOIC-UDP": 1730,
+      "Botnet (CIC-IDS2017)": 736,
+      "DoS Hulk - Attempted (CIC-IDS2017)": 581,
+      "DoS GoldenEye - Attempted (CIC-IDS2017)": 80,
+      "Heartbleed (CIC-IDS2017)": 11
     },
-    "rows_kept": 3145725,
+    "rows_kept": 3997888,
     "n_features_raw": 77,
     "feature_names_raw": [
       "Protocol",
@@ -98,16 +115,17 @@
     ]
   },
   "clean": {
-    "rows_before": 3145725,
-    "rows_with_nan_or_inf": 7874,
-    "duplicates_removed": 1226290,
-    "rows_after": 1911561,
+    "rows_before": 3997888,
+    "rows_with_nan_or_inf": 7878,
+    "duplicates_removed": 1327997,
+    "rows_after": 2662013,
     "class_counts_after_cleaning": {
       "Benign": 1472334,
+      "Benign (CIC-IDS2017)": 893304,
       "DDOS attack-HOIC": 198861,
-      "Bot": 144535,
       "SSH-Bruteforce": 94048,
       "DDOS attack-LOIC-UDP": 1730,
+      "PortScan": 1683,
       "FTP-BruteForce": 53
     }
   }

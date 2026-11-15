@@ -139,22 +139,43 @@ def data_values():
         put(f"task-dup-{a}", num(t.get("task_duplicates_removed", 0)))
         put(f"task-conf-{a}", num(t.get("task_conflicting_rows_removed", 0)))
         put(f"task-confvec-{a}", num(t.get("task_conflicting_vectors", 0)))
+        put(f"benign-orig-{a}", num(t["benign_rows_original"]))
+        put(f"benign-avail-{a}", num(t["benign_rows_available"]))
+        put(f"benign-ratio-{a}", dec(t["benign_rows_original"] / t["attack_rows_original"], 1))
+        put(f"dedup-share-{a}", pct(1 - t["attack_rows_available"] / t["attack_rows_original"], 1))
     put("benign-orig", num(task[ATTS[0]]["benign_rows_original"]))
     put("benign-avail", num(task[ATTS[0]]["benign_rows_available"]))
+    # брой записи по набор (за описанието на данните)
+    by_ds = {ds: sum(v for k, v in ld["original_class_counts"].items() if k.endswith(f"({ds})") or k == "PortScan")
+             for ds in (C.DATASET_2017,)}
+    put("rows-read-2017", num(by_ds[C.DATASET_2017]))
+    put("rows-read-2018", num(ld["rows_read_total"] - by_ds[C.DATASET_2017]))
 
     # таблица с класовете
     orig, after = ld["original_class_counts"], cl["class_counts_after_cleaning"]
     rows = []
+    benign_tasks = {b: ", ".join(a for a, sp in ATTACKS.items() if sp.benign_label == b) for b in C.BENIGN_LABELS.values()}
     def task_of(lbl):
-        if lbl == C.BENIGN_LABEL:
-            return "нормален (всички задачи)"
+        if lbl in benign_tasks:
+            return "нормален (" + benign_tasks[lbl] + ")"
         return next((a for a, s in ATTACKS.items() if s(lbl)), "--")
-    for lbl in sorted(orig, key=lambda k: (k != C.BENIGN_LABEL, list(ATTACKS).index(task_of(k)) if task_of(k) in ATTACKS else -1, -orig[k])):
-        rows.append([r"\texttt{" + esc(lbl) + "}", task_of(lbl), num(orig[lbl]), num(after.get(lbl, 0)),
+    def dataset_of(lbl):
+        return C.DATASET_2017 if lbl in (C.BENIGN_LABEL_2017, *C.CIC2017_LABELS.values()) else C.DATASET_2018
+    def show(lbl):
+        return {C.BENIGN_LABEL_2017: "BENIGN", "PortScan": "Portscan"}.get(lbl, lbl)
+    used = [k for k in orig if task_of(k) != "--"]
+    order = lambda k: (dataset_of(k) != C.DATASET_2018, k not in benign_tasks,
+                       list(ATTACKS).index(task_of(k)) if task_of(k) in ATTACKS else -1, -orig[k])
+    for lbl in sorted(used, key=order):
+        rows.append([dataset_of(lbl), r"\texttt{" + esc(show(lbl)) + "}", task_of(lbl), num(orig[lbl]), num(after.get(lbl, 0)),
                      pct(1 - after.get(lbl, 0) / orig[lbl], 1)])
-    rows.append([r"\textbf{Общо}", "", r"\textbf{" + num(ld["rows_read_total"]) + "}",
-                 r"\textbf{" + num(cl["rows_after"]) + "}", pct(1 - cl["rows_after"] / cl["rows_before"], 1)])
-    write("tab_class_counts", table("@{}llrrr@{}", ["Етикет", "Задача", "Изтеглени", "След почистване", "Премахнати"], rows))
+    unused = sum(v for k, v in orig.items() if k not in used)
+    put("rows-unused", num(unused))
+    put("rows-used", num(ld["rows_read_total"] - unused))
+    rows.append(["двата набора", "други етикети", "не се използват", num(unused), "--", "--"])
+    rows.append([r"\textbf{Общо}", "", "", r"\textbf{" + num(ld["rows_read_total"]) + "}",
+                 r"\textbf{" + num(cl["rows_after"]) + "}", ""])
+    write("tab_class_counts", table("@{}lllrrr@{}", ["Набор", "Етикет", "Задача", "Изтеглени", "След почистване", "Премахнати"], rows))
 
     env = read_json("environment.json")
     rows = [["Процесор", esc(env.get("cpu_model", env.get("processor", ""))) + f" ({env.get('cpu_count')} ядра)"],
@@ -176,6 +197,7 @@ def reduction_values():
         r = red[f"{ALGOS[0]}_{a}"]  # филтърът и подборът зависят само от обучаващите данни на задачата
         put(f"filtered-{a}", r["n_features_after_filter"])
         put(f"lowvar-{a}", len(r["dropped_low_variance"]))
+        put(f"lowvar-names-{a}", esc(", ".join(r["dropped_low_variance"])))
         put(f"sel-share-{a}", pct(r.get("selected_importance_share", 0), 1))
         rk = r.get("importance_ranking", [])
         put(f"sel-top-{a}", esc(rk[0]["feature"]) if rk else "--")
@@ -203,6 +225,12 @@ def reduction_values():
 
 def model_values():
     res = csv("metrics.csv")
+    import math
+    put("min-acc", pct(res.Accuracy.min(), 2))
+    put("min-acc-floor", dec(math.floor(res.Accuracy.min() * 1000) / 10, 1) + r"\%")
+    put("min-acc-model", f"{NAME[res.loc[res.Accuracy.idxmin(), 'algo']]} при {res.loc[res.Accuracy.idxmin(), 'attack']}")
+    rs = read_json("run_summary.json")
+    put("run-minutes", int(round(rs["total_minutes"])))
     full = csv("metrics_full_features.csv")
     nat = csv("metrics_natural_ratio.csv")
     noiat = csv("metrics_without_IAT.csv")
@@ -221,6 +249,7 @@ def model_values():
         put(f"{k}-pred-us", dec(r.predict_time_per_record_us, 1))
         put(f"{k}-ntrain", num(r.n_train))
         put(f"{k}-throughput", num(1e6 / r.predict_time_per_record_us))
+        put(f"{k}-errors", num(r.FP + r.FN))
         rows.append([NAME[r.algo], r.attack, num(r.TP), num(r.TN), num(r.FP), num(r.FN),
                      pct(r.Precision), pct(r.Accuracy), pct(r.Sensitivity)])
         rows2.append([NAME[r.algo], r.attack, pct(r.Specificity), pct(r.F1), pct(r.FPR, 3), dec(r.ROC_AUC, 4),
@@ -505,6 +534,7 @@ def robustness_values():
     hm = pd.read_csv(rd / "hybrid_main.csv")
     meta = json.loads((rd / "meta.json").read_text(encoding="utf-8"))
     N4 = {**NAME, "XGB|SVM": "XGBoost или SVM"}
+    put("rob-minutes", int(round(meta.get("runtime_min", 0))))
     key = lambda g: g.replace("|", "or")
     rows = []
     for a in ATTS:
@@ -523,7 +553,8 @@ def robustness_values():
     rnd = sf[(sf.split == "random") & (sf.algo != "XGB|SVM")].pivot_table(index=["attack", "algo"], columns="features", values="Accuracy")
     put("rob-fp-maxdrop", dec((rnd["all"] - rnd["no_fp"]).max() * 100, 2))
     ch = sf[(sf.split == "chronological") & (sf.features == "all")]
-    put("rob-chrono-min-DDoSBF", pct(ch[ch.attack != "Bot"].Accuracy.min(), 2))
+    put("rob-chrono-min-DDoSBF", pct(ch[ch.attack.isin(["DDoS", "BruteForce"])].Accuracy.min(), 2))
+    put("rob-chrono-min", pct(ch[ch.algo != "XGB|SVM"].Accuracy.min(), 2))
     for a in ATTS:
         c = meta.get(f"{a}_chronological", {})
         put(f"rob-cut-{a}", c.get("attack_test_from", "--"))
@@ -542,6 +573,9 @@ def robustness_values():
     put("benign-2102-tcp", pct(bp["Wednesday-21-02-2018"]["tcp_share"], 1))
     put("benign-other-tcp", pct(bp["Friday-02-03-2018"]["tcp_share"], 1))
     put("benign-2102-rows", num(bp["Wednesday-21-02-2018"]["rows"]))
+    for d, v in bp.items():
+        put(f"benign-rows-{d}", num(v["rows"]))
+        put(f"benign-tcp-{d}", pct(v["tcp_share"], 1))
     # A12
     sn = {"DDOS attack-HOIC": "HOIC", "DDOS attack-LOIC-UDP": "LOIC-UDP", "SSH-Bruteforce": "SSH", "FTP-BruteForce": "FTP"}
     rows = []
@@ -658,7 +692,7 @@ def appendix_tables():
 
 
 def write_values():
-    write("paths", "\\graphicspath{{" + (RES / "figures").as_posix() + "/}}\n")
+    write("paths", "\\graphicspath{{../../results/figures/}}\n")   # относително спрямо report/latex/main.tex
     lines = ["% Автоматично генерирано от report/build_report.py - не редактирайте ръчно"]
     for k, v in sorted(VALUES.items()):
         lines.append(rf"\expandafter\def\csname val@{k}\endcsname{{{v}}}")

@@ -2,7 +2,7 @@
 
     python run_all.py                       # всички атаки и алгоритми + разширените анализи
     python run_all.py --no-extended         # само основните 4 модела и E1-E4
-    python run_all.py --attacks Bot --algos RF
+    python run_all.py --attacks PortScan --algos RF
 
 Атаките и алгоритмите се избират от регистрите в src/registry.py.
 Резултатите се записват в results/ (CSV, JSON, лог, фигури), моделите - в models/.
@@ -55,7 +55,7 @@ def environment_info() -> dict:
 
 
 def parse_args(argv=None):
-    p = argparse.ArgumentParser(description="ML-IDS експеримент върху CSE-CIC-IDS2018")
+    p = argparse.ArgumentParser(description="ML-IDS експеримент върху CSE-CIC-IDS2018 и CIC-IDS2017")
     p.add_argument("--attacks", nargs="+", choices=list(ATTACKS), default=list(ATTACKS))
     p.add_argument("--algos", nargs="+", choices=list(ALGORITHMS), default=list(ALGORITHMS))
     p.add_argument("--no-extended", action="store_true", help="без разширените анализи A1-A14")

@@ -10,10 +10,11 @@
   A11  хронологично разделяне: моделът се обучава върху по-ранните 70% от потоците в деня
        на атаката и се тества върху по-късните 30% (вместо случайно разделяне);
   A12  пренос между подвидове: обучение върху единия инструмент, тест върху другия
-       (HOIC <-> LOIC-UDP при DDoS, SSH <-> FTP при грубата сила);
+       (HOIC <-> LOIC-UDP при DDoS, SSH <-> FTP при грубата сила; PortScan няма подвидове в етикетите);
   A13  нормален трафик от други дни: (а) модел, обучен с нормалния трафик само от деня на
-       атаката, се проверява за фалшиви аларми върху нормалния трафик от другите два дни;
-       (б) модел, обучен с нормален трафик от два дни, се проверява върху третия (непознат) ден;
+       атаката, се проверява за фалшиви аларми върху нормалния трафик от другите два дни
+       на същия набор; (б) модел, обучен с нормален трафик от два дни, се проверява върху
+       третия (непознат) ден;
   A14  комбиниран детектор: запис се обявява за атака, ако XGBoost ИЛИ SVM го обяви за атака.
        Дърветата са най-точни върху познати модели на атаката, а гладката граница на SVM
        улавя и нови разновидности; комбинацията се оценява във всички горни постановки.
@@ -25,6 +26,7 @@
 AM/PM. Атаките по официалния график са между 10:00 и 16:00, затова часовете 1-7 се приемат за
 следобедни (+12 ч). Така атаките попадат точно в публикуваните интервали
 (напр. LOIC-UDP 10:09-10:43 и HOIC 14:11-14:33 на 21.02.2018).
+В коригирания CIC-IDS2017 времето е пълно (24-часов запис с микросекунди) и се използва без промяна.
 
     python -m src.robustness
 """
@@ -40,14 +42,17 @@ import pandas as pd
 
 from . import config as C
 from .evaluate import compute_metrics
-from .preprocess import save_json
+from .preprocess import cic2017_files, normalize_2017, save_json
 from .registry import ATTACKS
 from .train import fit_final
 
 log = logging.getLogger(__name__)
 
 FINGERPRINT = ("Init Fwd Win Byts", "Init Bwd Win Byts", "Fwd Seg Size Min")
-DAY_OF = {"DDoS": "Wednesday-21-02-2018", "BruteForce": "Wednesday-14-02-2018", "Bot": "Friday-02-03-2018"}
+DAY_OF = {"DDoS": "Wednesday-21-02-2018", "BruteForce": "Wednesday-14-02-2018", "PortScan": "Friday-07-07-2017"}
+# Дните на всеки набор. Нормалният трафик на една атака идва само от дните на нейния набор.
+DAYS = {C.DATASET_2018: ("Friday-02-03-2018", "Wednesday-14-02-2018", "Wednesday-21-02-2018"),
+        C.DATASET_2017: tuple(sorted(C.CIC2017_DAYS.values()))}
 SUBTYPES = {"DDoS": ("DDOS attack-HOIC", "DDOS attack-LOIC-UDP"), "BruteForce": ("SSH-Bruteforce", "FTP-BruteForce")}
 ALGOS = ("RF", "SVM", "XGB")
 FEATURE_SETS = {"all": (), "no_fp": FINGERPRINT}
@@ -57,22 +62,41 @@ OTHER_DAY_BENIGN = 100_000
 # ---------------------------------------------------------------------------
 # Данни с време и ден
 # ---------------------------------------------------------------------------
+def _read_2018(f) -> pd.DataFrame:
+    d = pd.read_csv(f, low_memory=False)
+    d.columns = [c.strip() for c in d.columns]
+    t = pd.to_datetime(d["Timestamp"], format="%d/%m/%Y %H:%M:%S", errors="coerce")
+    sec = (t - t.dt.normalize()).dt.total_seconds()
+    sec = np.where(sec < 8 * 3600, sec + 12 * 3600, sec)        # 12-часов запис без AM/PM
+    ok = t.dt.year.eq(2018).to_numpy()                           # няколко записа с дата 1970 г.
+    d = d.drop(columns=["Timestamp", "Dst Port"])
+    lab = d.pop("Label").astype(str).str.strip()
+    d = d.apply(pd.to_numeric, errors="coerce").astype(np.float32)
+    d["label"], d["day"], d["sec"] = lab.to_numpy(), f.name.split("_")[0], sec
+    return d.loc[ok]
+
+
+def _read_2017(f) -> pd.DataFrame:
+    d = normalize_2017(pd.read_csv(f, low_memory=False))
+    t = pd.to_datetime(d["Timestamp"], errors="coerce", format="mixed")
+    sec = (t - t.dt.normalize()).dt.total_seconds().to_numpy()
+    d = d.drop(columns=["Timestamp", "Dst Port"])
+    lab = d.pop("Label").astype(str)
+    d = d.apply(pd.to_numeric, errors="coerce").astype(np.float32)
+    d["label"], d["day"], d["sec"] = lab.to_numpy(), C.CIC2017_DAYS[f.name], sec
+    wanted = lab.isin([C.BENIGN_LABEL_2017, *C.CIC2017_LABELS.values()]).to_numpy()
+    return d.loc[wanted & t.notna().to_numpy()]
+
+
 def load_with_time() -> pd.DataFrame:
     parts = []
     for f in sorted(C.RAW_DIR.glob("*.csv")):
-        day = f.name.split("_")[0]
-        d = pd.read_csv(f, low_memory=False)
-        d.columns = [c.strip() for c in d.columns]
-        t = pd.to_datetime(d["Timestamp"], format="%d/%m/%Y %H:%M:%S", errors="coerce")
-        sec = (t - t.dt.normalize()).dt.total_seconds()
-        sec = np.where(sec < 8 * 3600, sec + 12 * 3600, sec)        # 12-часов запис без AM/PM
-        ok = t.dt.year.eq(2018).to_numpy()                           # няколко записа с дата 1970 г.
-        d = d.drop(columns=["Timestamp", "Dst Port"])
-        lab = d.pop("Label").astype(str).str.strip()
-        d = d.apply(pd.to_numeric, errors="coerce").astype(np.float32)
-        d["label"], d["day"], d["sec"] = lab.to_numpy(), day, sec
-        parts.append(d.loc[ok])
-        log.info("прочетен %s: %d записа", f.name, ok.sum())
+        parts.append(_read_2018(f))
+        log.info("прочетен %s: %d записа", f.name, len(parts[-1]))
+    cols = list(parts[0].columns)
+    for f in cic2017_files():
+        parts.append(_read_2017(f)[cols])
+        log.info("прочетен %s: %d записа", f.name, len(parts[-1]))
     df = pd.concat(parts, ignore_index=True)
     feats = [c for c in df.columns if c not in ("label", "day", "sec")]
     df = df.replace([np.inf, -np.inf], np.nan).dropna(subset=feats)
@@ -80,6 +104,16 @@ def load_with_time() -> pd.DataFrame:
     df = df.sort_values(["day", "sec"], kind="stable")
     df = df.drop_duplicates(subset=feats + ["label"], keep="first").reset_index(drop=True)
     return df
+
+
+def other_days(attack) -> list[str]:
+    """Дните от набора на атаката без деня на самата атака."""
+    return sorted(set(DAYS[ATTACKS[attack].dataset]) - {DAY_OF[attack]})
+
+
+def benign_of(df, attack, day=None):
+    m = df.label == ATTACKS[attack].benign_label
+    return df[m & (df.day == day)] if day else df[m]
 
 
 def features(df):
@@ -102,7 +136,7 @@ def _sample(df, n, seed):
 def task_frame(df, attack, labels=None, day_only=True):
     rule = ATTACKS[attack]
     is_att = df["label"].isin(labels) if labels else df["label"].map(rule)
-    is_ben = df["label"].eq(C.BENIGN_LABEL)
+    is_ben = df["label"].eq(rule.benign_label)
     if day_only:
         is_ben &= df["day"].eq(DAY_OF[attack])
     t = df.loc[is_att | is_ben].copy()
@@ -205,8 +239,8 @@ def run():
                              m["Accuracy"], m["Sensitivity"], m["FPR"])
                     if split == "random":
                         # A13: фалшиви аларми върху нормалния трафик от другите дни
-                        for day in sorted(set(DAY_OF.values()) - {DAY_OF[attack]}):
-                            b = _sample(df[(df.label == C.BENIGN_LABEL) & (df.day == day)], OTHER_DAY_BENIGN, C.SEED)
+                        for day in other_days(attack):
+                            b = _sample(benign_of(df, attack, day), OTHER_DAY_BENIGN, C.SEED)
                             fp = int(pipe.predict(b[features(b)]).sum())
                             otherday_rows.append({"attack": attack, "algo": algo, "features": fs, "benign_day": day,
                                                   "n": len(b), "FP": fp, "FPR": fp / len(b),
@@ -217,18 +251,18 @@ def run():
                 log.info("%s %s XGB|SVM %s: Acc=%.5f Sens=%.5f FPR=%.5f", split, attack, fs,
                          mh["Accuracy"], mh["Sensitivity"], mh["FPR"])
                 if split == "random":
-                    for day in sorted(set(DAY_OF.values()) - {DAY_OF[attack]}):
-                        b = _sample(df[(df.label == C.BENIGN_LABEL) & (df.day == day)], OTHER_DAY_BENIGN, C.SEED)
+                    for day in other_days(attack):
+                        b = _sample(benign_of(df, attack, day), OTHER_DAY_BENIGN, C.SEED)
                         fp = int((pred["XGB"][1].predict(b[features(b)]) | pred["SVM"][1].predict(b[features(b)])).sum())
                         otherday_rows.append({"attack": attack, "algo": "XGB|SVM", "features": fs, "benign_day": day,
                                               "n": len(b), "FP": fp, "FPR": fp / len(b), "FPR_same_day": mh["FPR"]})
 
         # A13 (б): нормален трафик от два дни при обучението, тест върху третия ден
-        for held in sorted(set(DAY_OF.values()) - {DAY_OF[attack]}):
+        for held in other_days(attack):
             t2 = task_frame(df, attack, day_only=False)
             t2 = t2[(t2.y == 1) | (t2.day != held)]
             tr, te, _ = balanced_split(t2, C.SEED, False)
-            b = _sample(df[(df.label == C.BENIGN_LABEL) & (df.day == held)], OTHER_DAY_BENIGN, C.SEED)
+            b = _sample(benign_of(df, attack, held), OTHER_DAY_BENIGN, C.SEED)
             pb = {}
             for algo in ALGOS:
                 pipe, m, _ = fit_eval(algo, attack, tr, te, ())
@@ -266,7 +300,7 @@ def run():
     pd.DataFrame(subtype_rows).to_csv(out / "subtype_transfer.csv", index=False)
     pd.DataFrame(otherday_rows).to_csv(out / "other_day_benign.csv", index=False)
     pd.DataFrame(lodo_rows).to_csv(out / "held_out_day_benign.csv", index=False)
-    b = df[df.label == C.BENIGN_LABEL]
+    b = df[df.label.isin(list(C.BENIGN_LABELS.values()))]
     meta["benign_profile_by_day"] = {d: {"rows": int(len(g)),
                                          "init_win_65535_share": float((g["Init Fwd Win Byts"] == 65535).mean()),
                                          "tcp_share": float((g["Protocol"] == 6).mean())} for d, g in b.groupby("day")}

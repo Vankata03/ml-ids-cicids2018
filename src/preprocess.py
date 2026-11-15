@@ -1,7 +1,8 @@
-"""Предварителна обработка на CSE-CIC-IDS2018.
+"""Предварителна обработка на CSE-CIC-IDS2018 и CIC-IDS2017.
 
 Стъпки (виж плана, раздел 4):
-  1. зареждане само на нужните класове (Benign, DDOS attack-*, FTP/SSH-BruteForce, Bot);
+  1. зареждане само на нужните класове (Benign, DDOS attack-*, FTP/SSH-BruteForce от
+     CSE-CIC-IDS2018; Benign и PortScan от CIC-IDS2017);
   2. почистване: NaN/Inf, дубликати;
   3. формиране на бинарна задача за всяка атака;
   4. балансирана стратифицирана извадка;
@@ -31,7 +32,7 @@ log = logging.getLogger(__name__)
 # 1. Зареждане
 # ---------------------------------------------------------------------------
 def _wanted(label: str) -> bool:
-    return label == C.BENIGN_LABEL or any(spec(label) for spec in ATTACKS.values())
+    return label in C.BENIGN_LABELS.values() or any(spec(label) for spec in ATTACKS.values())
 
 
 def _load_fraction(label: str) -> float:
@@ -41,22 +42,52 @@ def _load_fraction(label: str) -> float:
     return 1.0
 
 
-def load_raw(raw_dir: Path = C.RAW_DIR, chunksize: int = 500_000) -> tuple[pd.DataFrame, dict]:
-    """Чете всички CSV файлове от raw_dir на части и запазва само нужните класове.
+def cic2017_files(raw2017_dir: Path = C.RAW2017_DIR) -> list[Path]:
+    """Файловете на CIC-IDS2017 в реда от конфигурацията (първи е денят на атаката)."""
+    return [raw2017_dir / n for n in C.CIC2017_FILES if (raw2017_dir / n).exists()]
 
-    Връща DataFrame и статистика за оригиналния брой записи по клас
-    (преди филтриране), която се използва в доклада.
+
+def normalize_2017(chunk: pd.DataFrame) -> pd.DataFrame:
+    """Привежда записите на CIC-IDS2017 към колоните и етикетите на CSE-CIC-IDS2018.
+
+    Етикетите извън C.CIC2017_LABELS (другите атаки от същите дни) получават наставка с името
+    на набора, за да не съвпаднат с етикет от CSE-CIC-IDS2018; те не участват в изследването."""
+    chunk.columns = [c.strip() for c in chunk.columns]
+    chunk = chunk.drop(columns=[c for c in C.CIC2017_DROP if c in chunk.columns]).rename(columns=C.CIC2017_RENAME)
+    lbl = chunk["Label"].astype(str).str.strip()
+    chunk["Label"] = lbl.map(lambda v: C.CIC2017_LABELS.get(v, f"{v} ({C.DATASET_2017})"))
+    return chunk
+
+
+def load_raw(raw_dir: Path = C.RAW_DIR, raw2017_dir: Path | None = None,
+             chunksize: int = 500_000) -> tuple[pd.DataFrame, dict]:
+    """Чете CSV файловете на двата набора на части и запазва само нужните класове.
+
+    Първо се четат файловете на CSE-CIC-IDS2018 от raw_dir, след това тези на CIC-IDS2017
+    от raw2017_dir (по подразбиране C.RAW2017_DIR, когато raw_dir е основната папка).
+    Връща DataFrame и статистика за оригиналния брой записи по клас (преди филтриране).
     """
-    files = sorted(raw_dir.rglob("*.csv"))
+    if raw2017_dir is None and Path(raw_dir) == C.RAW_DIR:
+        raw2017_dir = C.RAW2017_DIR
+    files = [(f, False) for f in sorted(Path(raw_dir).rglob("*.csv"))]
     if not files:
         raise FileNotFoundError(
             f"Няма CSV файлове в {raw_dir}. Изтеглете CSE-CIC-IDS2018 (виж data/README.md)."
         )
-    parts, original_counts = [], {}
+    if raw2017_dir is not None:
+        files2017 = cic2017_files(Path(raw2017_dir))
+        if not files2017:
+            raise FileNotFoundError(
+                f"Няма CSV файлове в {raw2017_dir}. Изтеглете CIC-IDS2017 (виж data/README.md)."
+            )
+        files += [(f, True) for f in files2017]
+    parts, original_counts, columns = [], {}, None
     rng = np.random.default_rng(C.SEED)
-    for i, f in enumerate(files, 1):
+    for i, (f, is2017) in enumerate(files, 1):
         for chunk in pd.read_csv(f, chunksize=chunksize, low_memory=False):
             chunk.columns = [c.strip() for c in chunk.columns]
+            if is2017:
+                chunk = normalize_2017(chunk)
             chunk = chunk.drop(columns=[c for c in C.DROP_COLUMNS if c in chunk.columns])
             label_col = next((c for c in chunk.columns if c.lower() == C.LABEL_COLUMN), None)
             if label_col is None:
@@ -77,12 +108,17 @@ def load_raw(raw_dir: Path = C.RAW_DIR, chunksize: int = 500_000) -> tuple[pd.Da
             sub[C.LABEL_COLUMN] = lbl[keep]
             num_cols = sub.columns.drop(C.LABEL_COLUMN)
             sub[num_cols] = sub[num_cols].apply(pd.to_numeric, errors="coerce").astype(np.float32)
-            parts.append(sub)
+            if columns is None:
+                columns = list(sub.columns)
+            elif set(sub.columns) != set(columns):
+                raise ValueError(f"{f.name}: колоните не съвпадат с тези на първия файл: "
+                                 f"{sorted(set(sub.columns) ^ set(columns))}")
+            parts.append(sub[columns])
         log.info("Прочетен файл %d/%d: %s", i, len(files), f.name)
     df = pd.concat(parts, ignore_index=True)
     stats = {
         "files": len(files),
-        "file_names": [f"{f.parent.name}/{f.name}" for f in files],
+        "file_names": [f"{f.parent.name}/{f.name}" for f, _ in files],
         "rows_read_total": int(sum(original_counts.values())),
         "original_class_counts": dict(sorted(original_counts.items(), key=lambda x: -x[1])),
         "rows_kept": int(len(df)),
@@ -120,13 +156,15 @@ def clean(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
 def build_task(df: pd.DataFrame, attack: str, original_counts: dict, seed: int = C.SEED) -> dict:
     """Формира балансирана бинарна задача (атака=1, нормален=0) и я разделя 70/30.
 
+    Нормалният трафик е от същия набор като атаката (AttackSpec.benign_label).
+
     Записите, които НЕ влизат в балансираната извадка, остават като „резерв“
     за експеримент E2 (тест при естествено съотношение на класовете).
     """
     rule = ATTACKS[attack]
     lbl = df[C.LABEL_COLUMN]
     is_attack = lbl.map(rule)
-    is_benign = lbl == C.BENIGN_LABEL
+    is_benign = lbl == rule.benign_label
 
     # Дубликати на ниво задача: различни оригинални етикети могат да имат еднакъв
     # вектор на признаците (напр. DDoS-SYN_Flood и DDoS-SynonymousIP_Flood).
@@ -171,11 +209,12 @@ def build_task(df: pd.DataFrame, attack: str, original_counts: dict, seed: int =
     neg_rest = np.setdiff1d(neg_idx, train_idx)
     # естествено съотношение по ОРИГИНАЛНИЯ брой записи в набора (преди извадката)
     n_att = sum(v for k, v in original_counts.items() if rule(k))
-    n_ben = original_counts.get(C.BENIGN_LABEL, 0)
+    n_ben = original_counts.get(rule.benign_label, 0)
     natural_ratio = n_att / (n_att + n_ben)
 
     stats = {
         "attack": attack,
+        "dataset": rule.dataset,
         "attack_labels_included": sorted(lbl[is_attack].unique().tolist()),
         "attack_rows_original": int(n_att),
         "benign_rows_original": int(n_ben),

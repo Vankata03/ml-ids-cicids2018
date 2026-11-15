@@ -10,7 +10,7 @@ A7 пренос между атаките (модел за една атака �
 A8 пермутационна важност на входните признаци за двата алгоритъма;
 A9 статистическо сравнение на алгоритмите (bootstrap интервали, McNemar) - в src/stats.py.
 
-Всички функции работят само с оригиналните записи на CSE-CIC-IDS2018.
+Всички функции работят само с оригиналните записи на двата набора.
 """
 from __future__ import annotations
 
@@ -51,7 +51,9 @@ def data_profile(df: pd.DataFrame, sample: int = 50_000, seed: int = C.SEED) -> 
     """
     rng = np.random.default_rng(seed)
     lbl = df[C.LABEL_COLUMN]
-    groups = {"Нормален": lbl == C.BENIGN_LABEL}
+    # по една група нормален трафик за всеки набор и по една за всяка атака
+    benign_group = {C.BENIGN_LABEL: "Нормален", C.BENIGN_LABEL_2017: f"Нормален ({C.DATASET_2017})"}
+    groups = {name: lbl == b for b, name in benign_group.items() if (lbl == b).any()}
     for key, spec in ATTACKS.items():
         m = lbl.map(spec)
         if m.sum() > 0:  # атака без налични записи се пропуска
@@ -70,8 +72,9 @@ def data_profile(df: pd.DataFrame, sample: int = 50_000, seed: int = C.SEED) -> 
     profile = pd.concat(rows).rename_axis("feature").reset_index()
     sep = []
     for key in [k for k in ATTACKS if k in samples]:
+        ben = samples[benign_group[ATTACKS[key].benign_label]]   # нормалният трафик от набора на атаката
         for f in feats:
-            a, b = samples[key][f].to_numpy(), samples["Нормален"][f].to_numpy()
+            a, b = samples[key][f].to_numpy(), ben[f].to_numpy()
             ks = ks_2samp(a, b)
             sep.append({"attack": key, "feature": f, "KS_D": float(ks.statistic),
                         "median_attack": float(np.median(a)), "median_benign": float(np.median(b))})
@@ -102,11 +105,13 @@ def projection_2d(pipe, X, y, n: int = C.PROJECTION_SAMPLES, seed: int = C.SEED)
 def learning_curve(algo: str, params: dict, task: dict, sizes=C.LEARNING_CURVE_SIZES) -> pd.DataFrame:
     X_tr, y_tr = task["X_train"], task["y_train"]
     X_te, y_te = _stratified(task["X_test"], task["y_test"], C.SWEEP_TEST_MAX, C.SEED + 7)
-    limit = ALGORITHMS[algo].train_max or len(X_tr)
+    limit = min(ALGORITHMS[algo].train_max or len(X_tr), len(X_tr))
+    sizes = [n for n in sizes if n <= limit]
+    if len(sizes) < 4:
+        # малка задача (PortScan): решетката е 1/8, 1/4, 1/2 и всички обучаващи записи
+        sizes = sorted({limit // 8, limit // 4, limit // 2, limit})
     out = []
     for n in sizes:
-        if n > limit:
-            continue
         pipe, t_fit, n_fit = fit_final(algo, params, X_tr, y_tr, train_max=n)
         t0 = time.perf_counter()
         y_pred = pipe.predict(X_te)

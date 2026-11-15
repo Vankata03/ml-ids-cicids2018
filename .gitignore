@@ -16,3 +16,12 @@ report/latex/*.toc
 report/latex/*.fls
 report/latex/*.fdb_latexmk
 report/latex/*.xdv
+
+# Raw corrected CIC-IDS2017 files (PortScan); download steps are in data/README.md
+data/raw_cicids2017/
+
+# Local environment and Node packages
+.venv/
+node_modules/
+report/latex/main.aux
+report/latex/main.pdf

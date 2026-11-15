@@ -239,123 +239,123 @@
       "share_A_better": 0.0
     }
   },
-  "Bot:RF-SVM": {
-    "attack": "Bot",
+  "PortScan:RF-SVM": {
+    "attack": "PortScan",
     "A": "RF",
     "B": "SVM",
-    "both_correct": 59752,
-    "only_A_correct": 228,
-    "only_B_correct": 7,
-    "both_wrong": 13,
-    "statistic": 205.95744680851064,
-    "p_value": 1.0468303993048255e-46,
-    "method": "хи-квадрат с корекция на Edwards",
-    "accuracy_diff": {
-      "metric": "Accuracy",
-      "diff": 0.0036833333333333718,
-      "ci_low": 0.0032166666666667565,
-      "ci_high": 0.004167083333333426,
-      "share_A_better": 1.0
-    },
-    "f1_diff": {
-      "metric": "F1",
-      "diff": 0.0036958688590598143,
-      "ci_low": 0.003226578491202689,
-      "ci_high": 0.004193888908742926,
-      "share_A_better": 1.0
-    },
-    "precision_diff": {
-      "metric": "Precision",
-      "diff": 0.0006389429613771203,
-      "ci_low": 0.00030303155113653446,
-      "ci_high": 0.00104062894104667,
-      "share_A_better": 1.0
-    },
-    "sensitivity_diff": {
-      "metric": "Sensitivity",
-      "diff": 0.006733333333333369,
-      "ci_low": 0.005832247083334119,
-      "ci_high": 0.007621241017036645,
-      "share_A_better": 1.0
-    }
-  },
-  "Bot:RF-XGB": {
-    "attack": "Bot",
-    "A": "RF",
-    "B": "XGB",
-    "both_correct": 59978,
-    "only_A_correct": 2,
-    "only_B_correct": 11,
-    "both_wrong": 9,
-    "statistic": 2.0,
-    "p_value": 0.0224609375,
+    "both_correct": 1003,
+    "only_A_correct": 5,
+    "only_B_correct": 1,
+    "both_wrong": 1,
+    "statistic": 1.0,
+    "p_value": 0.21875,
     "method": "точен биномен тест",
     "accuracy_diff": {
       "metric": "Accuracy",
-      "diff": -0.00014999999999998348,
-      "ci_low": -0.00026708333333341213,
-      "ci_high": -3.333333333332966e-05,
-      "share_A_better": 0.004
+      "diff": 0.003960396039603964,
+      "ci_low": 0.0,
+      "ci_high": 0.008910891089108919,
+      "share_A_better": 0.937
     },
     "f1_diff": {
       "metric": "F1",
-      "diff": -0.00015001916809720406,
-      "ci_low": -0.0002690610959417,
-      "ci_high": -3.3460149486697063e-05,
-      "share_A_better": 0.004
+      "diff": 0.00397218293257906,
+      "ci_low": 0.0,
+      "ci_high": 0.009298337089380937,
+      "share_A_better": 0.968
     },
     "precision_diff": {
       "metric": "Precision",
-      "diff": -0.00010003000455616196,
-      "ci_low": -0.00026782753172726047,
-      "ci_high": 6.703553146500396e-05,
-      "share_A_better": 0.087
+      "diff": 0.0019959451213511503,
+      "ci_low": -0.004040813817690112,
+      "ci_high": 0.008561987279100899,
+      "share_A_better": 0.762
     },
     "sensitivity_diff": {
       "metric": "Sensitivity",
-      "diff": -0.00019999999999997797,
-      "ci_low": -0.0003672377280733885,
-      "ci_high": -6.618396675617255e-05,
+      "diff": 0.005940594059405946,
+      "ci_low": 0.0,
+      "ci_high": 0.013780207022938674,
+      "share_A_better": 0.966
+    }
+  },
+  "PortScan:RF-XGB": {
+    "attack": "PortScan",
+    "A": "RF",
+    "B": "XGB",
+    "both_correct": 1007,
+    "only_A_correct": 1,
+    "only_B_correct": 0,
+    "both_wrong": 2,
+    "statistic": 0.0,
+    "p_value": 1.0,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.000990099009900991,
+      "ci_low": 0.0,
+      "ci_high": 0.002970297029702973,
+      "share_A_better": 0.626
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0009871610306431133,
+      "ci_low": 0.0,
+      "ci_high": 0.00303958183135902,
+      "share_A_better": 0.626
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0019723711501584695,
+      "ci_low": 0.0,
+      "ci_high": 0.006060912771439125,
+      "share_A_better": 0.626
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
       "share_A_better": 0.0
     }
   },
-  "Bot:SVM-XGB": {
-    "attack": "Bot",
+  "PortScan:SVM-XGB": {
+    "attack": "PortScan",
     "A": "SVM",
     "B": "XGB",
-    "both_correct": 59755,
-    "only_A_correct": 4,
-    "only_B_correct": 234,
-    "both_wrong": 7,
-    "statistic": 220.3403361344538,
-    "p_value": 7.623385069673603e-50,
-    "method": "хи-квадрат с корекция на Edwards",
+    "both_correct": 1002,
+    "only_A_correct": 2,
+    "only_B_correct": 5,
+    "both_wrong": 1,
+    "statistic": 2.0,
+    "p_value": 0.453125,
+    "method": "точен биномен тест",
     "accuracy_diff": {
       "metric": "Accuracy",
-      "diff": -0.0038333333333333552,
-      "ci_low": -0.004316666666666635,
-      "ci_high": -0.003316666666666743,
-      "share_A_better": 0.0
+      "diff": -0.002970297029702973,
+      "ci_low": -0.008910891089108919,
+      "ci_high": 0.001980198019801982,
+      "share_A_better": 0.078
     },
     "f1_diff": {
       "metric": "F1",
-      "diff": -0.0038458880271570184,
-      "ci_low": -0.004331775075824757,
-      "ci_high": -0.0033327865437415395,
-      "share_A_better": 0.0
+      "diff": -0.002985021901935947,
+      "ci_low": -0.008943387127021325,
+      "ci_high": 0.0019836561114403126,
+      "share_A_better": 0.078
     },
     "precision_diff": {
       "metric": "Precision",
-      "diff": -0.0007389729659332822,
-      "ci_low": -0.0011076812806832287,
-      "ci_high": -0.00040405713348979635,
-      "share_A_better": 0.0
+      "diff": -2.3573971192680787e-05,
+      "ci_low": -0.008036456054335539,
+      "ci_high": 0.007881522725300438,
+      "share_A_better": 0.381
     },
     "sensitivity_diff": {
       "metric": "Sensitivity",
-      "diff": -0.006933333333333347,
-      "ci_low": -0.00783684384529986,
-      "ci_high": -0.0059807363959348825,
+      "diff": -0.005940594059405946,
+      "ci_low": -0.013780207022938676,
+      "ci_high": 0.0,
       "share_A_better": 0.0
     }
   }

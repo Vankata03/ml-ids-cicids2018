@@ -1,9 +1,9 @@
 {
-  "total_minutes": 25.015208210866664,
+  "total_minutes": 11.042915748333325,
   "attacks": [
     "DDoS",
     "BruteForce",
-    "Bot"
+    "PortScan"
   ],
   "algorithms": [
     "RF",

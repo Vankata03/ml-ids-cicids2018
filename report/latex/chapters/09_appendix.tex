@@ -1,11 +1,11 @@
 % ============================== ПРИЛОЖЕНИЕ ==============================
 \chapter{Възпроизвеждане на изследването}\label{app:repro}
 \begin{enumerate}
-  \item Изтегляне на трите дневни CSV файла на CSE-CIC-IDS2018 от публичното хранилище в AWS (без регистрация)~\cite{aws2018}. Файловете се поставят в \texttt{data/raw/} (вж. \texttt{data/README.md}).
+  \item Изтегляне на трите дневни CSV файла на CSE-CIC-IDS2018 от публичното хранилище в AWS (без регистрация)~\cite{aws2018} в \texttt{data/raw/} и на архива на коригирания CIC-IDS2017~\cite{liu2022web}, от който трите дневни файла се разархивират в \texttt{data/raw\_cicids2017/} (вж. \texttt{data/README.md}).
   \item Инсталиране на зависимостите: \texttt{pip install -r requirements.txt}.
   \item Изпълнение на тестовете: \texttt{python -m pytest tests}.
-  \item Пълен експеримент: \texttt{python run\_all.py} (около 25 минути на 4 ядра и 16~GB RAM).
-  \item Доклад (изисква XeLaTeX): \texttt{python report/build\_report.py}.
+  \item Пълен експеримент: \texttt{python run\_all.py} (около \val{run-minutes} минути за основния експеримент и още \val{rob-minutes} за проверките за приложимост на машината от \cref{tab:env}).
+  \item Доклад: \texttt{python report/build\_report.py -{}-no-pdf} (таблици и стойности), след това \texttt{python report/build\_docx.py} (Word и PDF).
   \item Презентация: първо \path{python presentation/render_formulas.py},\\ след това \path{node presentation/build_presentation.js}.
 \end{enumerate}
 

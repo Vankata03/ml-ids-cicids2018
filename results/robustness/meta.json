@@ -10,6 +10,11 @@
       "65535": 0.2445,
       "-1": 0.2088
     },
+    "Benign (CIC-IDS2017)": {
+      "0": 0.5981,
+      "8192": 0.1783,
+      "29200": 0.1372
+    },
     "Bot": {
       "8192": 0.9895,
       "2052": 0.0044,
@@ -24,6 +29,11 @@
     },
     "FTP-BruteForce": {
       "26883": 1.0
+    },
+    "PortScan": {
+      "29200": 0.5585,
+      "1024": 0.3939,
+      "64240": 0.0315
     },
     "SSH-Bruteforce": {
       "26883": 0.9976,
@@ -60,18 +70,18 @@
       "FTP-BruteForce": 53
     }
   },
-  "Bot_chronological": {
-    "train_until": "14:40",
-    "test_from": "14:28",
-    "attack_test_from": "14:28",
-    "attack_train_until": "14:28",
-    "train_rows": 140000,
-    "test_rows": 60000,
+  "PortScan_chronological": {
+    "train_until": "17:55",
+    "test_from": "17:55",
+    "attack_test_from": "17:55",
+    "attack_train_until": "17:55",
+    "train_rows": 2356,
+    "test_rows": 1010,
     "test_attack_labels": {
-      "Bot": 30000
+      "PortScan": 505
     },
     "train_attack_labels": {
-      "Bot": 70000
+      "PortScan": 1178
     }
   },
   "benign_profile_by_day": {
@@ -79,6 +89,21 @@
       "rows": 626486,
       "init_win_65535_share": 0.0004213980839156821,
       "tcp_share": 0.7379079500579422
+    },
+    "Friday-07-07-2017": {
+      "rows": 271439,
+      "init_win_65535_share": 0.02018501394420109,
+      "tcp_share": 0.3641407461713313
+    },
+    "Monday-03-07-2017": {
+      "rows": 339806,
+      "init_win_65535_share": 0.0948040941007516,
+      "tcp_share": 0.43212892061941227
+    },
+    "Wednesday-05-07-2017": {
+      "rows": 282059,
+      "init_win_65535_share": 0.01865567133117539,
+      "tcp_share": 0.41043540535845335
     },
     "Wednesday-14-02-2018": {
       "rows": 485069,
@@ -91,5 +116,5 @@
       "tcp_share": 0.99453397417774
     }
   },
-  "runtime_min": 7.626799691216669
+  "runtime_min": 5.9735531716666666
 }

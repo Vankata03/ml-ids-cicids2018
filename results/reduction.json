@@ -1877,551 +1877,246 @@
     ],
     "selected_importance_share": 0.999911720778374
   },
-  "RF_Bot": {
+  "RF_PortScan": {
     "method": "select",
     "n_features_in": 77,
     "dropped_explicit": [],
     "dropped_low_variance": [
-      "Bwd PSH Flags",
       "Fwd URG Flags",
       "Bwd URG Flags",
+      "URG Flag Cnt",
       "CWE Flag Count",
-      "Fwd Byts/b Avg",
-      "Fwd Pkts/b Avg",
-      "Fwd Blk Rate Avg",
-      "Bwd Byts/b Avg",
-      "Bwd Pkts/b Avg",
-      "Bwd Blk Rate Avg"
+      "ECE Flag Cnt",
+      "Subflow Bwd Pkts"
     ],
     "dropped_correlated": [],
-    "n_features_after_filter": 67,
+    "n_features_after_filter": 71,
     "n_reduced": 20,
     "selected_features": [
       "Protocol",
-      "Tot Fwd Pkts",
+      "Flow Duration",
+      "TotLen Fwd Pkts",
       "Fwd Pkt Len Max",
       "Fwd Pkt Len Mean",
-      "Bwd Pkt Len Max",
-      "Bwd Pkt Len Mean",
-      "Flow Byts/s",
-      "Flow IAT Std",
-      "Flow IAT Max",
-      "Flow IAT Min",
-      "Fwd IAT Std",
-      "Fwd IAT Min",
-      "Fwd Pkts/s",
-      "Pkt Len Max",
-      "Pkt Len Mean",
-      "RST Flag Cnt",
-      "Pkt Size Avg",
-      "Init Fwd Win Byts",
-      "Active Mean",
-      "Idle Min"
-    ],
-    "importance_ranking": [
-      {
-        "feature": "Bwd Pkt Len Mean",
-        "importance": 0.6446875032998112
-      },
-      {
-        "feature": "RST Flag Cnt",
-        "importance": 0.26280098766401566
-      },
-      {
-        "feature": "Fwd Pkt Len Mean",
-        "importance": 0.043650505232998314
-      },
-      {
-        "feature": "Bwd Pkt Len Max",
-        "importance": 0.012017859662968814
-      },
-      {
-        "feature": "Flow Byts/s",
-        "importance": 0.006625912459552727
-      },
-      {
-        "feature": "Flow IAT Min",
-        "importance": 0.0054093303390254244
-      },
-      {
-        "feature": "Flow IAT Std",
-        "importance": 0.0025076870639504523
-      },
-      {
-        "feature": "Fwd IAT Std",
-        "importance": 0.00215304264409798
-      },
-      {
-        "feature": "Pkt Len Mean",
-        "importance": 0.00208707677402463
-      },
-      {
-        "feature": "Fwd Pkts/s",
-        "importance": 0.001821078350087103
-      },
-      {
-        "feature": "Tot Fwd Pkts",
-        "importance": 0.0017868794294835341
-      },
-      {
-        "feature": "Init Fwd Win Byts",
-        "importance": 0.0015795515868814829
-      },
-      {
-        "feature": "Pkt Size Avg",
-        "importance": 0.0015056624850965895
-      },
-      {
-        "feature": "Idle Min",
-        "importance": 0.0013478286048250918
-      },
-      {
-        "feature": "Protocol",
-        "importance": 0.0011573712052726768
-      },
-      {
-        "feature": "Pkt Len Max",
-        "importance": 0.001134131537109604
-      },
-      {
-        "feature": "Active Mean",
-        "importance": 0.0008551141890380388
-      },
-      {
-        "feature": "Fwd IAT Min",
-        "importance": 0.0006542923728538096
-      },
-      {
-        "feature": "Fwd Pkt Len Max",
-        "importance": 0.0005009724280879538
-      },
-      {
-        "feature": "Flow IAT Max",
-        "importance": 0.0004914980007640093
-      },
-      {
-        "feature": "TotLen Bwd Pkts",
-        "importance": 0.0004778371568107049
-      },
-      {
-        "feature": "Active Max",
-        "importance": 0.0004569840545539655
-      },
-      {
-        "feature": "Init Bwd Win Byts",
-        "importance": 0.00037999908146945125
-      },
-      {
-        "feature": "Fwd Header Len",
-        "importance": 0.0003027201651712612
-      },
-      {
-        "feature": "Idle Max",
-        "importance": 0.0003009550613548852
-      },
-      {
-        "feature": "Active Min",
-        "importance": 0.0002919621324575928
-      },
-      {
-        "feature": "Flow Duration",
-        "importance": 0.0002795654122014072
-      },
-      {
-        "feature": "TotLen Fwd Pkts",
-        "importance": 0.0002563079606495935
-      },
-      {
-        "feature": "Active Std",
-        "importance": 0.0002459430755201614
-      },
-      {
-        "feature": "Fwd IAT Tot",
-        "importance": 0.00020640759615636782
-      },
-      {
-        "feature": "Bwd Pkts/s",
-        "importance": 0.00019556498010195984
-      },
-      {
-        "feature": "Bwd IAT Min",
-        "importance": 0.00018089887690608266
-      },
-      {
-        "feature": "Bwd IAT Mean",
-        "importance": 0.00016674544674917258
-      },
-      {
-        "feature": "Idle Std",
-        "importance": 0.00016278897460682905
-      },
-      {
-        "feature": "Tot Bwd Pkts",
-        "importance": 0.00015969771020044935
-      },
-      {
-        "feature": "Fwd IAT Mean",
-        "importance": 0.0001548926619875724
-      },
-      {
-        "feature": "Fwd Pkt Len Min",
-        "importance": 0.00014411923717508725
-      },
-      {
-        "feature": "Bwd IAT Tot",
-        "importance": 0.00012799285618575573
-      },
-      {
-        "feature": "Fwd IAT Max",
-        "importance": 0.00012009236612940742
-      },
-      {
-        "feature": "Bwd IAT Max",
-        "importance": 0.00011754911705103452
-      },
-      {
-        "feature": "Bwd Header Len",
-        "importance": 0.0001116528598034601
-      },
-      {
-        "feature": "Flow Pkts/s",
-        "importance": 9.901726432441948e-05
-      },
-      {
-        "feature": "Pkt Len Std",
-        "importance": 9.174658147184509e-05
-      },
-      {
-        "feature": "Flow IAT Mean",
-        "importance": 8.456096997836215e-05
-      },
-      {
-        "feature": "Down/Up Ratio",
-        "importance": 7.558951388855036e-05
-      },
-      {
-        "feature": "Bwd Pkt Len Std",
-        "importance": 2.363500938980063e-05
-      },
-      {
-        "feature": "Fwd Pkt Len Std",
-        "importance": 1.0488547759740586e-05
-      },
-      {
-        "feature": "Fwd PSH Flags",
-        "importance": 0.0
-      },
-      {
-        "feature": "ECE Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "URG Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "ACK Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "PSH Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "FIN Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "SYN Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "Pkt Len Min",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd Seg Size Avg",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Pkts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Pkts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Fwd Seg Size Avg",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd IAT Std",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd Pkt Len Min",
-        "importance": 0.0
-      },
-      {
-        "feature": "Pkt Len Var",
-        "importance": 0.0
-      },
-      {
-        "feature": "Idle Mean",
-        "importance": 0.0
-      },
-      {
-        "feature": "Fwd Seg Size Min",
-        "importance": 0.0
-      },
-      {
-        "feature": "Fwd Act Data Pkts",
-        "importance": 0.0
-      }
-    ],
-    "selected_importance_share": 0.994774285329945
-  },
-  "SVM_Bot": {
-    "method": "select",
-    "n_features_in": 77,
-    "dropped_explicit": [],
-    "dropped_low_variance": [
-      "Bwd PSH Flags",
-      "Fwd URG Flags",
-      "Bwd URG Flags",
-      "CWE Flag Count",
-      "Fwd Byts/b Avg",
-      "Fwd Pkts/b Avg",
-      "Fwd Blk Rate Avg",
-      "Bwd Byts/b Avg",
-      "Bwd Pkts/b Avg",
-      "Bwd Blk Rate Avg"
-    ],
-    "dropped_correlated": [],
-    "n_features_after_filter": 67,
-    "n_reduced": 20,
-    "selected_features": [
-      "Protocol",
-      "Tot Fwd Pkts",
-      "Tot Bwd Pkts",
-      "Fwd Pkt Len Mean",
+      "Bwd Pkt Len Min",
       "Bwd Pkt Len Mean",
       "Bwd Pkt Len Std",
-      "Flow Byts/s",
-      "Flow IAT Std",
-      "Flow IAT Max",
+      "Flow Pkts/s",
+      "Flow IAT Mean",
       "Flow IAT Min",
       "Fwd IAT Min",
-      "Fwd Header Len",
-      "Fwd Pkts/s",
-      "Pkt Len Max",
       "Pkt Len Mean",
-      "RST Flag Cnt",
-      "Pkt Size Avg",
-      "Init Fwd Win Byts",
+      "SYN Flag Cnt",
+      "ACK Flag Cnt",
+      "Down/Up Ratio",
+      "Subflow Fwd Byts",
       "Active Mean",
-      "Idle Max"
+      "Idle Mean",
+      "Idle Std"
     ],
     "importance_ranking": [
       {
-        "feature": "Bwd Pkt Len Mean",
-        "importance": 0.698364462596765
-      },
-      {
-        "feature": "RST Flag Cnt",
-        "importance": 0.21788912006469982
+        "feature": "Subflow Fwd Byts",
+        "importance": 0.5239043105386539
       },
       {
         "feature": "Fwd Pkt Len Mean",
-        "importance": 0.035207891818065586
-      },
-      {
-        "feature": "Flow Byts/s",
-        "importance": 0.0056786782890591815
-      },
-      {
-        "feature": "Pkt Size Avg",
-        "importance": 0.005320848529271852
-      },
-      {
-        "feature": "Pkt Len Mean",
-        "importance": 0.004921092977562995
-      },
-      {
-        "feature": "Flow IAT Min",
-        "importance": 0.003603413033257409
-      },
-      {
-        "feature": "Pkt Len Max",
-        "importance": 0.0033231978267558434
-      },
-      {
-        "feature": "Flow IAT Std",
-        "importance": 0.0031585853369010485
-      },
-      {
-        "feature": "Fwd Pkts/s",
-        "importance": 0.0019464823011381405
+        "importance": 0.17674044647180315
       },
       {
         "feature": "Active Mean",
-        "importance": 0.001653065077062474
-      },
-      {
-        "feature": "Idle Max",
-        "importance": 0.0015841844147007087
-      },
-      {
-        "feature": "Protocol",
-        "importance": 0.0013181471230201472
-      },
-      {
-        "feature": "Flow IAT Max",
-        "importance": 0.0011455284102299187
-      },
-      {
-        "feature": "Tot Fwd Pkts",
-        "importance": 0.00107510305801215
-      },
-      {
-        "feature": "Bwd Pkt Len Std",
-        "importance": 0.0009986939527371751
-      },
-      {
-        "feature": "Fwd IAT Min",
-        "importance": 0.0009789519379833904
-      },
-      {
-        "feature": "Fwd Header Len",
-        "importance": 0.0009435151559999308
-      },
-      {
-        "feature": "Init Fwd Win Byts",
-        "importance": 0.0008556871442526659
-      },
-      {
-        "feature": "Tot Bwd Pkts",
-        "importance": 0.0008522995576890523
-      },
-      {
-        "feature": "Bwd IAT Max",
-        "importance": 0.0008110617689995284
-      },
-      {
-        "feature": "Bwd IAT Mean",
-        "importance": 0.0007863005759503866
-      },
-      {
-        "feature": "Fwd IAT Max",
-        "importance": 0.0007218384232341511
+        "importance": 0.1109574325126254
       },
       {
         "feature": "TotLen Fwd Pkts",
-        "importance": 0.0005687180393569379
+        "importance": 0.039210973880087846
       },
       {
-        "feature": "Pkt Len Std",
-        "importance": 0.0005492353960521993
-      },
-      {
-        "feature": "Fwd IAT Std",
-        "importance": 0.0004709570710948048
-      },
-      {
-        "feature": "Flow Pkts/s",
-        "importance": 0.0004673567011416708
-      },
-      {
-        "feature": "Init Bwd Win Byts",
-        "importance": 0.00044264754104136444
-      },
-      {
-        "feature": "Fwd IAT Mean",
-        "importance": 0.000429243738032972
-      },
-      {
-        "feature": "Active Min",
-        "importance": 0.0004006511819120269
-      },
-      {
-        "feature": "Fwd IAT Tot",
-        "importance": 0.0003831133376803934
-      },
-      {
-        "feature": "Bwd IAT Tot",
-        "importance": 0.0003797939384391969
-      },
-      {
-        "feature": "PSH Flag Cnt",
-        "importance": 0.0003143038194683523
-      },
-      {
-        "feature": "TotLen Bwd Pkts",
-        "importance": 0.0003120532411810237
-      },
-      {
-        "feature": "Idle Min",
-        "importance": 0.00030877494905117326
-      },
-      {
-        "feature": "Flow Duration",
-        "importance": 0.00028178795015811926
+        "feature": "SYN Flag Cnt",
+        "importance": 0.02275854798890033
       },
       {
         "feature": "Fwd Pkt Len Max",
-        "importance": 0.00022139578008327707
+        "importance": 0.018573517805425422
       },
       {
-        "feature": "Idle Mean",
-        "importance": 0.0002030353789477214
+        "feature": "Pkt Len Mean",
+        "importance": 0.016636914814545326
       },
       {
-        "feature": "Bwd IAT Min",
-        "importance": 0.0001994101283745622
+        "feature": "Idle Std",
+        "importance": 0.01034426939161536
       },
       {
-        "feature": "Active Std",
-        "importance": 0.00017197913662010087
+        "feature": "Protocol",
+        "importance": 0.010133927928225138
       },
       {
-        "feature": "Flow IAT Mean",
-        "importance": 0.00012621160568704288
+        "feature": "Fwd IAT Min",
+        "importance": 0.008476779388459628
       },
       {
-        "feature": "Active Max",
-        "importance": 0.00012308235387997423
+        "feature": "Flow IAT Min",
+        "importance": 0.007203369513965144
       },
       {
-        "feature": "Bwd Pkts/s",
-        "importance": 0.00011471273867141075
+        "feature": "Bwd Pkt Len Std",
+        "importance": 0.005390052366226778
+      },
+      {
+        "feature": "Bwd Pkt Len Mean",
+        "importance": 0.005322301117687662
+      },
+      {
+        "feature": "Bwd Pkt Len Min",
+        "importance": 0.004845083298963921
+      },
+      {
+        "feature": "Flow Pkts/s",
+        "importance": 0.004193461548238364
+      },
+      {
+        "feature": "Flow Duration",
+        "importance": 0.0041730117395822
+      },
+      {
+        "feature": "Down/Up Ratio",
+        "importance": 0.002626245689722123
       },
       {
         "feature": "ACK Flag Cnt",
-        "importance": 0.00010854275958214594
+        "importance": 0.002514368784537219
       },
       {
-        "feature": "Bwd Pkt Len Max",
-        "importance": 0.00010561130870427813
+        "feature": "Idle Mean",
+        "importance": 0.002511498960414309
       },
       {
-        "feature": "Bwd Header Len",
-        "importance": 9.118920321832999e-05
+        "feature": "Flow IAT Mean",
+        "importance": 0.0024487648784806567
+      },
+      {
+        "feature": "PSH Flag Cnt",
+        "importance": 0.002010298329464765
+      },
+      {
+        "feature": "Flow IAT Max",
+        "importance": 0.0018436286096585824
+      },
+      {
+        "feature": "Init Bwd Win Byts",
+        "importance": 0.0015885620349059485
+      },
+      {
+        "feature": "Pkt Len Max",
+        "importance": 0.0012460121605253399
+      },
+      {
+        "feature": "Fwd Seg Size Min",
+        "importance": 0.0011577232556737337
+      },
+      {
+        "feature": "Init Fwd Win Byts",
+        "importance": 0.0011361663052161593
+      },
+      {
+        "feature": "Fwd Pkts/s",
+        "importance": 0.001071153008803272
+      },
+      {
+        "feature": "Active Max",
+        "importance": 0.0010073106794340912
+      },
+      {
+        "feature": "TotLen Bwd Pkts",
+        "importance": 0.0009967753934552823
+      },
+      {
+        "feature": "Idle Min",
+        "importance": 0.000992895522309007
+      },
+      {
+        "feature": "Bwd Pkts/s",
+        "importance": 0.0008691419959351429
+      },
+      {
+        "feature": "Fwd Pkt Len Std",
+        "importance": 0.0008067335735054913
+      },
+      {
+        "feature": "Idle Max",
+        "importance": 0.0007061134308178276
+      },
+      {
+        "feature": "Fwd Act Data Pkts",
+        "importance": 0.0006079396041295842
+      },
+      {
+        "feature": "Fwd IAT Tot",
+        "importance": 0.0005543987693792414
+      },
+      {
+        "feature": "Bwd IAT Mean",
+        "importance": 0.0003666211624639406
+      },
+      {
+        "feature": "Fwd IAT Max",
+        "importance": 0.0003551840057090445
+      },
+      {
+        "feature": "FIN Flag Cnt",
+        "importance": 0.000344469581874987
+      },
+      {
+        "feature": "Pkt Len Std",
+        "importance": 0.0003443678132799868
+      },
+      {
+        "feature": "Fwd IAT Std",
+        "importance": 0.0003357803782094823
+      },
+      {
+        "feature": "Flow IAT Std",
+        "importance": 0.0003251165622643953
+      },
+      {
+        "feature": "RST Flag Cnt",
+        "importance": 0.0003026001978004742
       },
       {
         "feature": "Bwd IAT Std",
-        "importance": 8.804332827237488e-05
+        "importance": 0.00029942964119732634
       },
       {
-        "feature": "Fwd Pkt Len Min",
+        "feature": "Bwd Header Len",
+        "importance": 0.0002957630066676366
+      },
+      {
+        "feature": "Bwd IAT Min",
+        "importance": 0.00029467880677418596
+      },
+      {
+        "feature": "Bwd IAT Max",
+        "importance": 0.0002895265769099262
+      },
+      {
+        "feature": "Flow Byts/s",
+        "importance": 0.0002734856099416049
+      },
+      {
+        "feature": "Fwd Header Len",
+        "importance": 0.0002590046675864686
+      },
+      {
+        "feature": "Tot Bwd Pkts",
+        "importance": 0.00023684049784539275
+      },
+      {
+        "feature": "Tot Fwd Pkts",
+        "importance": 0.00011700020010172094
+      },
+      {
+        "feature": "Bwd IAT Tot",
         "importance": 0.0
       },
       {
@@ -2429,47 +2124,11 @@
         "importance": 0.0
       },
       {
-        "feature": "Down/Up Ratio",
-        "importance": 0.0
-      },
-      {
-        "feature": "URG Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "ECE Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "SYN Flag Cnt",
+        "feature": "Bwd PSH Flags",
         "importance": 0.0
       },
       {
         "feature": "Pkt Len Var",
-        "importance": 0.0
-      },
-      {
-        "feature": "Pkt Len Min",
-        "importance": 0.0
-      },
-      {
-        "feature": "FIN Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Pkts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Pkts",
         "importance": 0.0
       },
       {
@@ -2481,320 +2140,316 @@
         "importance": 0.0
       },
       {
-        "feature": "Bwd Pkt Len Min",
+        "feature": "Bwd Blk Rate Avg",
         "importance": 0.0
       },
       {
-        "feature": "Fwd Pkt Len Std",
+        "feature": "Bwd Pkts/b Avg",
         "importance": 0.0
       },
       {
-        "feature": "Fwd Act Data Pkts",
+        "feature": "Bwd Byts/b Avg",
         "importance": 0.0
       },
       {
-        "feature": "Fwd Seg Size Min",
+        "feature": "Pkt Len Min",
         "importance": 0.0
       },
       {
-        "feature": "Idle Std",
+        "feature": "Pkt Size Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Pkt Len Max",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkt Len Min",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd IAT Mean",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Fwd Pkts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Bwd Byts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Byts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Blk Rate Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Std",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Min",
         "importance": 0.0
       }
     ],
-    "selected_importance_share": 0.9908189486051645
+    "selected_importance_share": 0.97896527861816
   },
-  "XGB_Bot": {
+  "SVM_PortScan": {
     "method": "select",
     "n_features_in": 77,
     "dropped_explicit": [],
     "dropped_low_variance": [
-      "Bwd PSH Flags",
       "Fwd URG Flags",
       "Bwd URG Flags",
+      "URG Flag Cnt",
       "CWE Flag Count",
-      "Fwd Byts/b Avg",
-      "Fwd Pkts/b Avg",
-      "Fwd Blk Rate Avg",
-      "Bwd Byts/b Avg",
-      "Bwd Pkts/b Avg",
-      "Bwd Blk Rate Avg"
+      "ECE Flag Cnt",
+      "Subflow Bwd Pkts"
     ],
     "dropped_correlated": [],
-    "n_features_after_filter": 67,
+    "n_features_after_filter": 71,
     "n_reduced": 20,
     "selected_features": [
       "Protocol",
-      "Tot Fwd Pkts",
+      "Flow Duration",
+      "TotLen Fwd Pkts",
       "Fwd Pkt Len Max",
       "Fwd Pkt Len Mean",
-      "Bwd Pkt Len Max",
+      "Bwd Pkt Len Min",
       "Bwd Pkt Len Mean",
-      "Flow Byts/s",
-      "Flow IAT Std",
-      "Flow IAT Max",
+      "Bwd Pkt Len Std",
+      "Flow Pkts/s",
+      "Flow IAT Mean",
       "Flow IAT Min",
-      "Fwd IAT Std",
       "Fwd IAT Min",
-      "Fwd Pkts/s",
-      "Pkt Len Max",
       "Pkt Len Mean",
-      "RST Flag Cnt",
-      "Pkt Size Avg",
-      "Init Fwd Win Byts",
+      "SYN Flag Cnt",
+      "ACK Flag Cnt",
+      "Down/Up Ratio",
+      "Subflow Fwd Byts",
       "Active Mean",
-      "Idle Min"
+      "Idle Mean",
+      "Idle Std"
     ],
     "importance_ranking": [
       {
-        "feature": "Bwd Pkt Len Mean",
-        "importance": 0.6446875032998112
-      },
-      {
-        "feature": "RST Flag Cnt",
-        "importance": 0.26280098766401566
+        "feature": "Subflow Fwd Byts",
+        "importance": 0.5239043105386539
       },
       {
         "feature": "Fwd Pkt Len Mean",
-        "importance": 0.043650505232998314
-      },
-      {
-        "feature": "Bwd Pkt Len Max",
-        "importance": 0.012017859662968814
-      },
-      {
-        "feature": "Flow Byts/s",
-        "importance": 0.006625912459552727
-      },
-      {
-        "feature": "Flow IAT Min",
-        "importance": 0.0054093303390254244
-      },
-      {
-        "feature": "Flow IAT Std",
-        "importance": 0.0025076870639504523
-      },
-      {
-        "feature": "Fwd IAT Std",
-        "importance": 0.00215304264409798
-      },
-      {
-        "feature": "Pkt Len Mean",
-        "importance": 0.00208707677402463
-      },
-      {
-        "feature": "Fwd Pkts/s",
-        "importance": 0.001821078350087103
-      },
-      {
-        "feature": "Tot Fwd Pkts",
-        "importance": 0.0017868794294835341
-      },
-      {
-        "feature": "Init Fwd Win Byts",
-        "importance": 0.0015795515868814829
-      },
-      {
-        "feature": "Pkt Size Avg",
-        "importance": 0.0015056624850965895
-      },
-      {
-        "feature": "Idle Min",
-        "importance": 0.0013478286048250918
-      },
-      {
-        "feature": "Protocol",
-        "importance": 0.0011573712052726768
-      },
-      {
-        "feature": "Pkt Len Max",
-        "importance": 0.001134131537109604
+        "importance": 0.17674044647180315
       },
       {
         "feature": "Active Mean",
-        "importance": 0.0008551141890380388
-      },
-      {
-        "feature": "Fwd IAT Min",
-        "importance": 0.0006542923728538096
-      },
-      {
-        "feature": "Fwd Pkt Len Max",
-        "importance": 0.0005009724280879538
-      },
-      {
-        "feature": "Flow IAT Max",
-        "importance": 0.0004914980007640093
-      },
-      {
-        "feature": "TotLen Bwd Pkts",
-        "importance": 0.0004778371568107049
-      },
-      {
-        "feature": "Active Max",
-        "importance": 0.0004569840545539655
-      },
-      {
-        "feature": "Init Bwd Win Byts",
-        "importance": 0.00037999908146945125
-      },
-      {
-        "feature": "Fwd Header Len",
-        "importance": 0.0003027201651712612
-      },
-      {
-        "feature": "Idle Max",
-        "importance": 0.0003009550613548852
-      },
-      {
-        "feature": "Active Min",
-        "importance": 0.0002919621324575928
-      },
-      {
-        "feature": "Flow Duration",
-        "importance": 0.0002795654122014072
+        "importance": 0.1109574325126254
       },
       {
         "feature": "TotLen Fwd Pkts",
-        "importance": 0.0002563079606495935
+        "importance": 0.039210973880087846
       },
       {
-        "feature": "Active Std",
-        "importance": 0.0002459430755201614
+        "feature": "SYN Flag Cnt",
+        "importance": 0.02275854798890033
       },
       {
-        "feature": "Fwd IAT Tot",
-        "importance": 0.00020640759615636782
+        "feature": "Fwd Pkt Len Max",
+        "importance": 0.018573517805425422
       },
       {
-        "feature": "Bwd Pkts/s",
-        "importance": 0.00019556498010195984
-      },
-      {
-        "feature": "Bwd IAT Min",
-        "importance": 0.00018089887690608266
-      },
-      {
-        "feature": "Bwd IAT Mean",
-        "importance": 0.00016674544674917258
+        "feature": "Pkt Len Mean",
+        "importance": 0.016636914814545326
       },
       {
         "feature": "Idle Std",
-        "importance": 0.00016278897460682905
+        "importance": 0.01034426939161536
       },
       {
-        "feature": "Tot Bwd Pkts",
-        "importance": 0.00015969771020044935
+        "feature": "Protocol",
+        "importance": 0.010133927928225138
       },
       {
-        "feature": "Fwd IAT Mean",
-        "importance": 0.0001548926619875724
+        "feature": "Fwd IAT Min",
+        "importance": 0.008476779388459628
       },
       {
-        "feature": "Fwd Pkt Len Min",
-        "importance": 0.00014411923717508725
-      },
-      {
-        "feature": "Bwd IAT Tot",
-        "importance": 0.00012799285618575573
-      },
-      {
-        "feature": "Fwd IAT Max",
-        "importance": 0.00012009236612940742
-      },
-      {
-        "feature": "Bwd IAT Max",
-        "importance": 0.00011754911705103452
-      },
-      {
-        "feature": "Bwd Header Len",
-        "importance": 0.0001116528598034601
-      },
-      {
-        "feature": "Flow Pkts/s",
-        "importance": 9.901726432441948e-05
-      },
-      {
-        "feature": "Pkt Len Std",
-        "importance": 9.174658147184509e-05
-      },
-      {
-        "feature": "Flow IAT Mean",
-        "importance": 8.456096997836215e-05
-      },
-      {
-        "feature": "Down/Up Ratio",
-        "importance": 7.558951388855036e-05
+        "feature": "Flow IAT Min",
+        "importance": 0.007203369513965144
       },
       {
         "feature": "Bwd Pkt Len Std",
-        "importance": 2.363500938980063e-05
+        "importance": 0.005390052366226778
+      },
+      {
+        "feature": "Bwd Pkt Len Mean",
+        "importance": 0.005322301117687662
+      },
+      {
+        "feature": "Bwd Pkt Len Min",
+        "importance": 0.004845083298963921
+      },
+      {
+        "feature": "Flow Pkts/s",
+        "importance": 0.004193461548238364
+      },
+      {
+        "feature": "Flow Duration",
+        "importance": 0.0041730117395822
+      },
+      {
+        "feature": "Down/Up Ratio",
+        "importance": 0.002626245689722123
+      },
+      {
+        "feature": "ACK Flag Cnt",
+        "importance": 0.002514368784537219
+      },
+      {
+        "feature": "Idle Mean",
+        "importance": 0.002511498960414309
+      },
+      {
+        "feature": "Flow IAT Mean",
+        "importance": 0.0024487648784806567
+      },
+      {
+        "feature": "PSH Flag Cnt",
+        "importance": 0.002010298329464765
+      },
+      {
+        "feature": "Flow IAT Max",
+        "importance": 0.0018436286096585824
+      },
+      {
+        "feature": "Init Bwd Win Byts",
+        "importance": 0.0015885620349059485
+      },
+      {
+        "feature": "Pkt Len Max",
+        "importance": 0.0012460121605253399
+      },
+      {
+        "feature": "Fwd Seg Size Min",
+        "importance": 0.0011577232556737337
+      },
+      {
+        "feature": "Init Fwd Win Byts",
+        "importance": 0.0011361663052161593
+      },
+      {
+        "feature": "Fwd Pkts/s",
+        "importance": 0.001071153008803272
+      },
+      {
+        "feature": "Active Max",
+        "importance": 0.0010073106794340912
+      },
+      {
+        "feature": "TotLen Bwd Pkts",
+        "importance": 0.0009967753934552823
+      },
+      {
+        "feature": "Idle Min",
+        "importance": 0.000992895522309007
+      },
+      {
+        "feature": "Bwd Pkts/s",
+        "importance": 0.0008691419959351429
       },
       {
         "feature": "Fwd Pkt Len Std",
-        "importance": 1.0488547759740586e-05
+        "importance": 0.0008067335735054913
+      },
+      {
+        "feature": "Idle Max",
+        "importance": 0.0007061134308178276
+      },
+      {
+        "feature": "Fwd Act Data Pkts",
+        "importance": 0.0006079396041295842
+      },
+      {
+        "feature": "Fwd IAT Tot",
+        "importance": 0.0005543987693792414
+      },
+      {
+        "feature": "Bwd IAT Mean",
+        "importance": 0.0003666211624639406
+      },
+      {
+        "feature": "Fwd IAT Max",
+        "importance": 0.0003551840057090445
+      },
+      {
+        "feature": "FIN Flag Cnt",
+        "importance": 0.000344469581874987
+      },
+      {
+        "feature": "Pkt Len Std",
+        "importance": 0.0003443678132799868
+      },
+      {
+        "feature": "Fwd IAT Std",
+        "importance": 0.0003357803782094823
+      },
+      {
+        "feature": "Flow IAT Std",
+        "importance": 0.0003251165622643953
+      },
+      {
+        "feature": "RST Flag Cnt",
+        "importance": 0.0003026001978004742
+      },
+      {
+        "feature": "Bwd IAT Std",
+        "importance": 0.00029942964119732634
+      },
+      {
+        "feature": "Bwd Header Len",
+        "importance": 0.0002957630066676366
+      },
+      {
+        "feature": "Bwd IAT Min",
+        "importance": 0.00029467880677418596
+      },
+      {
+        "feature": "Bwd IAT Max",
+        "importance": 0.0002895265769099262
+      },
+      {
+        "feature": "Flow Byts/s",
+        "importance": 0.0002734856099416049
+      },
+      {
+        "feature": "Fwd Header Len",
+        "importance": 0.0002590046675864686
+      },
+      {
+        "feature": "Tot Bwd Pkts",
+        "importance": 0.00023684049784539275
+      },
+      {
+        "feature": "Tot Fwd Pkts",
+        "importance": 0.00011700020010172094
+      },
+      {
+        "feature": "Bwd IAT Tot",
+        "importance": 0.0
       },
       {
         "feature": "Fwd PSH Flags",
         "importance": 0.0
       },
       {
-        "feature": "ECE Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "URG Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "ACK Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "PSH Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "FIN Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "SYN Flag Cnt",
-        "importance": 0.0
-      },
-      {
-        "feature": "Pkt Len Min",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd Seg Size Avg",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Bwd Pkts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Byts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Subflow Fwd Pkts",
-        "importance": 0.0
-      },
-      {
-        "feature": "Fwd Seg Size Avg",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd IAT Std",
-        "importance": 0.0
-      },
-      {
-        "feature": "Bwd Pkt Len Min",
+        "feature": "Bwd PSH Flags",
         "importance": 0.0
       },
       {
@@ -2802,18 +2457,399 @@
         "importance": 0.0
       },
       {
-        "feature": "Idle Mean",
+        "feature": "Fwd Seg Size Avg",
         "importance": 0.0
       },
       {
-        "feature": "Fwd Seg Size Min",
+        "feature": "Bwd Seg Size Avg",
         "importance": 0.0
       },
       {
-        "feature": "Fwd Act Data Pkts",
+        "feature": "Bwd Blk Rate Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Pkts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Byts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Pkt Len Min",
+        "importance": 0.0
+      },
+      {
+        "feature": "Pkt Size Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Pkt Len Max",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkt Len Min",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd IAT Mean",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Fwd Pkts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Bwd Byts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Byts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Blk Rate Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Std",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Min",
         "importance": 0.0
       }
     ],
-    "selected_importance_share": 0.994774285329945
+    "selected_importance_share": 0.97896527861816
+  },
+  "XGB_PortScan": {
+    "method": "select",
+    "n_features_in": 77,
+    "dropped_explicit": [],
+    "dropped_low_variance": [
+      "Fwd URG Flags",
+      "Bwd URG Flags",
+      "URG Flag Cnt",
+      "CWE Flag Count",
+      "ECE Flag Cnt",
+      "Subflow Bwd Pkts"
+    ],
+    "dropped_correlated": [],
+    "n_features_after_filter": 71,
+    "n_reduced": 20,
+    "selected_features": [
+      "Protocol",
+      "Flow Duration",
+      "TotLen Fwd Pkts",
+      "Fwd Pkt Len Max",
+      "Fwd Pkt Len Mean",
+      "Bwd Pkt Len Min",
+      "Bwd Pkt Len Mean",
+      "Bwd Pkt Len Std",
+      "Flow Pkts/s",
+      "Flow IAT Mean",
+      "Flow IAT Min",
+      "Fwd IAT Min",
+      "Pkt Len Mean",
+      "SYN Flag Cnt",
+      "ACK Flag Cnt",
+      "Down/Up Ratio",
+      "Subflow Fwd Byts",
+      "Active Mean",
+      "Idle Mean",
+      "Idle Std"
+    ],
+    "importance_ranking": [
+      {
+        "feature": "Subflow Fwd Byts",
+        "importance": 0.5239043105386539
+      },
+      {
+        "feature": "Fwd Pkt Len Mean",
+        "importance": 0.17674044647180315
+      },
+      {
+        "feature": "Active Mean",
+        "importance": 0.1109574325126254
+      },
+      {
+        "feature": "TotLen Fwd Pkts",
+        "importance": 0.039210973880087846
+      },
+      {
+        "feature": "SYN Flag Cnt",
+        "importance": 0.02275854798890033
+      },
+      {
+        "feature": "Fwd Pkt Len Max",
+        "importance": 0.018573517805425422
+      },
+      {
+        "feature": "Pkt Len Mean",
+        "importance": 0.016636914814545326
+      },
+      {
+        "feature": "Idle Std",
+        "importance": 0.01034426939161536
+      },
+      {
+        "feature": "Protocol",
+        "importance": 0.010133927928225138
+      },
+      {
+        "feature": "Fwd IAT Min",
+        "importance": 0.008476779388459628
+      },
+      {
+        "feature": "Flow IAT Min",
+        "importance": 0.007203369513965144
+      },
+      {
+        "feature": "Bwd Pkt Len Std",
+        "importance": 0.005390052366226778
+      },
+      {
+        "feature": "Bwd Pkt Len Mean",
+        "importance": 0.005322301117687662
+      },
+      {
+        "feature": "Bwd Pkt Len Min",
+        "importance": 0.004845083298963921
+      },
+      {
+        "feature": "Flow Pkts/s",
+        "importance": 0.004193461548238364
+      },
+      {
+        "feature": "Flow Duration",
+        "importance": 0.0041730117395822
+      },
+      {
+        "feature": "Down/Up Ratio",
+        "importance": 0.002626245689722123
+      },
+      {
+        "feature": "ACK Flag Cnt",
+        "importance": 0.002514368784537219
+      },
+      {
+        "feature": "Idle Mean",
+        "importance": 0.002511498960414309
+      },
+      {
+        "feature": "Flow IAT Mean",
+        "importance": 0.0024487648784806567
+      },
+      {
+        "feature": "PSH Flag Cnt",
+        "importance": 0.002010298329464765
+      },
+      {
+        "feature": "Flow IAT Max",
+        "importance": 0.0018436286096585824
+      },
+      {
+        "feature": "Init Bwd Win Byts",
+        "importance": 0.0015885620349059485
+      },
+      {
+        "feature": "Pkt Len Max",
+        "importance": 0.0012460121605253399
+      },
+      {
+        "feature": "Fwd Seg Size Min",
+        "importance": 0.0011577232556737337
+      },
+      {
+        "feature": "Init Fwd Win Byts",
+        "importance": 0.0011361663052161593
+      },
+      {
+        "feature": "Fwd Pkts/s",
+        "importance": 0.001071153008803272
+      },
+      {
+        "feature": "Active Max",
+        "importance": 0.0010073106794340912
+      },
+      {
+        "feature": "TotLen Bwd Pkts",
+        "importance": 0.0009967753934552823
+      },
+      {
+        "feature": "Idle Min",
+        "importance": 0.000992895522309007
+      },
+      {
+        "feature": "Bwd Pkts/s",
+        "importance": 0.0008691419959351429
+      },
+      {
+        "feature": "Fwd Pkt Len Std",
+        "importance": 0.0008067335735054913
+      },
+      {
+        "feature": "Idle Max",
+        "importance": 0.0007061134308178276
+      },
+      {
+        "feature": "Fwd Act Data Pkts",
+        "importance": 0.0006079396041295842
+      },
+      {
+        "feature": "Fwd IAT Tot",
+        "importance": 0.0005543987693792414
+      },
+      {
+        "feature": "Bwd IAT Mean",
+        "importance": 0.0003666211624639406
+      },
+      {
+        "feature": "Fwd IAT Max",
+        "importance": 0.0003551840057090445
+      },
+      {
+        "feature": "FIN Flag Cnt",
+        "importance": 0.000344469581874987
+      },
+      {
+        "feature": "Pkt Len Std",
+        "importance": 0.0003443678132799868
+      },
+      {
+        "feature": "Fwd IAT Std",
+        "importance": 0.0003357803782094823
+      },
+      {
+        "feature": "Flow IAT Std",
+        "importance": 0.0003251165622643953
+      },
+      {
+        "feature": "RST Flag Cnt",
+        "importance": 0.0003026001978004742
+      },
+      {
+        "feature": "Bwd IAT Std",
+        "importance": 0.00029942964119732634
+      },
+      {
+        "feature": "Bwd Header Len",
+        "importance": 0.0002957630066676366
+      },
+      {
+        "feature": "Bwd IAT Min",
+        "importance": 0.00029467880677418596
+      },
+      {
+        "feature": "Bwd IAT Max",
+        "importance": 0.0002895265769099262
+      },
+      {
+        "feature": "Flow Byts/s",
+        "importance": 0.0002734856099416049
+      },
+      {
+        "feature": "Fwd Header Len",
+        "importance": 0.0002590046675864686
+      },
+      {
+        "feature": "Tot Bwd Pkts",
+        "importance": 0.00023684049784539275
+      },
+      {
+        "feature": "Tot Fwd Pkts",
+        "importance": 0.00011700020010172094
+      },
+      {
+        "feature": "Bwd IAT Tot",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd PSH Flags",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd PSH Flags",
+        "importance": 0.0
+      },
+      {
+        "feature": "Pkt Len Var",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Seg Size Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Seg Size Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Blk Rate Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Pkts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Byts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Pkt Len Min",
+        "importance": 0.0
+      },
+      {
+        "feature": "Pkt Size Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Bwd Pkt Len Max",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkt Len Min",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd IAT Mean",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Fwd Pkts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Subflow Bwd Byts",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Byts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Pkts/b Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Fwd Blk Rate Avg",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Std",
+        "importance": 0.0
+      },
+      {
+        "feature": "Active Min",
+        "importance": 0.0
+      }
+    ],
+    "selected_importance_share": 0.97896527861816
   }
 }

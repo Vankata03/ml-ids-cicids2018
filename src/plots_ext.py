@@ -50,8 +50,9 @@ def feature_distributions(df: pd.DataFrame, sep: pd.DataFrame, per_attack: int =
     fig, axes = plt.subplots(len(attacks), per_attack, figsize=(12, 3.2 * len(attacks)))
     rng = np.random.default_rng(C.SEED)
     lbl = df[C.LABEL_COLUMN]
-    ben_idx = rng.choice(df.index[(lbl == C.BENIGN_LABEL).to_numpy()], n, replace=False)
     for r, a in enumerate(attacks):
+        ben_all = df.index[(lbl == ATTACKS[a].benign_label).to_numpy()]   # нормалният трафик от набора на атаката
+        ben_idx = rng.choice(ben_all, min(n, len(ben_all)), replace=False)
         mask = lbl.map(ATTACKS[a]).to_numpy()
         idx = df.index[mask]
         att_idx = rng.choice(idx, min(n, len(idx)), replace=False)

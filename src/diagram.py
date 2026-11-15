@@ -41,9 +41,9 @@ def pipeline_diagram():
         st = json.loads(sp.read_text(encoding="utf-8"))
     n = lambda v: f"{v:,}".replace(",", " ") if isinstance(v, int) else "?"
     ld, cl = st.get("load", {}), st.get("clean", {})
-    box(ax, 0.1, y, w, h, f"1. Данни {C.DATASET_NAME}",
-        [f"{ld.get('files', '?')} CSV файла (по ден)", f"{n(ld.get('rows_read_total'))} записа",
-         f"{ld.get('n_features_raw', '?')} признака"])
+    box(ax, 0.1, y, w, h, "1. Данни",
+        [C.DATASET_2018, C.DATASET_2017, f"{ld.get('files', '?')} CSV файла (по ден)",
+         f"{n(ld.get('rows_read_total'))} записа", f"{ld.get('n_features_raw', '?')} признака"])
     box(ax, 2.55, y, w, h, "2. Почистване", ["NaN / ±Inf", "дубликати", f"→ {n(cl.get('rows_after'))} записа"])
     box(ax, 5.0, y, w, h, "3. Бинарни задачи", [f"{k} срещу Benign" for k in ATTACKS] + ["балансирани 1:1"])
     box(ax, 7.45, y, w, h, "4. Разделяне", ["стратифицирано", "70% обучение", "30% тест"])

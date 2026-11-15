@@ -1,7 +1,7 @@
 {
  "ks": {
   "DDoS": {
-   "mean_top10": 0.6491139888763428,
+   "mean_top10": 0.6489440023899078,
    "top": [
     "Bwd Pkt Len Std",
     "Bwd Pkt Len Mean",
@@ -11,7 +11,7 @@
    ]
   },
   "BruteForce": {
-   "mean_top10": 0.9772439897060394,
+   "mean_top10": 0.9772259950637817,
    "top": [
     "Fwd Seg Size Min",
     "Fwd Act Data Pkts",
@@ -20,14 +20,14 @@
     "Subflow Fwd Byts"
    ]
   },
-  "Bot": {
-   "mean_top10": 0.7123539865016937,
+  "PortScan": {
+   "mean_top10": 0.8985824346542358,
    "top": [
-    "Bwd Pkt Len Mean",
-    "Bwd Seg Size Avg",
-    "Pkt Size Avg",
-    "Fwd IAT Tot",
-    "Fwd IAT Max"
+    "Fwd Pkt Len Mean",
+    "Fwd Seg Size Avg",
+    "Subflow Fwd Byts",
+    "TotLen Fwd Pkts",
+    "Fwd Pkt Len Max"
    ]
   }
  },
@@ -36,25 +36,29 @@
    "Нормален": 53348.0,
    "DDoS": 11797.5,
    "BruteForce": 374850.5,
-   "Bot": 10901.0
+   "Нормален 2017": 91179.5,
+   "PortScan": 596.0
   },
   "Tot Fwd Pkts": {
    "Нормален": 5.0,
    "DDoS": 3.0,
    "BruteForce": 22.0,
-   "Bot": 3.0
+   "Нормален 2017": 2.0,
+   "PortScan": 2.0
   },
   "Flow Pkts/s": {
    "Нормален": 78.99830627441406,
    "DDoS": 561.2122192382812,
    "BruteForce": 117.69032287597656,
-   "Bot": 642.5555419921875
+   "Нормален 2017": 47.714195251464844,
+   "PortScan": 5571.03076171875
   },
   "Init Fwd Win Byts": {
    "Нормален": 8192.0,
    "DDoS": 65535.0,
    "BruteForce": 26883.0,
-   "Bot": 8192.0
+   "Нормален 2017": 0.0,
+   "PortScan": 29200.0
   }
  },
  "pre": {
@@ -67,10 +71,11 @@
  },
  "dup_share": {
   "Benign": 0.17785422842761756,
+  "Benign (CIC-IDS2017)": 0.08780256676279097,
   "DDOS attack-HOIC": 0.7101202311329831,
-  "Bot": 0.4949701423175432,
   "FTP-BruteForce": 0.9997258998758792,
   "SSH-Bruteforce": 0.4986486414448609,
+  "PortScan": 0.9894194862509902,
   "DDOS attack-LOIC-UDP": 0.0
  }
 }

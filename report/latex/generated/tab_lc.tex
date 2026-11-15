@@ -3,65 +3,57 @@
 \toprule
 \headrow \hd{Атака} & \hd{Модел} & \hd{Обучаващи записи} & \hd{F1} & \hd{Precision} & \hd{Sensitivity} & \hd{Обучение, s}\\
 \midrule
-DDoS & Random Forest & 1\,000 & 99,93\% & 99,96\% & 99,90\% & 0,49\\
-\rowcolor{rowalt}DDoS & Random Forest & 2\,000 & 99,92\% & 99,96\% & 99,88\% & 0,48\\
-DDoS & Random Forest & 5\,000 & 99,91\% & 99,94\% & 99,88\% & 0,65\\
-\rowcolor{rowalt}DDoS & Random Forest & 10\,000 & 99,90\% & 99,94\% & 99,86\% & 0,82\\
-DDoS & Random Forest & 20\,000 & 99,93\% & 99,94\% & 99,92\% & 1,26\\
-\rowcolor{rowalt}DDoS & Random Forest & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 3,10\\
-DDoS & Random Forest & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 6,55\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & 1\,000 & 99,60\% & 99,52\% & 99,68\% & 0,13\\
-DDoS & SVM (RBF) & 2\,000 & 99,80\% & 99,96\% & 99,64\% & 0,15\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & 5\,000 & 99,94\% & 99,96\% & 99,92\% & 0,22\\
-DDoS & SVM (RBF) & 10\,000 & 99,96\% & 99,98\% & 99,94\% & 0,32\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & 20\,000 & 99,97\% & 100,00\% & 99,94\% & 0,54\\
-DDoS & SVM (RBF) & 50\,000 & 99,98\% & 100,00\% & 99,96\% & 1,58\\
-\rowcolor{rowalt}DDoS & XGBoost & 1\,000 & 99,87\% & 99,80\% & 99,94\% & 0,19\\
-DDoS & XGBoost & 2\,000 & 99,95\% & 99,92\% & 99,98\% & 0,22\\
-\rowcolor{rowalt}DDoS & XGBoost & 5\,000 & 99,93\% & 99,94\% & 99,92\% & 0,31\\
-DDoS & XGBoost & 10\,000 & 99,94\% & 99,94\% & 99,94\% & 0,42\\
-\rowcolor{rowalt}DDoS & XGBoost & 20\,000 & 99,99\% & 99,98\% & 100,00\% & 0,63\\
-DDoS & XGBoost & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,35\\
-\rowcolor{rowalt}DDoS & XGBoost & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 2,64\\
-BruteForce & Random Forest & 1\,000 & 99,87\% & 99,98\% & 99,76\% & 0,39\\
+DDoS & Random Forest & 1\,000 & 99,93\% & 99,96\% & 99,90\% & 0,45\\
+\rowcolor{rowalt}DDoS & Random Forest & 2\,000 & 99,92\% & 99,96\% & 99,88\% & 0,60\\
+DDoS & Random Forest & 5\,000 & 99,91\% & 99,94\% & 99,88\% & 0,61\\
+\rowcolor{rowalt}DDoS & Random Forest & 10\,000 & 99,90\% & 99,94\% & 99,86\% & 0,76\\
+DDoS & Random Forest & 20\,000 & 99,93\% & 99,94\% & 99,92\% & 1,08\\
+\rowcolor{rowalt}DDoS & Random Forest & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 2,18\\
+DDoS & Random Forest & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 4,06\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & 1\,000 & 99,60\% & 99,52\% & 99,68\% & 0,29\\
+DDoS & SVM (RBF) & 2\,000 & 99,80\% & 99,96\% & 99,64\% & 0,34\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & 5\,000 & 99,94\% & 99,96\% & 99,92\% & 0,45\\
+DDoS & SVM (RBF) & 10\,000 & 99,96\% & 99,98\% & 99,94\% & 0,59\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & 20\,000 & 99,97\% & 100,00\% & 99,94\% & 0,86\\
+DDoS & SVM (RBF) & 50\,000 & 99,98\% & 100,00\% & 99,96\% & 1,95\\
+\rowcolor{rowalt}DDoS & XGBoost & 1\,000 & 99,89\% & 99,82\% & 99,96\% & 0,49\\
+DDoS & XGBoost & 2\,000 & 99,88\% & 99,84\% & 99,92\% & 0,51\\
+\rowcolor{rowalt}DDoS & XGBoost & 5\,000 & 99,92\% & 99,94\% & 99,90\% & 0,68\\
+DDoS & XGBoost & 10\,000 & 99,93\% & 99,94\% & 99,92\% & 0,82\\
+\rowcolor{rowalt}DDoS & XGBoost & 20\,000 & 99,95\% & 99,98\% & 99,92\% & 1,11\\
+DDoS & XGBoost & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,88\\
+\rowcolor{rowalt}DDoS & XGBoost & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 3,25\\
+BruteForce & Random Forest & 1\,000 & 99,87\% & 99,98\% & 99,76\% & 0,46\\
 \rowcolor{rowalt}BruteForce & Random Forest & 2\,000 & 99,88\% & 99,98\% & 99,78\% & 0,45\\
-BruteForce & Random Forest & 5\,000 & 99,99\% & 100,00\% & 99,98\% & 0,51\\
-\rowcolor{rowalt}BruteForce & Random Forest & 10\,000 & 99,97\% & 99,94\% & 100,00\% & 0,65\\
-BruteForce & Random Forest & 20\,000 & 99,97\% & 99,94\% & 100,00\% & 0,85\\
-\rowcolor{rowalt}BruteForce & Random Forest & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,73\\
-BruteForce & Random Forest & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 3,56\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & 1\,000 & 99,82\% & 99,78\% & 99,86\% & 0,09\\
-BruteForce & SVM (RBF) & 2\,000 & 99,90\% & 99,96\% & 99,84\% & 0,14\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & 5\,000 & 99,91\% & 99,94\% & 99,88\% & 0,21\\
-BruteForce & SVM (RBF) & 10\,000 & 99,92\% & 99,94\% & 99,90\% & 0,33\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & 20\,000 & 99,95\% & 99,94\% & 99,96\% & 0,51\\
-BruteForce & SVM (RBF) & 50\,000 & 99,98\% & 100,00\% & 99,96\% & 1,14\\
-\rowcolor{rowalt}BruteForce & XGBoost & 1\,000 & 99,84\% & 99,68\% & 100,00\% & 0,12\\
-BruteForce & XGBoost & 2\,000 & 99,96\% & 99,92\% & 100,00\% & 0,15\\
-\rowcolor{rowalt}BruteForce & XGBoost & 5\,000 & 99,96\% & 100,00\% & 99,92\% & 0,25\\
-BruteForce & XGBoost & 10\,000 & 99,99\% & 99,98\% & 100,00\% & 0,36\\
-\rowcolor{rowalt}BruteForce & XGBoost & 20\,000 & 100,00\% & 100,00\% & 100,00\% & 0,70\\
-BruteForce & XGBoost & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,26\\
-\rowcolor{rowalt}BruteForce & XGBoost & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 2,37\\
-Bot & Random Forest & 1\,000 & 99,65\% & 100,00\% & 99,30\% & 0,41\\
-\rowcolor{rowalt}Bot & Random Forest & 2\,000 & 99,74\% & 99,82\% & 99,66\% & 0,49\\
-Bot & Random Forest & 5\,000 & 99,73\% & 99,76\% & 99,70\% & 0,66\\
-\rowcolor{rowalt}Bot & Random Forest & 10\,000 & 99,79\% & 99,84\% & 99,74\% & 0,85\\
-Bot & Random Forest & 20\,000 & 99,93\% & 99,98\% & 99,88\% & 1,08\\
-\rowcolor{rowalt}Bot & Random Forest & 50\,000 & 99,94\% & 99,96\% & 99,92\% & 2,05\\
-Bot & Random Forest & 100\,000 & 99,97\% & 99,98\% & 99,96\% & 4,10\\
-\rowcolor{rowalt}Bot & SVM (RBF) & 1\,000 & 99,36\% & 99,80\% & 98,92\% & 0,13\\
-Bot & SVM (RBF) & 2\,000 & 99,44\% & 99,88\% & 99,00\% & 0,22\\
-\rowcolor{rowalt}Bot & SVM (RBF) & 5\,000 & 99,49\% & 99,84\% & 99,14\% & 0,32\\
-Bot & SVM (RBF) & 10\,000 & 99,41\% & 99,88\% & 98,94\% & 0,45\\
-\rowcolor{rowalt}Bot & SVM (RBF) & 20\,000 & 99,53\% & 99,98\% & 99,08\% & 0,84\\
-Bot & SVM (RBF) & 50\,000 & 99,57\% & 99,92\% & 99,22\% & 2,22\\
-\rowcolor{rowalt}Bot & XGBoost & 1\,000 & 99,42\% & 100,00\% & 98,84\% & 0,19\\
-Bot & XGBoost & 2\,000 & 99,59\% & 99,80\% & 99,38\% & 0,30\\
-\rowcolor{rowalt}Bot & XGBoost & 5\,000 & 99,71\% & 99,76\% & 99,66\% & 0,50\\
-Bot & XGBoost & 10\,000 & 99,81\% & 99,86\% & 99,76\% & 0,69\\
-\rowcolor{rowalt}Bot & XGBoost & 20\,000 & 99,94\% & 99,98\% & 99,90\% & 1,28\\
-Bot & XGBoost & 50\,000 & 99,98\% & 100,00\% & 99,96\% & 1,92\\
-\rowcolor{rowalt}Bot & XGBoost & 100\,000 & 99,97\% & 99,98\% & 99,96\% & 3,76\\
+BruteForce & Random Forest & 5\,000 & 99,99\% & 100,00\% & 99,98\% & 0,56\\
+\rowcolor{rowalt}BruteForce & Random Forest & 10\,000 & 99,97\% & 99,94\% & 100,00\% & 0,60\\
+BruteForce & Random Forest & 20\,000 & 99,97\% & 99,94\% & 100,00\% & 0,82\\
+\rowcolor{rowalt}BruteForce & Random Forest & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,37\\
+BruteForce & Random Forest & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 2,46\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & 1\,000 & 99,82\% & 99,78\% & 99,86\% & 0,20\\
+BruteForce & SVM (RBF) & 2\,000 & 99,90\% & 99,96\% & 99,84\% & 0,21\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & 5\,000 & 99,91\% & 99,94\% & 99,88\% & 0,30\\
+BruteForce & SVM (RBF) & 10\,000 & 99,92\% & 99,94\% & 99,90\% & 0,45\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & 20\,000 & 99,95\% & 99,94\% & 99,96\% & 0,56\\
+BruteForce & SVM (RBF) & 50\,000 & 99,98\% & 100,00\% & 99,96\% & 1,06\\
+\rowcolor{rowalt}BruteForce & XGBoost & 1\,000 & 99,84\% & 99,68\% & 100,00\% & 0,40\\
+BruteForce & XGBoost & 2\,000 & 99,92\% & 99,84\% & 100,00\% & 0,44\\
+\rowcolor{rowalt}BruteForce & XGBoost & 5\,000 & 99,96\% & 100,00\% & 99,92\% & 0,53\\
+BruteForce & XGBoost & 10\,000 & 99,99\% & 99,98\% & 100,00\% & 0,64\\
+\rowcolor{rowalt}BruteForce & XGBoost & 20\,000 & 100,00\% & 100,00\% & 100,00\% & 0,82\\
+BruteForce & XGBoost & 50\,000 & 100,00\% & 100,00\% & 100,00\% & 1,37\\
+\rowcolor{rowalt}BruteForce & XGBoost & 100\,000 & 100,00\% & 100,00\% & 100,00\% & 2,53\\
+PortScan & Random Forest & 294 & 98,09\% & 99,80\% & 96,44\% & 0,42\\
+\rowcolor{rowalt}PortScan & Random Forest & 588 & 98,80\% & 99,60\% & 98,02\% & 0,48\\
+PortScan & Random Forest & 1\,177 & 99,70\% & 99,80\% & 99,60\% & 0,61\\
+\rowcolor{rowalt}PortScan & Random Forest & 2\,354 & 99,80\% & 99,80\% & 99,80\% & 0,50\\
+PortScan & SVM (RBF) & 294 & 97,11\% & 97,60\% & 96,63\% & 0,19\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & 588 & 98,09\% & 99,39\% & 96,83\% & 0,22\\
+PortScan & SVM (RBF) & 1\,177 & 99,12\% & 98,44\% & 99,80\% & 0,25\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & 2\,354 & 99,40\% & 99,60\% & 99,21\% & 0,30\\
+PortScan & XGBoost & 294 & 98,09\% & 99,80\% & 96,44\% & 0,40\\
+\rowcolor{rowalt}PortScan & XGBoost & 588 & 98,80\% & 99,40\% & 98,22\% & 0,46\\
+PortScan & XGBoost & 1\,177 & 99,51\% & 99,41\% & 99,60\% & 0,51\\
+\rowcolor{rowalt}PortScan & XGBoost & 2\,354 & 99,70\% & 99,60\% & 99,80\% & 0,59\\
 \bottomrule
 \end{tabular}}%

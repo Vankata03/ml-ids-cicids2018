@@ -25,6 +25,13 @@ class AttackSpec:
     category_bg: str                  # категория на атаката
     selector: Callable[[str], bool]   # кои оригинални етикети принадлежат на атаката
     description_bg: str = ""
+    dataset: str = C.DATASET_2018     # набор, от който са записите на атаката
+    # Нормалният трафик се взема само от същия набор като атаката: записи от различни
+    # мрежи и версии на CICFlowMeter не се смесват в една задача.
+
+    @property
+    def benign_label(self) -> str:
+        return C.BENIGN_LABELS[self.dataset]
 
     def __call__(self, label: str) -> bool:
         return self.selector(label)
@@ -65,13 +72,14 @@ ATTACKS: dict[str, AttackSpec] = {
         selector=lambda lbl: lbl in ("FTP-BruteForce", "SSH-Bruteforce"),
         description_bg="Отгатване на пароли по речник с Patator срещу FTP и SSH сървъри (14.02.2018).",
     ),
-    "Bot": AttackSpec(
-        key="Bot",
-        title_bg="Botnet (Ares)",
-        category_bg="Botnet (Bot), команден сървър",
-        selector=lambda lbl: lbl == "Bot",
-        description_bg="Заразени машини, управлявани от команден сървър на Botnet Ares: "
-                       "периодична връзка, изпълнение на команди, снимки на екрана (02.03.2018).",
+    "PortScan": AttackSpec(
+        key="PortScan",
+        title_bg="Сканиране на портове (PortScan)",
+        category_bg="PortScan (разузнаване)",
+        selector=lambda lbl: lbl == "PortScan",
+        description_bg="Сканиране на портовете на жертвата с Nmap (SYN, connect, FIN, Xmas, Null, UDP и други "
+                       "режими) от атакуваща машина извън мрежата (CIC-IDS2017, 07.07.2017).",
+        dataset=C.DATASET_2017,
     ),
 }
 

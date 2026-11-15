@@ -21,7 +21,7 @@ const THIRD_FN = 'Fak No. 961326014';
 // ---------------------------------------------------------------- данни
 const parseCsvLine = line => { const out = []; let cur = '', q = false; for (const ch of line) { if (ch === '"') q = !q; else if (ch === ',' && !q) { out.push(cur); cur = ''; } else cur += ch; } out.push(cur); return out; };
 const readCsv = f => {
-  const [h, ...rows] = fs.readFileSync(path.join(RES, f), 'utf8').trim().split('\n');
+  const [h, ...rows] = fs.readFileSync(path.join(RES, f), 'utf8').trim().split(/\r?\n/);
   const H = parseCsvLine(h);
   return rows.map(r => { const v = parseCsvLine(r); const o = {}; H.forEach((k, i) => { o[k] = isNaN(+v[i]) || v[i] === '' ? v[i] : +v[i]; }); return o; });
 };
@@ -40,12 +40,17 @@ const get = (T, a, g) => T.find(r => r.attack === a && r.algo === g);
 const int = n => Math.round(n).toLocaleString('en-US').replace(/,/g, ' ');
 const pct = (x, k = 1) => (x * 100).toFixed(k).replace('.', ',') + '%';
 const dec = (x, k = 1) => (+x).toFixed(k).replace('.', ',');
-const ATT = ['DDoS', 'BruteForce', 'Bot'], ALG = ['RF', 'SVM', 'XGB'];
-const ATT_N = { DDoS: 'DDoS', BruteForce: 'BruteForce', Bot: 'Bot' };
+const ATT = ['DDoS', 'BruteForce', 'PortScan'], ALG = ['RF', 'SVM', 'XGB'];
+const ATT_N = { DDoS: 'DDoS', BruteForce: 'BruteForce', PortScan: 'PortScan' };
+const HARD = 'PortScan';   // атаката, показана подробно в диаграмите за един модел
 const ALG_N = { RF: 'Random Forest', SVM: 'SVM (RBF)', XGB: 'XGBoost' };
 const L = DS.load, CL = DS.clean;
 const speed = x => 1e6 / x.predict_time_per_record_us;
 const minAcc = Math.min(...M.map(r => r.Accuracy));
+const accFloor = (Math.floor(minAcc * 1000) / 10).toFixed(1).replace('.', ',') + '%';
+const natMin = a => Math.min(...MN.filter(r => r.attack === a).map(r => r.Precision));
+const natMax = a => Math.max(...MN.filter(r => r.attack === a).map(r => r.Precision));
+const errs = (a, g) => get(M, a, g).FP + get(M, a, g).FN;
 const gapMax = Math.max(...OF.map(r => r.gap_accuracy));
 const nSig = Object.values(MC).filter(v => v.p_value < 0.05).length;
 const natPrec = Math.min(...MN.map(r => r.Precision));
@@ -64,7 +69,7 @@ const HEX = THEME.colors;
 const INK = HEX.dk2, GREY = '5F6673', RULE = '14213D', LIGHT = 'C9CED6';
 const pres = new pptxgen();
 pres.layout = 'LAYOUT_WIDE'; // 13,333 x 7,5
-pres.title = 'Откриване на проникване с машинно обучение (CSE-CIC-IDS2018)';
+pres.title = 'Откриване на проникване с машинно обучение (CSE-CIC-IDS2018 и CIC-IDS2017)';
 pres.author = 'Иван Терзиев, Кристиян Януцев, ' + THIRD;
 pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
 const C = pres.SchemeColor;
@@ -152,7 +157,7 @@ section('Въведение');
 let s = pres.addSlide({ masterName: 'COVER', sectionTitle: secName });
 s.addNotes(NOTES[idx++].speech);
 s.addText('Експериментално изследване на откриване на проникване в мрежов трафик на център за данни, базирано на машинно обучение', { placeholder: 'title' });
-s.addText('DDoS, BruteForce и Bot · Random Forest, SVM и XGBoost · реални данни CSE-CIC-IDS2018', { placeholder: 'body' });
+s.addText('PortScan, DDoS и BruteForce · Random Forest, SVM и XGBoost · реални данни CSE-CIC-IDS2018 и CIC-IDS2017', { placeholder: 'body' });
 s.addShape(pres.shapes.LINE, { x: 0.75, y: 5.45, w: 1.2, h: 0, line: { color: HEX.accent4, width: 2.5 } });
 [['Иван Терзиев', 'Fak No. 961326004'], ['Кристиян Януцев', 'Fak No. 961326003'], [THIRD, THIRD_FN]].forEach(([n, f], k) =>
   T(s, [{ text: n, options: { bold: true, color: 'FFFFFF', breakLine: true } }, { text: f, options: { color: 'AEBBCD' } }],
@@ -188,8 +193,8 @@ s = slide('Съдържание: път на изследването');
 s = slide('Цел и изследователски въпроси');
 sub(s, 'Цел', X0, 1.55, 5.6);
 T(s, [
-  { text: 'Да се построят и сравнят девет модела за откриване на проникване: Random Forest, SVM и XGBoost, всеки поотделно за Distributed Denial of Service (DDoS), за Brute Force срещу FTP/SSH (BruteForce) и за Botnet (Bot). Моделите се оценяват върху невиждани записи по TP, TN, FP, FN, Accuracy, Precision, Recall, F1 и Specificity.', options: { breakLine: true, paraSpaceAfter: 12 } },
-  { text: 'Използват се само реални записи от инфраструктура на AWS. Синтетични данни няма.', options: {} },
+  { text: 'Да се построят и сравнят девет модела за откриване на проникване: Random Forest, SVM и XGBoost, всеки поотделно за сканиране на портове (PortScan), за Distributed Denial of Service (DDoS) и за Brute Force срещу FTP/SSH (BruteForce). Моделите се оценяват върху невиждани записи по TP, TN, FP, FN, Accuracy, Precision, Recall, F1 и Specificity.', options: { breakLine: true, paraSpaceAfter: 12 } },
+  { text: 'Използват се само реални записи от два набора на Canadian Institute for Cybersecurity. Синтетични данни няма.', options: {} },
 ], { x: X0, y: 2.15, w: 5.6, h: 4.5, fontSize: 18, lineSpacingMultiple: 1.08 });
 sub(s, 'Въпроси', 6.85, 1.55, 5.83);
 numbered(s, ['Колко точно трите алгоритъма откриват трите атаки?', 'Как редукцията на признаците влияе на качеството и скоростта?', 'Значими ли са разликите, стабилни ли са метриките, има ли преобучение?',
@@ -197,20 +202,20 @@ numbered(s, ['Колко точно трите алгоритъма открив
 
 // ================================================================ 2. ДАННИ
 section('Данни');
-s = slide('Избор на атаки и набор от данни');
-let F = fig(s, 'p02_datasets.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.45, 'Точност върху тестовите записи. Вляво: предварителното изследване върху CICIoT2023; вдясно: избраният набор.');
+s = slide('Избор на атаки и набори от данни');
+let F = fig(s, 'p02_datasets.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.45, 'Точност върху тестовите записи. Вляво: предварителното изследване върху CICIoT2023; вдясно: избраните набори.');
 bul(s, [
-  [{ text: 'Набор: ', b: true }, { text: `в CICIoT2023 Port Scan остава около ${pct(preAcc('PortScan', 'XGB'), 0)}, защото признаците не носят отпечатъка му. CSE-CIC-IDS2018 е записан в AWS (420 машини, 30 сървъра) и описва целия двупосочен поток.` }],
-  [{ text: 'DDoS (HOIC, LOIC-UDP): ', b: true }, { text: 'обемна атака с много кратки потоци. ' }, { text: 'BruteForce (FTP, SSH): ', b: true }, { text: 'еднакви кратки опити за вход.' }],
-  [{ text: 'Bot: ', b: true }, { text: 'периодична връзка с командния сървър; най-близо до нормалния трафик и най-трудна за откриване.' }],
+  [{ text: 'PortScan: ', b: true }, { text: `в CICIoT2023 (запис = прозорец от пакети) остава около ${pct(preAcc('PortScan', 'XGB'), 0)}. CSE-CIC-IDS2018 няма етикет за сканиране, затова атаката е от коригирания CIC-IDS2017 (запис = двупосочен поток, Nmap).` }],
+  [{ text: 'DDoS (HOIC, LOIC-UDP) и BruteForce (FTP, SSH): ', b: true }, { text: 'от CSE-CIC-IDS2018, записан в AWS (420 машини, 30 сървъра).' }],
+  [{ text: 'Едни и същи 77 признака в двата набора. ', b: true }, { text: 'Нормалният трафик на всяка задача е от набора на атаката.' }],
 ], X0, F.bottom + 0.1, XW, 7.2 - F.bottom - 0.1, { fontSize: 16 });
 
-s = slide('Набор CSE-CIC-IDS2018 и почистване');
+s = slide('Данни и почистване');
 F = fig(s, 'p01_class_counts.png', X0, 1.4, XW, 3.55, 'Записи по етикет преди и след почистването и дял на премахнатите.');
 bul(s, [
-  `${L.files} официални CSV файла: ${int(L.rows_read_total)} записа, ${L.n_features_raw} признака.`,
+  `${L.files} дневни CSV файла (3 + 3): ${int(L.rows_read_total)} записа, ${L.n_features_raw} признака.`,
   `Премахнати ${int(CL.rows_with_nan_or_inf)} записа с NaN/Inf и ${int(CL.duplicates_removed)} дубликата; остават ${int(CL.rows_after)}.`,
-  'FTP: от 193 хиляди записа остават 53 уникални.',
+  `FTP: от 193 хиляди записа остават 53 уникални; PortScan: от 159 хиляди остават ${int(TS.PortScan.attack_rows_available)}.`,
 ], X0, F.bottom + 0.12, 5.6, 7.3 - F.bottom - 0.12, { fontSize: 15.5 });
 table(s, [['Задача', 'На клас', 'Обучение', 'Тест'],
   ...ATT.map(a => [`${ATT_N[a]} срещу нормален`, int(TS[a].per_class_sample), int(TS[a].train_rows), int(TS[a].test_rows)])],
@@ -220,11 +225,11 @@ table(s, [['Задача', 'На клас', 'Обучение', 'Тест'],
 section('Методология');
 s = slide('Предварителна обработка и подбор на признаци');
 formula(s, 'select.png', X0, 1.6, 5.9, 1.75);
-numbered(s, ['Махане на Timestamp и Dst Port: 79 → 77 признака', 'Филтър: признаци с нулева дисперсия, 77 → 67', 'Подбор по важност (gain) в помощен XGBoost, 67 → 20', 'Стандартизация (z-оценка)'],
+numbered(s, ['Махане на Timestamp и Dst Port: 79 → 77 признака', 'Филтър: признаци с нулева дисперсия, 77 → 67 (71 при PortScan)', 'Подбор по важност (gain) в помощен XGBoost: остават 20', 'Стандартизация (z-оценка)'],
   X0, 3.55, 5.9, 2.2, { fontSize: 17, gap: 6 });
 T(s, 'Стъпки 2–4 са част от sklearn Pipeline и се научават само от обучаващите записи, във всеки фолд на кръстосаната валидация. PCA е контролен вариант (E5).',
   { x: X0, y: 5.85, w: 5.9, h: 1.3, fontSize: 16, color: GREY, lineSpacingMultiple: 1.05 });
-fig(s, 'p08_selection.png', 6.95, 1.5, 5.73, 4.95, 'Нормирана важност (gain) на 12 от 20-те избрани признака за Bot.');
+fig(s, 'p08_selection.png', 6.95, 1.5, 5.73, 4.95, 'Важност на 12-те най-важни признака за PortScan.');
 
 s = slide('Три алгоритъма: Random Forest, XGBoost и SVM');
 {
@@ -233,7 +238,7 @@ s = slide('Три алгоритъма: Random Forest, XGBoost и SVM');
       ATT.map(a => { const p = bp('RF', a); return `${ATT_N[a]}: ${p.clf__n_estimators} дървета, дълб. ${p.clf__max_depth ?? '∞'}, листо ${p.clf__min_samples_leaf}`; })],
     ['XGBoost', 'xgb.png', ['Дърветата се строят последователно; всяко поправя грешките на предишните.', 'Регуляризацията γT + ½λΣw² пази от преобучение.'],
       ATT.map(a => { const p = bp('XGB', a); return `${ATT_N[a]}: ${p.clf__n_estimators} дървета, дълб. ${p.clf__max_depth}, ν ${dec(p.clf__learning_rate, 2)}`; })],
-    ['SVM (RBF)', 'svm.png', ['Нелинейна граница с максимален марж; C наказва грешките, γ задава обхвата на ядрото.', 'Сложност O(n²)–O(n³): обучение върху 50 000 записа.'],
+    ['SVM (RBF)', 'svm.png', ['Нелинейна граница с максимален марж; C наказва грешките, γ задава обхвата на ядрото.', 'Сложност O(n²)–O(n³): обучение върху най-много 50 000 записа.'],
       ATT.map(a => { const p = bp('SVM', a); return `${ATT_N[a]}: C = ${p.clf__C}, γ = ${p.clf__gamma === 'scale' ? 'scale' : dec(p.clf__gamma, 2)}`; })],
   ];
   const cw = (XW - 0.5) / 3;
@@ -251,7 +256,7 @@ s = slide('Избор на хиперпараметри: правило „ед�
 formula(s, 'onese.png', X0, 1.55, 6.9, 1.5);
 T(s, '5-кратна кръстосана валидация с критерий F1. От конфигурациите в рамките на една стандартна грешка от най-добрата се избира най-простата: по-плитки дървета, повече записи в листо, по-малки C и γ.',
   { x: 7.85, y: 1.6, w: 4.83, h: 1.6, fontSize: 16.5, lineSpacingMultiple: 1.05 });
-fig(s, 'p09_one_se.png', X0, 3.3, XW, 3.3, 'Среден F1 ± стандартна грешка за всяка конфигурация при Bot; пунктирът е прагът 1-SE.');
+fig(s, 'p09_one_se.png', X0, 3.3, XW, 3.3, 'Среден F1 ± стандартна грешка за всяка конфигурация при PortScan; пунктирът е прагът 1-SE.');
 
 s = slide('Метрики за оценка');
 formula(s, 'metrics.png', X0, 1.65, 5.6, 3.9);
@@ -271,7 +276,7 @@ table(s, [['Компонент', 'Съдържание'],
   ['run_all.py', `целият експеримент (${Math.round(RS.total_minutes)} мин.)`],
   ['notebooks/', 'Colab ноутбук и диаграми'],
   ['models/', '9 обучени модела (.joblib)'],
-  ['tests/', '8 теста върху реални записи']],
+  ['tests/', '10 теста върху реални записи']],
   8.25, 1.45, 4.43, [1.5, 2.93], 'Хранилище ml-ids-cicids2018.', { right: false, fontSize: 14.5, rowH: 0.48 });
 T(s, 'Всички числа в доклада и в презентацията се генерират от results/. При фиксиран seed 42 повторният пуск дава идентични метрики.', { x: 8.25, y: 5.35, w: 4.43, h: 1.4, fontSize: 15.5, color: GREY });
 
@@ -289,50 +294,50 @@ s = slide('Основни резултати в оперативната фаз�
 {
   const row = r => [`${ALG_N[r.algo]}, ${ATT_N[r.attack]}`, int(r.TP), int(r.TN), int(r.FP), int(r.FN), pct(r.Accuracy, 3), pct(r.Precision, 3), pct(r.Sensitivity, 3), pct(r.F1, 3), pct(r.Specificity, 3)];
   table(s, [['Модел', 'TP', 'TN', 'FP', 'FN', 'Accuracy', 'Precision', 'Recall', 'F1', 'Specificity'],
-    ...ATT.flatMap(a => ALG.map(g => { const r = get(M, a, g); const c = row(r); return (a === 'Bot' && g === 'SVM') ? c.map(t => ({ text: t, fill: 'FBEFE3' })) : c; }))],
-    X0, 1.42, XW, [2.95, 0.95, 0.95, 0.6, 0.6, 1.2, 1.2, 1.15, 1.13, 1.3], `Метрики върху ${int(get(M, 'DDoS', 'RF').n_test)} (DDoS), ${int(get(M, 'BruteForce', 'RF').n_test)} (BruteForce) и ${int(get(M, 'Bot', 'RF').n_test)} (Bot) тестови записа.`, { fontSize: 14.5, rowH: 0.42 });
+    ...ATT.flatMap(a => ALG.map(g => { const r = get(M, a, g); const c = row(r); return (a === HARD && g === 'SVM') ? c.map(t => ({ text: t, fill: 'FBEFE3' })) : c; }))],
+    X0, 1.42, XW, [2.95, 0.95, 0.95, 0.6, 0.6, 1.2, 1.2, 1.15, 1.13, 1.3], `Метрики върху ${int(get(M, 'DDoS', 'RF').n_test)} (DDoS), ${int(get(M, 'BruteForce', 'RF').n_test)} (BruteForce) и ${int(get(M, HARD, 'RF').n_test)} (PortScan) тестови записа.`, { fontSize: 14.5, rowH: 0.42 });
 }
-T(s, `Всички девет модела имат Accuracy над 99,5% (минимум ${pct(minAcc, 2)}). Единственият по-слаб резултат е SVM при Bot: ${get(M, 'Bot', 'SVM').FN} пропуснати атаки.`,
+T(s, `Всички девет модела имат Accuracy над ${accFloor} (минимум ${pct(minAcc, 2)}). При PortScan тестът е малък (${int(get(M, HARD, 'RF').n_test)} уникални записа): грешките са ${errs(HARD, 'RF')} (RF), ${errs(HARD, 'XGB')} (XGBoost) и ${errs(HARD, 'SVM')} (SVM).`,
   { x: X0, y: 6.3, w: XW, h: 0.8, fontSize: 17.5 });
 
 s = slide('Проверка за преобучение');
 F = fig(s, 'p13_overfitting.png', WIDE.fx, WIDE.fy, WIDE.fw, 4.0, 'Точност при обучение, оценка от кръстосаната валидация и точност при тест за всеки модел.');
 bul(s, [`Най-голямата разлика между обучение и тест е ${dec(gapMax * 100, 3)} процентни пункта: моделите не са преобучени.`,
-  'Причини: регуляризация (дълбочина, листа, Ω в XGBoost, C и γ в SVM), правило 1-SE и почистване на дубликатите.'],
+  'Причини: регуляризация (дълбочина, листа, Ω в XGBoost, C и γ в SVM), правило 1-SE и почистване на дубликатите. По-голямата разлика при PortScan отговаря на 2–3 тестови записа.'],
   X0, F.bottom + 0.15, XW, 7.2 - F.bottom - 0.15, { fontSize: 17 });
 
 s = slide('Статистическа значимост: bootstrap и McNemar');
 formula(s, 'stats.png', X0, 1.45, 5.3, 1.75);
 bul(s, [
-  `${nSig} от 9 двойки се различават значимо (p < 0,05).`,
-  `Bot, RF срещу SVM: ${MC['Bot:RF-SVM'].only_A_correct} срещу ${MC['Bot:RF-SVM'].only_B_correct} записа, p ≈ 10⁻⁴⁶.`,
-  `RF и XGBoost се различават само при Bot (${MC['Bot:RF-XGB'].only_A_correct} срещу ${MC['Bot:RF-XGB'].only_B_correct} записа).`,
+  `${nSig} от 9 двойки се различават значимо (p < 0,05): SVM срещу двата ансамбъла при DDoS и BruteForce.`,
+  `PortScan, RF срещу SVM: ${MC['PortScan:RF-SVM'].only_A_correct} срещу ${MC['PortScan:RF-SVM'].only_B_correct} записа, p = ${dec(MC['PortScan:RF-SVM'].p_value, 2)}: разликата не е значима.`,
+  'RF и XGBoost дават еднакви решения при DDoS и BruteForce.',
 ], 6.3, 1.55, 6.38, 1.9, { fontSize: 16.5 });
-fig(s, 'p16_mcnemar.png', X0, 3.4, XW, 3.3, 'Вляво: F1 и 95% bootstrap интервал при Bot. Вдясно: записи, на които е прав само единият модел, и p от теста на McNemar.');
+fig(s, 'p16_mcnemar.png', X0, 3.4, XW, 3.3, 'Вляво: F1 и 95% bootstrap интервал при PortScan. Вдясно: записи, на които е прав само единият модел, и p от теста на McNemar.');
 
 s = slide('Контролни експерименти E1, E4 и E5');
 fig(s, 'p10_controls.png', X0, 1.45, 7.7, 5.2, 'Accuracy в четири варианта на конвейера; цветът е разликата спрямо основния вариант.');
 bul(s, [
   [{ text: 'E1: ', b: true }, { text: 'с всички 77 признака качеството не се подобрява; 20 признака са достатъчни.' }],
-  [{ text: 'E4: ', b: true }, { text: 'без времевите признаци (продължителност, интервали) резултатите остават; най-голям спад има SVM при Bot (−0,11 пункта).' }],
-  [{ text: 'E5: ', b: true }, { text: 'PCA дава почти същото качество, но губи обяснимостта на признаците.' }],
-  'Всички разлики са под 0,12 процентни пункта.',
+  [{ text: 'E4: ', b: true }, { text: 'без времевите признаци DDoS и BruteForce не се променят; при PortScan спадът е до 0,3 пункта (SVM).' }],
+  [{ text: 'E5: ', b: true }, { text: 'PCA дава близко качество, но губи обяснимостта на признаците.' }],
+  'При DDoS и BruteForce разликите са под 0,03 пункта; при PortScan един тестов запис е 0,1 пункта.',
 ], 8.75, 1.7, 3.93, 5.3, { fontSize: 16.5 });
 
 s = slide('Оценка при естествения дял на атаките (E2)');
 formula(s, 'baserate.png', X0, 1.45, 5.2, 0.9);
-F = fig(s, 'p19_natural.png', X0, 2.5, XW, 3.75, `Вляво: Precision–Recall за Bot; вдясно: грешки на 10 000 записа (${int(get(MN, 'Bot', 'RF').n_test)} неизползвани записа за всяка атака).`);
-T(s, `Делът на атаките е ${pct(get(MN, 'Bot', 'RF').attack_share, 1)} (Bot) до ${pct(get(MN, 'DDoS', 'RF').attack_share, 1)} (DDoS). Precision остава над ${pct(natPrec, 1)} за всички модели.`,
+F = fig(s, 'p19_natural.png', X0, 2.5, XW, 3.75, `Вляво: Precision–Recall за PortScan (${int(get(MN, HARD, 'RF').n_test)} неизползвани записа); вдясно: грешки на 10 000 записа за всяка атака.`);
+T(s, `Делът на атаките е ${pct(get(MN, HARD, 'RF').attack_share, 1)} (PortScan) до ${pct(get(MN, 'DDoS', 'RF').attack_share, 1)} (DDoS). Precision остава над ${pct(Math.min(natMin('DDoS'), natMin('BruteForce')), 1)} при DDoS и BruteForce; при PortScan е ${pct(natMin(HARD), 1)}–${pct(natMax(HARD), 1)}.`,
   { x: 6.2, y: 1.5, w: 6.48, h: 0.9, fontSize: 17 });
 
 // ================================================================ 6. АНАЛИЗ
 section('Анализ');
 s = slide('Какво учат моделите: пермутационна важност (A8)');
-F = fig(s, 'p21_importance.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.75, 'Спад на F1 при разбъркване на всеки признак за трите алгоритъма (2000 тестови записа, 3 повторения).');
+F = fig(s, 'p21_importance.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.75, 'Спад на F1 при разбъркване на всеки признак за трите алгоритъма (до 2000 тестови записа, 3 повторения).');
 bul(s, [
   [{ text: 'DDoS: ', b: true }, { text: 'началният размер на TCP прозореца, зададен от атакуващата програма.' }],
   [{ text: 'BruteForce: ', b: true }, { text: 'минималният размер на сегмента от клиента.' }],
-  [{ text: 'Bot: ', b: true }, { text: 'RF и SVM разчитат на флага RST, XGBoost разпределя важността между няколко признака; няма един решаващ признак.' }],
+  [{ text: 'PortScan: ', b: true }, { text: 'SVM разчита на броя флагове SYN и на протокола; при дърветата признаците са взаимозаменяеми и разбъркването на един не променя резултата.' }],
 ], X0, F.bottom + 0.05, XW, 7.15 - F.bottom - 0.05, { fontSize: 15.5 });
 
 s = slide('Проверка за приложимост: отпечатъци и време (A10, A11, A14)');
@@ -340,21 +345,21 @@ fig(s, 'p25_robustness.png', X0, 1.45, 6.9, 5.3, 'Accuracy и дял откри�
 bul(s, [
   [{ text: 'A10: ', b: true }, { text: 'без признаците на TCP стека на инструмента точността почти не се променя.' }],
   [{ text: 'A11: ', b: true }, { text: `обучение върху ранните 70% от потоците, тест върху късните 30%. DDoS и BruteForce остават над 99,5%.` }],
-  [{ text: 'Bot: ', b: true }, { text: `RF и XGBoost откриват само ${pct(sfv('Bot', 'XGB', 'chronological', 'Sensitivity'), 0)} от новите потоци; SVM открива ${pct(sfv('Bot', 'SVM', 'chronological', 'Sensitivity'), 1)}.` }],
-  [{ text: 'A14: ', b: true }, { text: `комбиниран детектор „XGBoost или SVM“ открива ${pct(sfv('Bot', 'XGB|SVM', 'chronological', 'Sensitivity'), 2)}.` }],
+  [{ text: 'PortScan: ', b: true }, { text: `моделите откриват само ${pct(sfv(HARD, 'XGB', 'chronological', 'Sensitivity'), 0)} от късните проби: скенерът минава към режими с пълна TCP връзка, които липсват в ранните данни.` }],
+  [{ text: 'A14: ', b: true }, { text: `комбинацията „XGBoost или SVM“ помага малко: ${pct(sfv(HARD, 'XGB|SVM', 'chronological', 'Sensitivity'), 1)}.` }],
 ], 7.75, 1.6, 4.93, 5.4, { fontSize: 16.5 });
 
 s = slide('Нормален трафик от непознат ден (A13)');
 F = fig(s, 'p26_benign_days.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.85, 'Фалшиви аларми върху нормален трафик от ден, който не е участвал в обучението (по-лошият от двата дни).');
 bul(s, [
-  `DDoS с нормален трафик само от 21.02: ${pct(odMax('DDoS', 'RF'), 0)}–${pct(odMax('DDoS', 'XGB'), 0)} фалшиви аларми в другите дни; с трафик от два дни под ${pct(loMax('DDoS', 'SVM'), 2)}.`,
-  `Bot без нормалния трафик от 21.02: дърветата грешат масово, SVM остава на ${pct(loMax('Bot', 'SVM'), 2)}. Нормалният трафик при обучението трябва да покрива цялата мрежа.`,
+  `DDoS с нормален трафик само от 21.02: ${pct(odMax('DDoS', 'XGB'), 0)}–${pct(odMax('DDoS', 'SVM'), 0)} фалшиви аларми в другите дни; с трафик от два дни до ${pct(loMax('DDoS', 'SVM'), 2)}.`,
+  `PortScan: ${pct(loMax(HARD, 'RF'), 2)} (RF) до ${pct(loMax(HARD, 'SVM'), 2)} (SVM) независимо от броя дни: с порядък повече от другите две атаки. Нормалният трафик при обучението трябва да покрива цялата мрежа.`,
 ], X0, F.bottom + 0.1, XW, 7.2 - F.bottom - 0.1, { fontSize: 16 });
 
 s = slide('Пренос между атаките (A7) и подвидовете (A12)');
 F = fig(s, 'p27_subtypes.png', WIDE.fx, WIDE.fy, WIDE.fw, 3.5, 'Дял открити атаки от подвид, който не е участвал в обучението.');
 bul(s, [
-  'A7: модел за една атака открива 0% от другите две; моделите учат конкретната атака, а не обща аномалия.',
+  'A7: в рамките на един набор модел за една атака открива 0% от другата; между наборите има до 18% случайни съвпадения и 4–8% фалшиви аларми.',
   'HOIC (HTTP) и LOIC-UDP (UDP) нямат общи признаци: моделите не се пренасят между тях.',
   'RF открива FTP, обучен върху SSH, само заради общия TCP прозорец на инструмента; без него откриването пада до 11%.',
   'Обучаващите данни трябва да съдържат всеки използван инструмент, както е в основния експеримент.',
@@ -363,31 +368,31 @@ bul(s, [
 s = slide('Сравнение на алгоритмите');
 table(s, [['Критерий', 'Random Forest', 'SVM (RBF)', 'XGBoost'],
   ['DDoS, BruteForce', 'практически без грешка', 'до 30 грешки', 'практически без грешка'],
-  ['Bot (Accuracy)', pct(get(M, 'Bot', 'RF').Accuracy, 2), pct(get(M, 'Bot', 'SVM').Accuracy, 2), pct(get(M, 'Bot', 'XGB').Accuracy, 2)],
-  ['Обучение', 'всички записи', 'извадка 50 000', 'всички записи'],
-  ['Записи/s (Bot)', int(speed(get(M, 'Bot', 'RF'))), int(speed(get(M, 'Bot', 'SVM'))), int(speed(get(M, 'Bot', 'XGB')))],
-  ['Обяснимост', 'вградена важност', 'само пермутационна', 'вградена важност'],
-  ['Нови данни (A11, A13)', 'чувствителен', 'най-устойчив', 'чувствителен']],
-  X0, 1.4, XW, [3.0, 3.0, 3.0, 3.03], 'Обобщено сравнение на алгоритмите.', { right: false, fontSize: 14, rowH: 0.34 });
+  ['PortScan (Accuracy)', pct(get(M, HARD, 'RF').Accuracy, 2), pct(get(M, HARD, 'SVM').Accuracy, 2), pct(get(M, HARD, 'XGB').Accuracy, 2)],
+  ['PortScan, Precision при реален дял', pct(get(MN, HARD, 'RF').Precision, 1), pct(get(MN, HARD, 'SVM').Precision, 1), pct(get(MN, HARD, 'XGB').Precision, 1)],
+  ['Обучение', 'всички записи', 'до 50 000', 'всички записи'],
+  ['Записи/s (DDoS)', int(speed(get(M, 'DDoS', 'RF'))), int(speed(get(M, 'DDoS', 'SVM'))), int(speed(get(M, 'DDoS', 'XGB')))],
+  ['Обяснимост', 'вградена важност', 'само пермутационна', 'вградена важност']],
+  X0, 1.4, XW, [3.6, 2.8, 2.8, 2.83], 'Обобщено сравнение на алгоритмите.', { right: false, fontSize: 14, rowH: 0.34 });
 fig(s, 'p24_speed.png', 4.75, 4.4, 7.93, 2.75, null, FIG, 'r');
-T(s, 'Препоръка: XGBoost за познатите атаки (най-точен и най-бърз). За Bot, когато се очакват нови разновидности: XGBoost или SVM.',
+T(s, 'Препоръка: XGBoost (сред най-точните и най-бърз) или Random Forest (най-малко фалшиви аларми при PortScan). SVM е най-слаб и по трите критерия.',
   { x: X0, y: 4.55, w: 4.4, h: 2.5, fontSize: 17 });
 
 s = slide('Ограничения и насоки за развитие');
 sub(s, 'Ограничения', X0, 1.55, 5.8);
-bul(s, ['Данни от контролирана среда през 2018 г.; реалният трафик днес е различен.', 'Моделите не се пренасят към нов инструмент на атаката (A12).', 'Фалшивите аларми зависят от разнообразието на нормалния трафик (A13).', 'Бинарен модел за всяка атака поотделно.'], X0, 2.2, 5.8, 4.8, { fontSize: 18 });
+bul(s, ['Данни от контролирана среда (2017 и 2018 г.); реалният трафик днес е различен.', 'PortScan е от друг набор и остава с 1 682 уникални записа: малък тест, широки интервали.', 'Моделите не се пренасят към нов инструмент или режим на атаката (A11, A12).', 'Бинарен модел за всяка атака поотделно.'], X0, 2.2, 5.8, 4.8, { fontSize: 18 });
 sub(s, 'Насоки', 6.88, 1.55, 5.8);
-bul(s, ['Периодично преобучение с нормален трафик от цялата мрежа.', 'Тест върху друг набор, напр. CIC-IDS2017.', 'Многокласов детектор за всички атаки в набора.', 'Нови атаки и алгоритми: по един запис в регистъра.'], 6.88, 2.2, 5.8, 4.8, { fontSize: 18 });
+bul(s, ['Признаци, агрегирани по източник, за режимите на сканиране с пълна връзка.', 'DDoS и BruteForce върху коригираната версия на CSE-CIC-IDS2018.', 'Многокласов детектор за всички атаки в наборите.', 'Нови атаки и алгоритми: по един запис в регистъра.'], 6.88, 2.2, 5.8, 4.8, { fontSize: 18 });
 
 section('Заключение');
 s = slide('Изводи');
 numbered(s, [
-  `Деветте модела постигат Accuracy над 99,5% върху реални данни (минимум ${pct(minAcc, 2)}), без преобучение (разлика до ${dec(gapMax * 100, 3)} пункта).`,
-  'Ансамблите от дървета са статистически по-добри от SVM при Bot; XGBoost е най-подходящ за практическа IDS.',
-  `При реалния дял на атаките Precision остава над ${pct(natPrec, 1)}.`,
+  `Деветте модела постигат Accuracy над ${accFloor} върху реални данни (минимум ${pct(minAcc, 2)}), без преобучение (разлика до ${dec(gapMax * 100, 2)} пункта).`,
+  'DDoS и BruteForce се откриват практически без грешка. PortScan се открива с 99,4–99,8%, а разликите между алгоритмите там не са статистически значими.',
+  `При реалния дял на атаките Precision остава над 99% за DDoS и BruteForce и е ${pct(natMin(HARD), 0)}–${pct(natMax(HARD), 0)} за PortScan.`,
   'Подборът на признаци е за предпочитане пред PCA: същото качество с обясними признаци.',
-  `При хронологично разделяне DDoS и BruteForce остават над 99,5%; за Bot комбинацията XGBoost или SVM открива ${pct(sfv('Bot', 'XGB|SVM', 'chronological', 'Sensitivity'), 2)} от по-късните атаки.`,
-  `Сравнението с CICIoT2023 (Port Scan около ${pct(preAcc('PortScan', 'XGB'), 0)}) показва, че качеството на IDS зависи преди всичко от това дали признаците носят отпечатъка на атаката.`,
+  `При хронологично разделяне DDoS и BruteForce остават над 99,5%; при PortScan моделите откриват ${pct(sfv(HARD, 'XGB', 'chronological', 'Sensitivity'), 0)} от по-късните проби, защото режимите на скенера се сменят.`,
+  `Същата атака PortScan: около ${pct(preAcc('PortScan', 'XGB'), 0)} в CICIoT2023 и над 99% в CIC-IDS2017. Качеството на IDS зависи преди всичко от това дали признаците носят отпечатъка на атаката.`,
   'Кодът, моделите и ноутбукът са възпроизводими и използват само реални данни.',
 ], X0, 1.6, 11.6, 5.5, { fontSize: 17.5, gap: 9 });
 
@@ -398,7 +403,7 @@ s = slide('Информационни източници');
   const half = Math.ceil(REFS.length / 2) + 1, cw = (XW - 0.35) / 2;
   [REFS.slice(0, half), REFS.slice(half)].forEach((col, c) => s.addText(col.map((t, i, a) => ({
     text: `[${c * half + i + 1}] ${t}`, options: { breakLine: i < a.length - 1, paraSpaceAfter: 2.5 } })),
-    { isTextBox: true, x: X0 + c * (cw + 0.35), y: 1.45, w: cw, h: 5.45, fontSize: 8.5, color: HEX.dk1, valign: 'top', margin: 0, lineSpacingMultiple: 0.98, objectName: `refs-col-${c + 1}` }));
+    { isTextBox: true, x: X0 + c * (cw + 0.35), y: 1.45, w: cw, h: 5.45, fontSize: 8, color: HEX.dk1, valign: 'top', margin: 0, lineSpacingMultiple: 0.95, objectName: `refs-col-${c + 1}` }));
   T(s, 'Номерацията съвпада с доклада. Код, модели и ноутбук: https://github.com/Vankata03/ml-ids-cicids2018', { x: X0, y: 6.95, w: XW, h: 0.3, fontSize: 11, color: GREY });
 }
 
@@ -406,7 +411,7 @@ s = slide('Информационни източници');
 s = pres.addSlide({ masterName: 'BLANK', sectionTitle: secName });
 s.background = { color: '0A1424' };
 s.addNotes(NOTES[idx++].speech);
-s.addImage({ path: path.join(FIG, 'p00_title.png'), x: 0, y: 0, w: W, h: 7.5, altText: 'Реални записи от CSE-CIC-IDS2018 в първите две главни компоненти' });
+s.addImage({ path: path.join(FIG, 'p00_title.png'), x: 0, y: 0, w: W, h: 7.5, altText: 'Реални записи от двата набора в първите две главни компоненти' });
 T(s, 'Благодаря за вниманието!', { x: 0.75, y: 2.6, w: 8.2, h: 1.3, fontSize: 48, bold: true, color: 'FFFFFF', valign: 'bottom' });
 s.addShape(pres.shapes.LINE, { x: 0.75, y: 4.15, w: 1.2, h: 0, line: { color: HEX.accent4, width: 2.5 } });
 T(s, [
