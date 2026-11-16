@@ -65,7 +65,7 @@ FIG = REPO / "presentation" / "figures"
 FIG.mkdir(parents=True, exist_ok=True)
 for old in FIG.glob("p*.png"):
     old.unlink()
-ATT = list(ATTACKS)              # DDoS, BruteForce, PortScan
+ATT = list(ATTACKS)              # PortScan, DDoS, BruteForce
 HARD = "PortScan"                 # атаката, показана подробно в диаграмите за един модел
 ALG = list(ALGORITHMS)           # RF, SVM, XGB
 print("Хранилище:", REPO)
@@ -85,7 +85,7 @@ ATT_C = {"DDoS": DDOS, "BruteForce": BRUTE, "PortScan": SCAN}
 ATT_N = {"DDoS": "DDoS", "BruteForce": "BruteForce", "PortScan": "PortScan"}
 ATT_DS = {a: ATTACKS[a].dataset for a in ATT}      # набор на всяка атака
 GRP_C = {"Нормален": BENIGN, "Нормален 2017": BENIGN17, **ATT_C}
-GROUPS0 = ["Нормален", "DDoS", "BruteForce", "Нормален 2017", "PortScan"]
+GROUPS0 = ["Нормален 2017", "PortScan", "Нормален", "DDoS", "BruteForce"]
 GRP_N = {"Нормален": "Нормален трафик (2018)", "Нормален 2017": "Нормален трафик (2017)", **ATT_N}
 
 fams = {f.name for f in font_manager.fontManager.ttflist}
@@ -859,7 +859,7 @@ PRE = pd.read_csv(RES / "preliminary_ciciot2023" / "metrics.csv").set_index(["at
 fig, ax = plt.subplots(figsize=(15, 5.4))
 rows = [("CICIoT2023\nPort Scan", [PRE.loc[("PortScan", g), "Accuracy"] for g in ALG]),
         ("CICIoT2023\nDDoS", [PRE.loc[("DDoS", g), "Accuracy"] for g in ALG])] + \
-       [(f"{ATT_DS[a]}\n{ATT_N[a]}", [MET[(a, g)].Accuracy for g in ALG]) for a in ["PortScan", "DDoS", "BruteForce"]]
+       [(f"{ATT_DS[a]}\n{ATT_N[a]}", [MET[(a, g)].Accuracy for g in ALG]) for a in ATT]
 ax.axvspan(-0.5, 1.5, color="#F4F5F7", zorder=0)
 for k, (nm, vals) in enumerate(rows):
     for j, g in enumerate(ALG):

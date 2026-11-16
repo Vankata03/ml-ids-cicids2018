@@ -1,4 +1,25 @@
 {
+  "PortScan": {
+    "attack": "PortScan",
+    "dataset": "CIC-IDS2017",
+    "attack_labels_included": [
+      "PortScan"
+    ],
+    "attack_rows_original": 159066,
+    "benign_rows_original": 979288,
+    "attack_rows_available": 1682,
+    "benign_rows_available": 893303,
+    "natural_attack_share": 0.13973333427035878,
+    "per_class_sample": 1682,
+    "task_duplicates_removed": 0,
+    "task_conflicting_rows_removed": 2,
+    "task_conflicting_vectors": 1,
+    "train_rows": 2354,
+    "test_rows": 1010,
+    "attack_subtype_counts_in_sample": {
+      "PortScan": 1682
+    }
+  },
   "DDoS": {
     "attack": "DDoS",
     "dataset": "CSE-CIC-IDS2018",
@@ -43,27 +64,6 @@
     "attack_subtype_counts_in_sample": {
       "SSH-Bruteforce": 94041,
       "FTP-BruteForce": 53
-    }
-  },
-  "PortScan": {
-    "attack": "PortScan",
-    "dataset": "CIC-IDS2017",
-    "attack_labels_included": [
-      "PortScan"
-    ],
-    "attack_rows_original": 159066,
-    "benign_rows_original": 979288,
-    "attack_rows_available": 1682,
-    "benign_rows_available": 893303,
-    "natural_attack_share": 0.13973333427035878,
-    "per_class_sample": 1682,
-    "task_duplicates_removed": 0,
-    "task_conflicting_rows_removed": 2,
-    "task_conflicting_vectors": 1,
-    "train_rows": 2354,
-    "test_rows": 1010,
-    "attack_subtype_counts_in_sample": {
-      "PortScan": 1682
     }
   }
 }

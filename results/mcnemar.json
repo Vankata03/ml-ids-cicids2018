@@ -1,4 +1,124 @@
 {
+  "PortScan:RF-SVM": {
+    "attack": "PortScan",
+    "A": "RF",
+    "B": "SVM",
+    "both_correct": 1003,
+    "only_A_correct": 5,
+    "only_B_correct": 1,
+    "both_wrong": 1,
+    "statistic": 1.0,
+    "p_value": 0.21875,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.003960396039603964,
+      "ci_low": 0.0,
+      "ci_high": 0.008910891089108919,
+      "share_A_better": 0.937
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.00397218293257906,
+      "ci_low": 0.0,
+      "ci_high": 0.009298337089380937,
+      "share_A_better": 0.968
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0019959451213511503,
+      "ci_low": -0.004040813817690112,
+      "ci_high": 0.008561987279100899,
+      "share_A_better": 0.762
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.005940594059405946,
+      "ci_low": 0.0,
+      "ci_high": 0.013780207022938674,
+      "share_A_better": 0.966
+    }
+  },
+  "PortScan:RF-XGB": {
+    "attack": "PortScan",
+    "A": "RF",
+    "B": "XGB",
+    "both_correct": 1007,
+    "only_A_correct": 1,
+    "only_B_correct": 0,
+    "both_wrong": 2,
+    "statistic": 0.0,
+    "p_value": 1.0,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": 0.000990099009900991,
+      "ci_low": 0.0,
+      "ci_high": 0.002970297029702973,
+      "share_A_better": 0.626
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": 0.0009871610306431133,
+      "ci_low": 0.0,
+      "ci_high": 0.00303958183135902,
+      "share_A_better": 0.626
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": 0.0019723711501584695,
+      "ci_low": 0.0,
+      "ci_high": 0.006060912771439125,
+      "share_A_better": 0.626
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": 0.0,
+      "ci_low": 0.0,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    }
+  },
+  "PortScan:SVM-XGB": {
+    "attack": "PortScan",
+    "A": "SVM",
+    "B": "XGB",
+    "both_correct": 1002,
+    "only_A_correct": 2,
+    "only_B_correct": 5,
+    "both_wrong": 1,
+    "statistic": 2.0,
+    "p_value": 0.453125,
+    "method": "точен биномен тест",
+    "accuracy_diff": {
+      "metric": "Accuracy",
+      "diff": -0.002970297029702973,
+      "ci_low": -0.008910891089108919,
+      "ci_high": 0.001980198019801982,
+      "share_A_better": 0.078
+    },
+    "f1_diff": {
+      "metric": "F1",
+      "diff": -0.002985021901935947,
+      "ci_low": -0.008943387127021325,
+      "ci_high": 0.0019836561114403126,
+      "share_A_better": 0.078
+    },
+    "precision_diff": {
+      "metric": "Precision",
+      "diff": -2.3573971192680787e-05,
+      "ci_low": -0.008036456054335539,
+      "ci_high": 0.007881522725300438,
+      "share_A_better": 0.381
+    },
+    "sensitivity_diff": {
+      "metric": "Sensitivity",
+      "diff": -0.005940594059405946,
+      "ci_low": -0.013780207022938676,
+      "ci_high": 0.0,
+      "share_A_better": 0.0
+    }
+  },
   "DDoS:RF-SVM": {
     "attack": "DDoS",
     "A": "RF",
@@ -236,126 +356,6 @@
       "diff": -0.00021255491001848092,
       "ci_low": -0.00039113580772209833,
       "ci_high": -7.087366874736767e-05,
-      "share_A_better": 0.0
-    }
-  },
-  "PortScan:RF-SVM": {
-    "attack": "PortScan",
-    "A": "RF",
-    "B": "SVM",
-    "both_correct": 1003,
-    "only_A_correct": 5,
-    "only_B_correct": 1,
-    "both_wrong": 1,
-    "statistic": 1.0,
-    "p_value": 0.21875,
-    "method": "точен биномен тест",
-    "accuracy_diff": {
-      "metric": "Accuracy",
-      "diff": 0.003960396039603964,
-      "ci_low": 0.0,
-      "ci_high": 0.008910891089108919,
-      "share_A_better": 0.937
-    },
-    "f1_diff": {
-      "metric": "F1",
-      "diff": 0.00397218293257906,
-      "ci_low": 0.0,
-      "ci_high": 0.009298337089380937,
-      "share_A_better": 0.968
-    },
-    "precision_diff": {
-      "metric": "Precision",
-      "diff": 0.0019959451213511503,
-      "ci_low": -0.004040813817690112,
-      "ci_high": 0.008561987279100899,
-      "share_A_better": 0.762
-    },
-    "sensitivity_diff": {
-      "metric": "Sensitivity",
-      "diff": 0.005940594059405946,
-      "ci_low": 0.0,
-      "ci_high": 0.013780207022938674,
-      "share_A_better": 0.966
-    }
-  },
-  "PortScan:RF-XGB": {
-    "attack": "PortScan",
-    "A": "RF",
-    "B": "XGB",
-    "both_correct": 1007,
-    "only_A_correct": 1,
-    "only_B_correct": 0,
-    "both_wrong": 2,
-    "statistic": 0.0,
-    "p_value": 1.0,
-    "method": "точен биномен тест",
-    "accuracy_diff": {
-      "metric": "Accuracy",
-      "diff": 0.000990099009900991,
-      "ci_low": 0.0,
-      "ci_high": 0.002970297029702973,
-      "share_A_better": 0.626
-    },
-    "f1_diff": {
-      "metric": "F1",
-      "diff": 0.0009871610306431133,
-      "ci_low": 0.0,
-      "ci_high": 0.00303958183135902,
-      "share_A_better": 0.626
-    },
-    "precision_diff": {
-      "metric": "Precision",
-      "diff": 0.0019723711501584695,
-      "ci_low": 0.0,
-      "ci_high": 0.006060912771439125,
-      "share_A_better": 0.626
-    },
-    "sensitivity_diff": {
-      "metric": "Sensitivity",
-      "diff": 0.0,
-      "ci_low": 0.0,
-      "ci_high": 0.0,
-      "share_A_better": 0.0
-    }
-  },
-  "PortScan:SVM-XGB": {
-    "attack": "PortScan",
-    "A": "SVM",
-    "B": "XGB",
-    "both_correct": 1002,
-    "only_A_correct": 2,
-    "only_B_correct": 5,
-    "both_wrong": 1,
-    "statistic": 2.0,
-    "p_value": 0.453125,
-    "method": "точен биномен тест",
-    "accuracy_diff": {
-      "metric": "Accuracy",
-      "diff": -0.002970297029702973,
-      "ci_low": -0.008910891089108919,
-      "ci_high": 0.001980198019801982,
-      "share_A_better": 0.078
-    },
-    "f1_diff": {
-      "metric": "F1",
-      "diff": -0.002985021901935947,
-      "ci_low": -0.008943387127021325,
-      "ci_high": 0.0019836561114403126,
-      "share_A_better": 0.078
-    },
-    "precision_diff": {
-      "metric": "Precision",
-      "diff": -2.3573971192680787e-05,
-      "ci_low": -0.008036456054335539,
-      "ci_high": 0.007881522725300438,
-      "share_A_better": 0.381
-    },
-    "sensitivity_diff": {
-      "metric": "Sensitivity",
-      "diff": -0.005940594059405946,
-      "ci_low": -0.013780207022938676,
-      "ci_high": 0.0,
       "share_A_better": 0.0
     }
   }

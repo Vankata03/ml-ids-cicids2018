@@ -40,6 +40,20 @@
       "241": 0.0024
     }
   },
+  "PortScan_chronological": {
+    "train_until": "17:55",
+    "test_from": "17:55",
+    "attack_test_from": "17:55",
+    "attack_train_until": "17:55",
+    "train_rows": 2356,
+    "test_rows": 1010,
+    "test_attack_labels": {
+      "PortScan": 505
+    },
+    "train_attack_labels": {
+      "PortScan": 1178
+    }
+  },
   "DDoS_chronological": {
     "train_until": "14:28",
     "test_from": "14:15",
@@ -68,20 +82,6 @@
     "train_attack_labels": {
       "SSH-Bruteforce": 65812,
       "FTP-BruteForce": 53
-    }
-  },
-  "PortScan_chronological": {
-    "train_until": "17:55",
-    "test_from": "17:55",
-    "attack_test_from": "17:55",
-    "attack_train_until": "17:55",
-    "train_rows": 2356,
-    "test_rows": 1010,
-    "test_attack_labels": {
-      "PortScan": 505
-    },
-    "train_attack_labels": {
-      "PortScan": 1178
     }
   },
   "benign_profile_by_day": {
@@ -116,5 +116,5 @@
       "tcp_share": 0.99453397417774
     }
   },
-  "runtime_min": 5.9735531716666666
+  "runtime_min": 6.349201580000044
 }

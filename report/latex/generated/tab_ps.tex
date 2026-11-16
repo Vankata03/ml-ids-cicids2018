@@ -3,149 +3,149 @@
 \toprule
 \headrow \hd{Атака} & \hd{Модел} & \hd{Метод} & \hd{Измерения} & \hd{Дял важност /\\дисперсия} & \hd{F1} & \hd{Обучение, s} & \hd{µs/запис}\\
 \midrule
-DDoS & Random Forest & подбор & 2 & 73,6\% & 94,53\% & 1,03 & 3,8\\
-\rowcolor{rowalt}DDoS & Random Forest & подбор & 5 & 96,5\% & 100,00\% & 1,03 & 3,8\\
-DDoS & Random Forest & подбор & 10 & 99,7\% & 99,93\% & 1,07 & 3,8\\
-\rowcolor{rowalt}DDoS & Random Forest & подбор & 15 & 99,8\% & 99,92\% & 1,11 & 3,9\\
-DDoS & Random Forest & подбор & 20 & 100,0\% & 99,93\% & 1,12 & 3,9\\
-\rowcolor{rowalt}DDoS & Random Forest & подбор & 30 & 100,0\% & 99,93\% & 1,14 & 3,9\\
-DDoS & Random Forest & подбор & 40 & 100,0\% & 99,93\% & 1,26 & 3,9\\
-\rowcolor{rowalt}DDoS & Random Forest & подбор & без редукция & -- & 99,93\% & 0,52 & 3,8\\
-DDoS & Random Forest & PCA & 2 & 35,4\% & 99,92\% & 0,42 & 3,8\\
-\rowcolor{rowalt}DDoS & Random Forest & PCA & 5 & 56,3\% & 99,95\% & 0,47 & 3,9\\
-DDoS & Random Forest & PCA & 10 & 74,3\% & 99,96\% & 0,62 & 3,9\\
-\rowcolor{rowalt}DDoS & Random Forest & PCA & 15 & 86,1\% & 99,95\% & 0,68 & 3,9\\
-DDoS & Random Forest & PCA & 20 & 94,0\% & 99,95\% & 0,86 & 4,0\\
-\rowcolor{rowalt}DDoS & Random Forest & PCA & 30 & 99,5\% & 99,96\% & 1,17 & 4,0\\
-DDoS & Random Forest & PCA & 40 & 100,0\% & 99,96\% & 1,44 & 4,0\\
-\rowcolor{rowalt}DDoS & Random Forest & PCA & без редукция & -- & 99,93\% & 0,51 & 3,8\\
-DDoS & SVM (RBF) & подбор & 2 & 73,6\% & 88,37\% & 3,39 & 238,6\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 5 & 96,5\% & 99,86\% & 0,91 & 9,9\\
-DDoS & SVM (RBF) & подбор & 10 & 99,7\% & 99,96\% & 0,88 & 3,2\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 15 & 99,8\% & 99,96\% & 0,83 & 3,3\\
-DDoS & SVM (RBF) & подбор & 20 & 100,0\% & 99,97\% & 0,87 & 3,9\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 30 & 100,0\% & 99,97\% & 0,96 & 11,3\\
-DDoS & SVM (RBF) & подбор & 40 & 100,0\% & 99,97\% & 1,00 & 16,4\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & без редукция & -- & 99,98\% & 0,46 & 35,0\\
-DDoS & SVM (RBF) & PCA & 2 & 35,4\% & 99,42\% & 0,52 & 36,4\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 5 & 56,3\% & 99,73\% & 0,25 & 6,7\\
-DDoS & SVM (RBF) & PCA & 10 & 74,3\% & 99,80\% & 0,28 & 5,8\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 15 & 86,1\% & 99,89\% & 0,26 & 5,5\\
-DDoS & SVM (RBF) & PCA & 20 & 94,0\% & 99,96\% & 0,24 & 4,3\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 30 & 99,5\% & 99,97\% & 0,24 & 3,9\\
-DDoS & SVM (RBF) & PCA & 40 & 100,0\% & 99,98\% & 0,24 & 3,4\\
-\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & без редукция & -- & 99,98\% & 0,47 & 34,6\\
-DDoS & XGBoost & подбор & 2 & 73,6\% & 94,52\% & 1,03 & 0,5\\
-\rowcolor{rowalt}DDoS & XGBoost & подбор & 5 & 96,5\% & 99,99\% & 1,06 & 0,6\\
-DDoS & XGBoost & подбор & 10 & 99,7\% & 99,99\% & 1,06 & 0,6\\
-\rowcolor{rowalt}DDoS & XGBoost & подбор & 15 & 99,8\% & 99,99\% & 1,08 & 0,6\\
-DDoS & XGBoost & подбор & 20 & 100,0\% & 99,95\% & 1,10 & 0,6\\
-\rowcolor{rowalt}DDoS & XGBoost & подбор & 30 & 100,0\% & 99,94\% & 1,11 & 0,7\\
-DDoS & XGBoost & подбор & 40 & 100,0\% & 99,96\% & 1,16 & 0,7\\
-\rowcolor{rowalt}DDoS & XGBoost & подбор & без редукция & -- & 100,00\% & 0,45 & 0,6\\
-DDoS & XGBoost & PCA & 2 & 35,4\% & 99,95\% & 0,54 & 0,8\\
-\rowcolor{rowalt}DDoS & XGBoost & PCA & 5 & 56,3\% & 99,97\% & 0,45 & 0,6\\
-DDoS & XGBoost & PCA & 10 & 74,3\% & 99,97\% & 0,46 & 0,8\\
-\rowcolor{rowalt}DDoS & XGBoost & PCA & 15 & 86,1\% & 99,97\% & 0,47 & 0,8\\
-DDoS & XGBoost & PCA & 20 & 94,0\% & 99,97\% & 0,50 & 0,7\\
-\rowcolor{rowalt}DDoS & XGBoost & PCA & 30 & 99,5\% & 99,97\% & 0,51 & 0,7\\
-DDoS & XGBoost & PCA & 40 & 100,0\% & 99,97\% & 0,53 & 0,9\\
-\rowcolor{rowalt}DDoS & XGBoost & PCA & без редукция & -- & 100,00\% & 0,45 & 0,7\\
-BruteForce & Random Forest & подбор & 2 & 95,8\% & 99,96\% & 0,76 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & подбор & 5 & 98,4\% & 99,97\% & 0,78 & 3,7\\
-BruteForce & Random Forest & подбор & 10 & 99,7\% & 99,97\% & 0,74 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & подбор & 15 & 99,9\% & 99,97\% & 0,75 & 3,7\\
-BruteForce & Random Forest & подбор & 20 & 100,0\% & 99,97\% & 0,75 & 3,7\\
-\rowcolor{rowalt}BruteForce & Random Forest & подбор & 30 & 100,0\% & 100,00\% & 0,77 & 3,8\\
-BruteForce & Random Forest & подбор & 40 & 100,0\% & 100,00\% & 0,79 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & подбор & без редукция & -- & 99,99\% & 0,29 & 3,8\\
-BruteForce & Random Forest & PCA & 2 & 33,7\% & 99,97\% & 0,40 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & PCA & 5 & 57,3\% & 99,97\% & 0,41 & 3,9\\
-BruteForce & Random Forest & PCA & 10 & 78,0\% & 99,96\% & 0,45 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & PCA & 15 & 89,8\% & 99,95\% & 0,46 & 4,0\\
-BruteForce & Random Forest & PCA & 20 & 95,6\% & 99,96\% & 0,51 & 3,8\\
-\rowcolor{rowalt}BruteForce & Random Forest & PCA & 30 & 99,5\% & 99,97\% & 0,56 & 3,9\\
-BruteForce & Random Forest & PCA & 40 & 100,0\% & 99,98\% & 0,60 & 3,9\\
-\rowcolor{rowalt}BruteForce & Random Forest & PCA & без редукция & -- & 99,99\% & 0,27 & 3,8\\
-BruteForce & SVM (RBF) & подбор & 2 & 95,8\% & 99,86\% & 0,55 & 2,5\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 5 & 98,4\% & 99,97\% & 0,52 & 1,5\\
-BruteForce & SVM (RBF) & подбор & 10 & 99,7\% & 99,96\% & 0,53 & 1,6\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 15 & 99,9\% & 99,95\% & 0,55 & 2,0\\
-BruteForce & SVM (RBF) & подбор & 20 & 100,0\% & 99,95\% & 0,66 & 2,0\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 30 & 100,0\% & 99,94\% & 0,69 & 5,8\\
-BruteForce & SVM (RBF) & подбор & 40 & 100,0\% & 99,94\% & 0,62 & 2,9\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & без редукция & -- & 99,93\% & 0,11 & 3,9\\
-BruteForce & SVM (RBF) & PCA & 2 & 33,7\% & 99,95\% & 0,18 & 2,3\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 5 & 57,3\% & 99,94\% & 0,20 & 2,2\\
-BruteForce & SVM (RBF) & PCA & 10 & 78,0\% & 99,93\% & 0,23 & 2,9\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 15 & 89,8\% & 99,92\% & 0,22 & 2,9\\
-BruteForce & SVM (RBF) & PCA & 20 & 95,6\% & 99,95\% & 0,23 & 2,9\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 30 & 99,5\% & 99,93\% & 0,28 & 7,3\\
-BruteForce & SVM (RBF) & PCA & 40 & 100,0\% & 99,93\% & 0,29 & 8,9\\
-\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & без редукция & -- & 99,93\% & 0,12 & 3,9\\
-BruteForce & XGBoost & подбор & 2 & 95,8\% & 99,96\% & 0,79 & 0,6\\
-\rowcolor{rowalt}BruteForce & XGBoost & подбор & 5 & 98,4\% & 99,96\% & 0,84 & 0,5\\
-BruteForce & XGBoost & подбор & 10 & 99,7\% & 99,97\% & 0,81 & 0,6\\
-\rowcolor{rowalt}BruteForce & XGBoost & подбор & 15 & 99,9\% & 100,00\% & 0,82 & 0,6\\
-BruteForce & XGBoost & подбор & 20 & 100,0\% & 100,00\% & 0,86 & 0,6\\
-\rowcolor{rowalt}BruteForce & XGBoost & подбор & 30 & 100,0\% & 100,00\% & 0,88 & 0,7\\
-BruteForce & XGBoost & подбор & 40 & 100,0\% & 100,00\% & 0,88 & 0,7\\
-\rowcolor{rowalt}BruteForce & XGBoost & подбор & без редукция & -- & 100,00\% & 0,44 & 0,8\\
-BruteForce & XGBoost & PCA & 2 & 33,7\% & 99,86\% & 0,45 & 0,7\\
-\rowcolor{rowalt}BruteForce & XGBoost & PCA & 5 & 57,3\% & 99,89\% & 0,45 & 0,7\\
-BruteForce & XGBoost & PCA & 10 & 78,0\% & 99,90\% & 0,47 & 0,7\\
-\rowcolor{rowalt}BruteForce & XGBoost & PCA & 15 & 89,8\% & 99,90\% & 0,50 & 0,9\\
-BruteForce & XGBoost & PCA & 20 & 95,6\% & 99,91\% & 0,50 & 0,7\\
-\rowcolor{rowalt}BruteForce & XGBoost & PCA & 30 & 99,5\% & 99,92\% & 0,53 & 0,7\\
-BruteForce & XGBoost & PCA & 40 & 100,0\% & 99,94\% & 0,55 & 0,7\\
-\rowcolor{rowalt}BruteForce & XGBoost & PCA & без редукция & -- & 100,00\% & 0,43 & 0,6\\
-PortScan & Random Forest & подбор & 2 & 70,1\% & 98,34\% & 0,46 & 25,8\\
-\rowcolor{rowalt}PortScan & Random Forest & подбор & 5 & 87,4\% & 99,61\% & 0,46 & 26,1\\
-PortScan & Random Forest & подбор & 10 & 93,8\% & 99,80\% & 0,46 & 25,5\\
-\rowcolor{rowalt}PortScan & Random Forest & подбор & 15 & 96,5\% & 99,80\% & 0,47 & 24,8\\
-PortScan & Random Forest & подбор & 20 & 97,9\% & 99,80\% & 0,45 & 25,9\\
-\rowcolor{rowalt}PortScan & Random Forest & подбор & 30 & 99,2\% & 99,80\% & 0,47 & 25,3\\
-PortScan & Random Forest & подбор & 40 & 99,7\% & 99,70\% & 0,46 & 25,4\\
-\rowcolor{rowalt}PortScan & Random Forest & подбор & без редукция & -- & 99,70\% & 0,19 & 25,6\\
-PortScan & Random Forest & PCA & 2 & 29,4\% & 98,81\% & 0,22 & 26,0\\
-\rowcolor{rowalt}PortScan & Random Forest & PCA & 5 & 52,8\% & 99,11\% & 0,22 & 25,9\\
-PortScan & Random Forest & PCA & 10 & 74,4\% & 99,31\% & 0,21 & 25,7\\
-\rowcolor{rowalt}PortScan & Random Forest & PCA & 15 & 86,4\% & 99,50\% & 0,22 & 25,5\\
-PortScan & Random Forest & PCA & 20 & 93,6\% & 99,40\% & 0,22 & 24,9\\
-\rowcolor{rowalt}PortScan & Random Forest & PCA & 30 & 99,0\% & 99,50\% & 0,22 & 25,7\\
-PortScan & Random Forest & PCA & 40 & 100,0\% & 99,40\% & 0,23 & 25,7\\
-\rowcolor{rowalt}PortScan & Random Forest & PCA & без редукция & -- & 99,70\% & 0,19 & 26,4\\
-PortScan & SVM (RBF) & подбор & 2 & 70,1\% & 96,66\% & 0,31 & 9,9\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 5 & 87,4\% & 99,31\% & 0,30 & 5,4\\
-PortScan & SVM (RBF) & подбор & 10 & 93,8\% & 99,70\% & 0,30 & 4,4\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 15 & 96,5\% & 99,61\% & 0,30 & 4,8\\
-PortScan & SVM (RBF) & подбор & 20 & 97,9\% & 99,40\% & 0,29 & 3,9\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 30 & 99,2\% & 99,31\% & 0,29 & 4,1\\
-PortScan & SVM (RBF) & подбор & 40 & 99,7\% & 99,50\% & 0,29 & 4,1\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & без редукция & -- & 99,50\% & 0,02 & 5,1\\
-PortScan & SVM (RBF) & PCA & 2 & 29,4\% & 97,70\% & 0,05 & 5,7\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 5 & 52,8\% & 98,24\% & 0,05 & 5,5\\
-PortScan & SVM (RBF) & PCA & 10 & 74,4\% & 99,11\% & 0,04 & 5,2\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 15 & 86,4\% & 99,51\% & 0,05 & 5,1\\
-PortScan & SVM (RBF) & PCA & 20 & 93,6\% & 99,41\% & 0,05 & 4,1\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 30 & 99,0\% & 99,60\% & 0,05 & 4,4\\
+PortScan & Random Forest & подбор & 2 & 70,1\% & 98,34\% & 0,59 & 36,1\\
+\rowcolor{rowalt}PortScan & Random Forest & подбор & 5 & 87,4\% & 99,61\% & 0,61 & 36,4\\
+PortScan & Random Forest & подбор & 10 & 93,8\% & 99,80\% & 0,58 & 36,7\\
+\rowcolor{rowalt}PortScan & Random Forest & подбор & 15 & 96,5\% & 99,80\% & 0,59 & 36,2\\
+PortScan & Random Forest & подбор & 20 & 97,9\% & 99,80\% & 0,61 & 36,1\\
+\rowcolor{rowalt}PortScan & Random Forest & подбор & 30 & 99,2\% & 99,80\% & 0,60 & 35,9\\
+PortScan & Random Forest & подбор & 40 & 99,7\% & 99,70\% & 0,60 & 36,3\\
+\rowcolor{rowalt}PortScan & Random Forest & подбор & без редукция & -- & 99,70\% & 0,21 & 36,8\\
+PortScan & Random Forest & PCA & 2 & 29,4\% & 98,81\% & 0,24 & 36,9\\
+\rowcolor{rowalt}PortScan & Random Forest & PCA & 5 & 52,8\% & 99,11\% & 0,24 & 36,4\\
+PortScan & Random Forest & PCA & 10 & 74,4\% & 99,31\% & 0,24 & 36,1\\
+\rowcolor{rowalt}PortScan & Random Forest & PCA & 15 & 86,4\% & 99,50\% & 0,24 & 36,2\\
+PortScan & Random Forest & PCA & 20 & 93,6\% & 99,40\% & 0,25 & 36,0\\
+\rowcolor{rowalt}PortScan & Random Forest & PCA & 30 & 99,0\% & 99,50\% & 0,25 & 36,3\\
+PortScan & Random Forest & PCA & 40 & 100,0\% & 99,40\% & 0,25 & 36,2\\
+\rowcolor{rowalt}PortScan & Random Forest & PCA & без редукция & -- & 99,70\% & 0,21 & 36,6\\
+PortScan & SVM (RBF) & подбор & 2 & 70,1\% & 96,66\% & 0,44 & 17,4\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 5 & 87,4\% & 99,31\% & 0,42 & 8,9\\
+PortScan & SVM (RBF) & подбор & 10 & 93,8\% & 99,70\% & 0,42 & 7,0\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 15 & 96,5\% & 99,61\% & 0,41 & 7,6\\
+PortScan & SVM (RBF) & подбор & 20 & 97,9\% & 99,40\% & 0,40 & 6,4\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & 30 & 99,2\% & 99,31\% & 0,39 & 4,1\\
+PortScan & SVM (RBF) & подбор & 40 & 99,7\% & 99,50\% & 0,42 & 6,0\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & подбор & без редукция & -- & 99,50\% & 0,02 & 7,8\\
+PortScan & SVM (RBF) & PCA & 2 & 29,4\% & 97,70\% & 0,06 & 6,1\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 5 & 52,8\% & 98,24\% & 0,06 & 5,9\\
+PortScan & SVM (RBF) & PCA & 10 & 74,4\% & 99,11\% & 0,05 & 5,6\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 15 & 86,4\% & 99,51\% & 0,05 & 5,5\\
+PortScan & SVM (RBF) & PCA & 20 & 93,6\% & 99,41\% & 0,05 & 4,2\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & 30 & 99,0\% & 99,60\% & 0,05 & 4,9\\
 PortScan & SVM (RBF) & PCA & 40 & 100,0\% & 99,70\% & 0,04 & 4,3\\
-\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & без редукция & -- & 99,50\% & 0,01 & 5,1\\
-PortScan & XGBoost & подбор & 2 & 70,1\% & 98,34\% & 0,53 & 2,1\\
-\rowcolor{rowalt}PortScan & XGBoost & подбор & 5 & 87,4\% & 99,70\% & 0,54 & 2,1\\
-PortScan & XGBoost & подбор & 10 & 93,8\% & 99,80\% & 0,56 & 2,2\\
-\rowcolor{rowalt}PortScan & XGBoost & подбор & 15 & 96,5\% & 99,80\% & 0,57 & 2,2\\
-PortScan & XGBoost & подбор & 20 & 97,9\% & 99,70\% & 0,56 & 2,1\\
-\rowcolor{rowalt}PortScan & XGBoost & подбор & 30 & 99,2\% & 99,70\% & 0,61 & 2,2\\
-PortScan & XGBoost & подбор & 40 & 99,7\% & 99,70\% & 0,73 & 2,8\\
-\rowcolor{rowalt}PortScan & XGBoost & подбор & без редукция & -- & 99,70\% & 0,39 & 3,1\\
-PortScan & XGBoost & PCA & 2 & 29,4\% & 98,71\% & 0,31 & 2,8\\
-\rowcolor{rowalt}PortScan & XGBoost & PCA & 5 & 52,8\% & 99,21\% & 0,31 & 2,4\\
-PortScan & XGBoost & PCA & 10 & 74,4\% & 99,51\% & 0,32 & 2,4\\
-\rowcolor{rowalt}PortScan & XGBoost & PCA & 15 & 86,4\% & 99,51\% & 0,33 & 2,6\\
-PortScan & XGBoost & PCA & 20 & 93,6\% & 99,60\% & 0,34 & 2,6\\
-\rowcolor{rowalt}PortScan & XGBoost & PCA & 30 & 99,0\% & 99,80\% & 0,37 & 2,8\\
-PortScan & XGBoost & PCA & 40 & 100,0\% & 99,80\% & 0,39 & 2,7\\
-\rowcolor{rowalt}PortScan & XGBoost & PCA & без редукция & -- & 99,70\% & 0,36 & 2,6\\
+\rowcolor{rowalt}PortScan & SVM (RBF) & PCA & без редукция & -- & 99,50\% & 0,01 & 5,5\\
+PortScan & XGBoost & подбор & 2 & 70,1\% & 98,34\% & 0,64 & 1,9\\
+\rowcolor{rowalt}PortScan & XGBoost & подбор & 5 & 87,4\% & 99,70\% & 0,65 & 2,0\\
+PortScan & XGBoost & подбор & 10 & 93,8\% & 99,80\% & 0,61 & 2,1\\
+\rowcolor{rowalt}PortScan & XGBoost & подбор & 15 & 96,5\% & 99,80\% & 0,65 & 1,9\\
+PortScan & XGBoost & подбор & 20 & 97,9\% & 99,70\% & 0,67 & 2,1\\
+\rowcolor{rowalt}PortScan & XGBoost & подбор & 30 & 99,2\% & 99,70\% & 0,69 & 2,1\\
+PortScan & XGBoost & подбор & 40 & 99,7\% & 99,70\% & 0,71 & 2,4\\
+\rowcolor{rowalt}PortScan & XGBoost & подбор & без редукция & -- & 99,70\% & 0,35 & 2,7\\
+PortScan & XGBoost & PCA & 2 & 29,4\% & 98,71\% & 0,29 & 2,1\\
+\rowcolor{rowalt}PortScan & XGBoost & PCA & 5 & 52,8\% & 99,21\% & 0,29 & 2,0\\
+PortScan & XGBoost & PCA & 10 & 74,4\% & 99,51\% & 0,30 & 2,1\\
+\rowcolor{rowalt}PortScan & XGBoost & PCA & 15 & 86,4\% & 99,51\% & 0,32 & 2,1\\
+PortScan & XGBoost & PCA & 20 & 93,6\% & 99,60\% & 0,33 & 2,1\\
+\rowcolor{rowalt}PortScan & XGBoost & PCA & 30 & 99,0\% & 99,80\% & 0,36 & 2,3\\
+PortScan & XGBoost & PCA & 40 & 100,0\% & 99,80\% & 0,38 & 2,5\\
+\rowcolor{rowalt}PortScan & XGBoost & PCA & без редукция & -- & 99,70\% & 0,35 & 2,6\\
+DDoS & Random Forest & подбор & 2 & 73,6\% & 94,53\% & 0,98 & 3,8\\
+\rowcolor{rowalt}DDoS & Random Forest & подбор & 5 & 96,5\% & 100,00\% & 1,03 & 3,7\\
+DDoS & Random Forest & подбор & 10 & 99,7\% & 99,93\% & 1,05 & 3,8\\
+\rowcolor{rowalt}DDoS & Random Forest & подбор & 15 & 99,8\% & 99,92\% & 1,09 & 3,8\\
+DDoS & Random Forest & подбор & 20 & 100,0\% & 99,93\% & 1,12 & 3,8\\
+\rowcolor{rowalt}DDoS & Random Forest & подбор & 30 & 100,0\% & 99,93\% & 1,17 & 3,9\\
+DDoS & Random Forest & подбор & 40 & 100,0\% & 99,93\% & 1,28 & 3,9\\
+\rowcolor{rowalt}DDoS & Random Forest & подбор & без редукция & -- & 99,93\% & 0,51 & 3,8\\
+DDoS & Random Forest & PCA & 2 & 35,4\% & 99,92\% & 0,43 & 3,8\\
+\rowcolor{rowalt}DDoS & Random Forest & PCA & 5 & 56,3\% & 99,95\% & 0,46 & 3,9\\
+DDoS & Random Forest & PCA & 10 & 74,3\% & 99,96\% & 0,61 & 3,8\\
+\rowcolor{rowalt}DDoS & Random Forest & PCA & 15 & 86,1\% & 99,95\% & 0,66 & 3,9\\
+DDoS & Random Forest & PCA & 20 & 94,0\% & 99,95\% & 0,86 & 3,9\\
+\rowcolor{rowalt}DDoS & Random Forest & PCA & 30 & 99,5\% & 99,96\% & 1,12 & 4,0\\
+DDoS & Random Forest & PCA & 40 & 100,0\% & 99,96\% & 1,43 & 4,0\\
+\rowcolor{rowalt}DDoS & Random Forest & PCA & без редукция & -- & 99,93\% & 0,52 & 3,8\\
+DDoS & SVM (RBF) & подбор & 2 & 73,6\% & 88,37\% & 3,38 & 242,2\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 5 & 96,5\% & 99,86\% & 0,93 & 10,1\\
+DDoS & SVM (RBF) & подбор & 10 & 99,7\% & 99,96\% & 0,91 & 3,2\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 15 & 99,8\% & 99,96\% & 0,91 & 3,2\\
+DDoS & SVM (RBF) & подбор & 20 & 100,0\% & 99,97\% & 0,88 & 3,4\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & 30 & 100,0\% & 99,97\% & 0,97 & 11,4\\
+DDoS & SVM (RBF) & подбор & 40 & 100,0\% & 99,97\% & 1,05 & 17,0\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & подбор & без редукция & -- & 99,98\% & 0,46 & 35,0\\
+DDoS & SVM (RBF) & PCA & 2 & 35,4\% & 99,42\% & 0,51 & 37,6\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 5 & 56,3\% & 99,73\% & 0,25 & 6,9\\
+DDoS & SVM (RBF) & PCA & 10 & 74,3\% & 99,80\% & 0,28 & 5,9\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 15 & 86,1\% & 99,89\% & 0,25 & 5,6\\
+DDoS & SVM (RBF) & PCA & 20 & 94,0\% & 99,96\% & 0,24 & 4,3\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & 30 & 99,5\% & 99,97\% & 0,25 & 3,8\\
+DDoS & SVM (RBF) & PCA & 40 & 100,0\% & 99,98\% & 0,23 & 3,4\\
+\rowcolor{rowalt}DDoS & SVM (RBF) & PCA & без редукция & -- & 99,98\% & 0,45 & 35,1\\
+DDoS & XGBoost & подбор & 2 & 73,6\% & 94,52\% & 1,03 & 0,5\\
+\rowcolor{rowalt}DDoS & XGBoost & подбор & 5 & 96,5\% & 99,99\% & 0,99 & 0,5\\
+DDoS & XGBoost & подбор & 10 & 99,7\% & 99,99\% & 1,03 & 0,5\\
+\rowcolor{rowalt}DDoS & XGBoost & подбор & 15 & 99,8\% & 99,99\% & 1,00 & 0,6\\
+DDoS & XGBoost & подбор & 20 & 100,0\% & 99,95\% & 1,02 & 0,7\\
+\rowcolor{rowalt}DDoS & XGBoost & подбор & 30 & 100,0\% & 99,94\% & 1,12 & 0,7\\
+DDoS & XGBoost & подбор & 40 & 100,0\% & 99,96\% & 1,12 & 0,7\\
+\rowcolor{rowalt}DDoS & XGBoost & подбор & без редукция & -- & 100,00\% & 0,44 & 0,5\\
+DDoS & XGBoost & PCA & 2 & 35,4\% & 99,95\% & 0,45 & 0,7\\
+\rowcolor{rowalt}DDoS & XGBoost & PCA & 5 & 56,3\% & 99,97\% & 0,45 & 0,6\\
+DDoS & XGBoost & PCA & 10 & 74,3\% & 99,97\% & 0,46 & 0,6\\
+\rowcolor{rowalt}DDoS & XGBoost & PCA & 15 & 86,1\% & 99,97\% & 0,47 & 0,6\\
+DDoS & XGBoost & PCA & 20 & 94,0\% & 99,97\% & 0,47 & 0,8\\
+\rowcolor{rowalt}DDoS & XGBoost & PCA & 30 & 99,5\% & 99,97\% & 0,50 & 0,7\\
+DDoS & XGBoost & PCA & 40 & 100,0\% & 99,97\% & 0,53 & 0,7\\
+\rowcolor{rowalt}DDoS & XGBoost & PCA & без редукция & -- & 100,00\% & 0,44 & 0,5\\
+BruteForce & Random Forest & подбор & 2 & 95,8\% & 99,96\% & 0,99 & 3,8\\
+\rowcolor{rowalt}BruteForce & Random Forest & подбор & 5 & 98,4\% & 99,97\% & 0,98 & 3,8\\
+BruteForce & Random Forest & подбор & 10 & 99,7\% & 99,97\% & 0,99 & 3,9\\
+\rowcolor{rowalt}BruteForce & Random Forest & подбор & 15 & 99,9\% & 99,97\% & 0,98 & 3,9\\
+BruteForce & Random Forest & подбор & 20 & 100,0\% & 99,97\% & 1,00 & 3,9\\
+\rowcolor{rowalt}BruteForce & Random Forest & подбор & 30 & 100,0\% & 100,00\% & 1,03 & 3,9\\
+BruteForce & Random Forest & подбор & 40 & 100,0\% & 100,00\% & 1,04 & 4,0\\
+\rowcolor{rowalt}BruteForce & Random Forest & подбор & без редукция & -- & 99,99\% & 0,31 & 3,8\\
+BruteForce & Random Forest & PCA & 2 & 33,7\% & 99,97\% & 0,43 & 3,9\\
+\rowcolor{rowalt}BruteForce & Random Forest & PCA & 5 & 57,3\% & 99,97\% & 0,45 & 3,9\\
+BruteForce & Random Forest & PCA & 10 & 78,0\% & 99,96\% & 0,49 & 3,9\\
+\rowcolor{rowalt}BruteForce & Random Forest & PCA & 15 & 89,8\% & 99,95\% & 0,49 & 4,0\\
+BruteForce & Random Forest & PCA & 20 & 95,6\% & 99,96\% & 0,52 & 4,0\\
+\rowcolor{rowalt}BruteForce & Random Forest & PCA & 30 & 99,5\% & 99,97\% & 0,57 & 4,0\\
+BruteForce & Random Forest & PCA & 40 & 100,0\% & 99,98\% & 0,61 & 3,9\\
+\rowcolor{rowalt}BruteForce & Random Forest & PCA & без редукция & -- & 99,99\% & 0,30 & 3,8\\
+BruteForce & SVM (RBF) & подбор & 2 & 95,8\% & 99,86\% & 0,78 & 4,5\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 5 & 98,4\% & 99,97\% & 0,75 & 1,6\\
+BruteForce & SVM (RBF) & подбор & 10 & 99,7\% & 99,96\% & 0,71 & 1,7\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 15 & 99,9\% & 99,95\% & 0,74 & 2,0\\
+BruteForce & SVM (RBF) & подбор & 20 & 100,0\% & 99,95\% & 0,76 & 3,2\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & 30 & 100,0\% & 99,94\% & 0,85 & 6,0\\
+BruteForce & SVM (RBF) & подбор & 40 & 100,0\% & 99,94\% & 0,83 & 3,1\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & подбор & без редукция & -- & 99,93\% & 0,12 & 4,0\\
+BruteForce & SVM (RBF) & PCA & 2 & 33,7\% & 99,95\% & 0,19 & 2,5\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 5 & 57,3\% & 99,94\% & 0,21 & 2,3\\
+BruteForce & SVM (RBF) & PCA & 10 & 78,0\% & 99,93\% & 0,24 & 3,0\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 15 & 89,8\% & 99,92\% & 0,24 & 3,0\\
+BruteForce & SVM (RBF) & PCA & 20 & 95,6\% & 99,95\% & 0,24 & 3,1\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & 30 & 99,5\% & 99,93\% & 0,29 & 7,7\\
+BruteForce & SVM (RBF) & PCA & 40 & 100,0\% & 99,93\% & 0,31 & 9,9\\
+\rowcolor{rowalt}BruteForce & SVM (RBF) & PCA & без редукция & -- & 99,93\% & 0,12 & 4,1\\
+BruteForce & XGBoost & подбор & 2 & 95,8\% & 99,96\% & 0,99 & 0,5\\
+\rowcolor{rowalt}BruteForce & XGBoost & подбор & 5 & 98,4\% & 99,96\% & 1,03 & 0,5\\
+BruteForce & XGBoost & подбор & 10 & 99,7\% & 99,97\% & 1,02 & 0,5\\
+\rowcolor{rowalt}BruteForce & XGBoost & подбор & 15 & 99,9\% & 100,00\% & 1,04 & 0,6\\
+BruteForce & XGBoost & подбор & 20 & 100,0\% & 100,00\% & 0,99 & 0,6\\
+\rowcolor{rowalt}BruteForce & XGBoost & подбор & 30 & 100,0\% & 100,00\% & 1,09 & 0,7\\
+BruteForce & XGBoost & подбор & 40 & 100,0\% & 100,00\% & 1,03 & 0,7\\
+\rowcolor{rowalt}BruteForce & XGBoost & подбор & без редукция & -- & 100,00\% & 0,43 & 0,6\\
+BruteForce & XGBoost & PCA & 2 & 33,7\% & 99,86\% & 0,44 & 0,7\\
+\rowcolor{rowalt}BruteForce & XGBoost & PCA & 5 & 57,3\% & 99,89\% & 0,45 & 0,7\\
+BruteForce & XGBoost & PCA & 10 & 78,0\% & 99,90\% & 0,46 & 0,7\\
+\rowcolor{rowalt}BruteForce & XGBoost & PCA & 15 & 89,8\% & 99,90\% & 0,48 & 0,7\\
+BruteForce & XGBoost & PCA & 20 & 95,6\% & 99,91\% & 0,55 & 0,9\\
+\rowcolor{rowalt}BruteForce & XGBoost & PCA & 30 & 99,5\% & 99,92\% & 0,52 & 0,7\\
+BruteForce & XGBoost & PCA & 40 & 100,0\% & 99,94\% & 0,58 & 0,8\\
+\rowcolor{rowalt}BruteForce & XGBoost & PCA & без редукция & -- & 100,00\% & 0,42 & 0,6\\
 \bottomrule
 \end{tabular}}%

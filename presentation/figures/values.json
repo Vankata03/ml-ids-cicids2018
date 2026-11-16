@@ -1,25 +1,5 @@
 {
  "ks": {
-  "DDoS": {
-   "mean_top10": 0.6489440023899078,
-   "top": [
-    "Bwd Pkt Len Std",
-    "Bwd Pkt Len Mean",
-    "Bwd Seg Size Avg",
-    "Fwd IAT Min",
-    "Init Fwd Win Byts"
-   ]
-  },
-  "BruteForce": {
-   "mean_top10": 0.9772259950637817,
-   "top": [
-    "Fwd Seg Size Min",
-    "Fwd Act Data Pkts",
-    "Fwd Header Len",
-    "TotLen Fwd Pkts",
-    "Subflow Fwd Byts"
-   ]
-  },
   "PortScan": {
    "mean_top10": 0.8985824346542358,
    "top": [
@@ -29,36 +9,56 @@
     "TotLen Fwd Pkts",
     "Fwd Pkt Len Max"
    ]
+  },
+  "DDoS": {
+   "mean_top10": 0.6502059936523438,
+   "top": [
+    "Bwd Pkt Len Std",
+    "Bwd Pkt Len Mean",
+    "Bwd Seg Size Avg",
+    "Fwd IAT Min",
+    "Init Fwd Win Byts"
+   ]
+  },
+  "BruteForce": {
+   "mean_top10": 0.977374005317688,
+   "top": [
+    "Fwd Seg Size Min",
+    "Fwd Act Data Pkts",
+    "Fwd Header Len",
+    "TotLen Fwd Pkts",
+    "Subflow Fwd Byts"
+   ]
   }
  },
  "median": {
   "Flow Duration": {
-   "Нормален": 53348.0,
-   "DDoS": 11797.5,
-   "BruteForce": 374850.5,
-   "Нормален 2017": 91179.5,
-   "PortScan": 596.0
+   "Нормален 2017": 93292.5,
+   "PortScan": 596.0,
+   "Нормален": 50662.5,
+   "DDoS": 11839.0,
+   "BruteForce": 374367.5
   },
   "Tot Fwd Pkts": {
+   "Нормален 2017": 2.0,
+   "PortScan": 2.0,
    "Нормален": 5.0,
    "DDoS": 3.0,
-   "BruteForce": 22.0,
-   "Нормален 2017": 2.0,
-   "PortScan": 2.0
+   "BruteForce": 22.0
   },
   "Flow Pkts/s": {
-   "Нормален": 78.99830627441406,
-   "DDoS": 561.2122192382812,
-   "BruteForce": 117.69032287597656,
-   "Нормален 2017": 47.714195251464844,
-   "PortScan": 5571.03076171875
+   "Нормален 2017": 44.163963317871094,
+   "PortScan": 5571.03076171875,
+   "Нормален": 80.3874740600586,
+   "DDoS": 557.391357421875,
+   "BruteForce": 117.82865905761719
   },
   "Init Fwd Win Byts": {
+   "Нормален 2017": 0.0,
+   "PortScan": 29200.0,
    "Нормален": 8192.0,
    "DDoS": 65535.0,
-   "BruteForce": 26883.0,
-   "Нормален 2017": 0.0,
-   "PortScan": 29200.0
+   "BruteForce": 26883.0
   }
  },
  "pre": {

@@ -57,6 +57,16 @@ class AlgorithmSpec:
 
 
 ATTACKS: dict[str, AttackSpec] = {
+    # Редът е този от заданието: PortScan, DDoS, Brute Force.
+    "PortScan": AttackSpec(
+        key="PortScan",
+        title_bg="Сканиране на портове (PortScan)",
+        category_bg="PortScan (разузнаване)",
+        selector=lambda lbl: lbl == "PortScan",
+        description_bg="Сканиране на портовете на жертвата с Nmap (SYN, connect, FIN, Xmas, Null, UDP и други "
+                       "режими) от атакуваща машина извън мрежата (CIC-IDS2017, 07.07.2017).",
+        dataset=C.DATASET_2017,
+    ),
     "DDoS": AttackSpec(
         key="DDoS",
         title_bg="Distributed Denial of Service (DDoS)",
@@ -71,15 +81,6 @@ ATTACKS: dict[str, AttackSpec] = {
         category_bg="Brute Force (BruteForce)",
         selector=lambda lbl: lbl in ("FTP-BruteForce", "SSH-Bruteforce"),
         description_bg="Отгатване на пароли по речник с Patator срещу FTP и SSH сървъри (14.02.2018).",
-    ),
-    "PortScan": AttackSpec(
-        key="PortScan",
-        title_bg="Сканиране на портове (PortScan)",
-        category_bg="PortScan (разузнаване)",
-        selector=lambda lbl: lbl == "PortScan",
-        description_bg="Сканиране на портовете на жертвата с Nmap (SYN, connect, FIN, Xmas, Null, UDP и други "
-                       "режими) от атакуваща машина извън мрежата (CIC-IDS2017, 07.07.2017).",
-        dataset=C.DATASET_2017,
     ),
 }
 
